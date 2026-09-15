@@ -38,7 +38,7 @@
     </script>
     <style>
         .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
@@ -46,7 +46,7 @@
             border: 1px solid rgba(255, 255, 255, 1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
-        
+
         .glass-input {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -68,7 +68,7 @@
     </style>
 </head>
 <body class="font-body min-h-screen pb-12 pt-20 antialiased">
-    <!-- Civilian Navigation -->
+
     <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 px-6 flex items-center justify-between">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
@@ -77,7 +77,7 @@
                 </div>
                 <span class="font-headline font-bold text-lg text-slate-900 tracking-wide hidden sm:block">JA Accident Report</span>
             </div>
-            
+
             <nav class="hidden md:flex gap-6">
                 <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">home</span> Home
@@ -105,7 +105,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
         <nav class="flex flex-col gap-6 text-center">
             <a href="civilian_dashboard.html" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
@@ -127,21 +126,21 @@
     </div>
 
     <main class="max-w-[1440px] mx-auto px-6 mt-4 pb-20 animate-fade-in">
-        <!-- Progress Tracker -->
+
         <div class="mb-12 max-w-2xl mx-auto">
             <div class="flex justify-between items-center relative">
                 <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 -z-10 rounded-full"></div>
-                <!-- Step 1 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">1</div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Describe</span>
                 </div>
-                <!-- Step 2 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-white border-2 border-slate-300 text-slate-400 flex items-center justify-center font-bold">2</div>
                     <span class="font-label text-xs text-slate-400 uppercase tracking-wider">Evidence</span>
                 </div>
-                <!-- Step 3 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-white border-2 border-slate-300 text-slate-400 flex items-center justify-center font-bold">3</div>
                     <span class="font-label text-xs text-slate-400 uppercase tracking-wider">Review</span>
@@ -150,7 +149,7 @@
         </div>
 
         <div class="max-w-2xl mx-auto glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
-            <!-- Top highlight -->
+
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald to-teal-500"></div>
 
             <h1 class="font-headline text-2xl font-bold text-slate-900 mb-2">Incident Details</h1>
@@ -168,7 +167,7 @@
                         <option value="Other">Other</option>
                     </select>
                 </div>
-                
+
                 <div>
                     <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Location</label>
                     <div class="flex gap-2 mb-2">
@@ -185,7 +184,7 @@
                     <input type="hidden" id="incident-lat" value="">
                     <input type="hidden" id="incident-lon" value="">
                 </div>
-                
+
                 <div>
                     <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Description</label>
                     <textarea id="incident-desc" rows="5" class="glass-input w-full rounded-lg px-4 py-3 resize-y" placeholder="Describe what happened in detail..." required></textarea>
@@ -217,8 +216,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-200 pt-6 mt-6">
                     <h3 class="font-headline font-bold text-slate-800 md:col-span-2">Involved Parties (Drivers / Owners)</h3>
-                    
-                    <!-- Party 1 -->
+
                     <div class="md:col-span-2 text-sm font-bold text-emerald mt-2 border-b border-slate-100 pb-1">Party 1 (You)</div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">First Name</label>
@@ -241,7 +239,6 @@
                         </div>
                     </div>
 
-                    <!-- Party 2 -->
                     <div class="md:col-span-2 text-sm font-bold text-amber mt-4 border-b border-slate-100 pb-1">Party 2 (Other Involved)</div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">First Name</label>
@@ -308,11 +305,11 @@
 
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
-        
+
         document.getElementById('mobile-logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => window.location.href = 'login.html');
         });
@@ -334,13 +331,12 @@
                 } catch (err) {}
             }
         };
-        
+
         const pd = document.getElementById('portal-link-desktop');
         if (pd) pd.addEventListener('click', handlePortalSwitch);
         const pm = document.getElementById('portal-link-mobile');
         if (pm) pm.addEventListener('click', handlePortalSwitch);
 
-        // Pre-fill if going back
         const typeSelect = document.getElementById('incident-type');
         const locInput = document.getElementById('incident-location');
         const descInput = document.getElementById('incident-desc');
@@ -353,27 +349,26 @@
         descInput.value = sessionStorage.getItem('incidentDesc') || '';
         jurInput.value = sessionStorage.getItem('incidentJurisdiction') || '';
 
-        // Geolocation Logic
         let map = null;
         let marker = null;
 
         const reverseGeocode = async (lat, lon) => {
             locStatus.innerHTML = '<span class="material-symbols-outlined animate-spin text-[14px] align-middle mr-1">autorenew</span> Translating coordinates...';
             try {
-                // Use BigDataCloud Free Client-Side Reverse Geocoding API (Fast & No Rate Limits)
+
                 const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
                 const data = await res.json();
-                
+
                 if (data) {
                     const parish = data.principalSubdivision || data.city || "Unknown Parish";
-                    
+
                     let fullAddr = "";
                     if (data.locality) {
                         fullAddr = `${data.locality}, ${parish}`;
                     } else {
                         fullAddr = `${data.city || data.principalSubdivision}, ${data.countryName}`;
                     }
-                    
+
                     locInput.value = fullAddr;
                     jurInput.value = parish;
                     document.getElementById('incident-lat').value = lat.toFixed(6);
@@ -409,18 +404,18 @@
             navigator.geolocation.getCurrentPosition((position) => {
                 const lat = position.coords.latitude;
                 const lon = position.coords.longitude;
-                
+
                 document.getElementById('map-container').classList.remove('hidden');
-                
+
                 if (!map) {
                     map = L.map('map').setView([lat, lon], 18);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '© OpenStreetMap'
                     }).addTo(map);
-                    
+
                     marker = L.marker([lat, lon], {draggable: true}).addTo(map);
-                    
+
                     marker.on('dragend', function (event) {
                         const markerObj = event.target;
                         const position = markerObj.getLatLng();
@@ -430,19 +425,18 @@
                     map.setView([lat, lon], 18);
                     marker.setLatLng([lat, lon]);
                 }
-                
-                // Ensure map renders correctly if previously hidden
+
                 setTimeout(() => map.invalidateSize(), 100);
-                
+
                 reverseGeocode(lat, lon);
                 locateBtn.disabled = false;
-                
+
             }, (error) => {
                 let msg = "Location access denied or failed.";
                 if (error.code === 1) msg = "Location access was denied. Please allow permissions.";
                 else if (error.code === 2) msg = "Position unavailable. Device lost signal.";
                 else if (error.code === 3) msg = "GPS lock timed out. Try stepping outside.";
-                
+
                 locStatus.textContent = msg + " You can still type it manually.";
                 locStatus.classList.replace('text-slate-500', 'text-amber-600');
                 locateBtn.disabled = false;
@@ -451,12 +445,12 @@
 
         document.getElementById('report-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             sessionStorage.setItem('incidentType', typeSelect.value);
             sessionStorage.setItem('incidentLocation', locInput.value);
             sessionStorage.setItem('incidentDesc', descInput.value);
             sessionStorage.setItem('incidentJurisdiction', jurInput.value || 'Unknown');
-            
+
             const latVal = document.getElementById('incident-lat').value;
             const lonVal = document.getElementById('incident-lon').value;
             if (latVal && lonVal) {
@@ -475,7 +469,7 @@
                 color: document.getElementById('veh-color').value
             };
             sessionStorage.setItem('vehicleDetails', JSON.stringify(vehicleDetails));
-            
+
             const involvedParties = [];
             involvedParties.push({
                 party: "Party 1 (You)",
@@ -501,7 +495,7 @@
             const witnessAddress = document.getElementById('wit-address').value;
             const witnessPhoneRaw = document.getElementById('wit-phone').value;
             const witnessPhone = witnessPhoneRaw ? document.getElementById('wit-country-code').value + " " + witnessPhoneRaw : "";
-            
+
             if (witnessFirst || witnessLast || witnessPhone || witnessAddress) {
                 sessionStorage.setItem('witnesses', JSON.stringify([{
                     firstName: witnessFirst,

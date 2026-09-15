@@ -41,7 +41,7 @@
     </script>
     <style>
         .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
@@ -49,7 +49,7 @@
             border: 1px solid rgba(255, 255, 255, 1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
-        
+
         body {
             background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
             background-attachment: fixed;
@@ -58,7 +58,7 @@
     </style>
 </head>
 <body class="font-body min-h-screen pb-12 pt-20 antialiased">
-    <!-- Civilian Navigation -->
+
     <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 px-6 flex items-center justify-between">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
@@ -67,7 +67,7 @@
                 </div>
                 <span class="font-headline font-bold text-lg text-slate-900 tracking-wide hidden sm:block">JA Accident Report</span>
             </div>
-            
+
             <nav class="hidden md:flex gap-6">
                 <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">home</span> Home
@@ -95,7 +95,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
         <nav class="flex flex-col gap-6 text-center">
             <a href="civilian_dashboard.html" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
@@ -117,25 +116,25 @@
     </div>
 
     <main class="max-w-[1440px] mx-auto px-6 mt-4 pb-20 animate-fade-in">
-        <!-- Progress Tracker -->
+
         <div class="mb-12 max-w-2xl mx-auto">
             <div class="flex justify-between items-center relative">
                 <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-emerald -z-10 rounded-full shadow-sm"></div>
-                <!-- Step 1 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">
                         <span class="material-symbols-outlined text-[20px]">check</span>
                     </div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Describe</span>
                 </div>
-                <!-- Step 2 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">
                         <span class="material-symbols-outlined text-[20px]">check</span>
                     </div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Evidence</span>
                 </div>
-                <!-- Step 3 -->
+
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">3</div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Review</span>
@@ -144,19 +143,19 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
-            <!-- Left Column: Form Details -->
+
             <div class="lg:col-span-8 flex flex-col gap-6">
-                <!-- Details -->
+
                 <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-1 h-full bg-emerald"></div>
-                    
+
                     <div class="flex justify-between items-center mb-6 border-b border-slate-200 pb-4">
                         <h3 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
                             <span class="material-symbols-outlined text-emerald">summarize</span>
                             Incident Summary
                         </h3>
                     </div>
-                    
+
                     <div class="space-y-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
@@ -172,8 +171,7 @@
                             <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Specific Location</p>
                             <p id="disp-location" class="text-slate-700 font-body flex items-start gap-1"><span class="material-symbols-outlined text-slate-400 text-[18px] mt-0.5">location_on</span> <span id="loc-text"></span></p>
                         </div>
-                        
-                        <!-- Vehicle Details -->
+
                         <div id="veh-container" class="hidden">
                             <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 border-t border-slate-200 pt-4 mt-2">Vehicle Details</p>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
@@ -184,13 +182,11 @@
                             </div>
                         </div>
 
-                        <!-- Involved Parties -->
                         <div id="parties-container" class="hidden">
                             <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 border-t border-slate-200 pt-4 mt-2">Involved Parties</p>
                             <div id="parties-list" class="space-y-3"></div>
                         </div>
 
-                        <!-- Witness Details -->
                         <div id="wit-container" class="hidden">
                             <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 border-t border-slate-200 pt-4 mt-2">Witness Details</p>
                             <div id="witness-list" class="space-y-2"></div>
@@ -203,7 +199,6 @@
                     </div>
                 </section>
 
-                <!-- Evidence Preview -->
                 <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
                     <h3 class="font-headline text-lg font-bold text-slate-900 flex items-center gap-2 mb-6 border-b border-slate-200 pb-4">
                         <span class="material-symbols-outlined text-emerald">photo_library</span>
@@ -215,7 +210,6 @@
                 </section>
             </div>
 
-            <!-- Right Column: Legal & Actions -->
             <div class="lg:col-span-4">
                 <div class="sticky top-24 flex flex-col gap-6 animate-slide-in">
                     <section class="glass-panel rounded-2xl p-6 shadow-xl border border-emerald/20 bg-emerald/5 relative overflow-hidden">
@@ -233,7 +227,7 @@
                             </span>
                         </label>
                     </section>
-                    
+
                     <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
                     <div id="success-message" class="hidden bg-emerald/10 border border-emerald/30 text-emerald-700 px-4 py-3 rounded-lg text-sm font-label text-center flex items-center justify-center gap-2">
                         <span class="material-symbols-outlined">check_circle</span>
@@ -259,7 +253,7 @@
 
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
@@ -285,7 +279,7 @@
                 } catch (err) {}
             }
         };
-        
+
         const pd = document.getElementById('portal-link-desktop');
         if (pd) pd.addEventListener('click', handlePortalSwitch);
         const pm = document.getElementById('portal-link-mobile');
@@ -307,7 +301,6 @@
         document.getElementById('loc-text').textContent = incLoc;
         document.getElementById('disp-desc').textContent = incDesc;
 
-        // Vehicle
         if (vehDetails.plate || vehDetails.vin) {
             document.getElementById('veh-container').classList.remove('hidden');
             document.getElementById('v-plate').textContent = vehDetails.plate || 'N/A';
@@ -316,7 +309,6 @@
             document.getElementById('v-vin').textContent = vehDetails.vin || 'N/A';
         }
 
-        // Involved Parties
         if (involvedParties.length > 0) {
             document.getElementById('parties-container').classList.remove('hidden');
             const pl = document.getElementById('parties-list');
@@ -325,7 +317,6 @@
             });
         }
 
-        // Witnesses
         if (witnesses.length > 0) {
             document.getElementById('wit-container').classList.remove('hidden');
             const wl = document.getElementById('witness-list');
@@ -338,13 +329,13 @@
 
         const evidenceContainer = document.getElementById('evidence-container');
         const allFiles = [...statDocs, ...scenePhotos];
-        
+
         if (allFiles.length > 0) {
             document.getElementById('no-evidence').classList.add('hidden');
             allFiles.forEach(file => {
                 const div = document.createElement('div');
                 div.className = "aspect-square rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center p-3 text-center overflow-hidden hover:border-emerald/30 transition-colors relative group";
-                
+
                 let icon = 'description';
                 if (file.type && file.type.startsWith('image/')) icon = 'image';
                 else if (file.type === 'application/pdf') icon = 'picture_as_pdf';
@@ -401,7 +392,7 @@
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
-                
+
                 if (!response.ok) {
                     const data = await response.json();
                     throw new Error(data.detail || "Submission failed");
@@ -418,11 +409,11 @@
                 sessionStorage.removeItem('witnesses');
                 sessionStorage.removeItem('incidentLat');
                 sessionStorage.removeItem('incidentLon');
-                
+
                 successMsg.classList.remove('hidden');
                 submitBtn.classList.add('hidden');
                 document.getElementById('back-btn').classList.add('hidden');
-                
+
                 setTimeout(() => {
                     window.location.href = 'civilian_dashboard.html';
                 }, 2000);

@@ -142,7 +142,7 @@
         const photosList = document.getElementById('photos-list');
 
         dropZone.addEventListener('click', () => filePhotosInput.click());
-        
+
         filePhotosInput.addEventListener('change', (e) => {
             Array.from(e.target.files).forEach(f => {
                 if (f.size <= 10 * 1024 * 1024) scenePhotoFiles.push(f);
@@ -168,36 +168,34 @@
 
         document.getElementById('upload-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const btn = document.getElementById('continue-btn');
             const status = document.getElementById('upload-status');
-            
+
             btn.disabled = true;
             btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span> Processing...';
             status.classList.remove('hidden');
             status.textContent = 'Cryptographically hashing and uploading files. Please wait...';
 
             const formData = new FormData();
-            
-            // Collect Statutory Docs
+
             const statFiles = [
                 { id: 'file-dl', name: 'Driver Licence' },
                 { id: 'file-vr', name: 'Vehicle Registration' },
                 { id: 'file-cf', name: 'Certificate of Fitness' },
                 { id: 'file-ic', name: 'Insurance Certificate' }
             ];
-            
+
             statFiles.forEach(sf => {
                 const el = document.getElementById(sf.id);
                 if (el.files[0]) {
-                    // Create a new File object to rename it for the backend
+
                     const ext = el.files[0].name.split('.').pop();
                     const renamed = new File([el.files[0]], `${sf.name.replace(/ /g, '_')}.${ext}`, { type: el.files[0].type });
                     formData.append('files', renamed);
                 }
             });
 
-            // Collect Scene Photos
             scenePhotoFiles.forEach(f => {
                 formData.append('files', f);
             });
@@ -216,8 +214,7 @@
                         throw new Error(`Server returned ${response.status}: ${errorDetails}`);
                     }
                     const data = await response.json();
-                    
-                    // Categorize back based on prefix
+
                     data.files.forEach(f => {
                         if (f.name.includes("Driver_Licence") || f.name.includes("Vehicle_Registration") || 
                             f.name.includes("Certificate_of_Fitness") || f.name.includes("Insurance_Certificate")) {
@@ -227,10 +224,10 @@
                         }
                     });
                 }
-                
+
                 sessionStorage.setItem('statutoryDocs', JSON.stringify(statResults));
                 sessionStorage.setItem('scenePhotos', JSON.stringify(photoResults));
-                
+
                 window.location.href = 'civilian_review.html';
             } catch (err) {
                 status.textContent = `Error: ${err.message}`;

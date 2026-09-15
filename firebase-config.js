@@ -22,7 +22,6 @@ const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const appleProvider = new OAuthProvider('apple.com');
 
-// Helper to get token
 async function getAuthToken() {
     const user = auth.currentUser;
     if (user) {
@@ -31,7 +30,6 @@ async function getAuthToken() {
     return null;
 }
 
-// Fetch helper with auth
 async function apiFetch(url, options = {}) {
     const token = await getAuthToken();
     if (!token) {

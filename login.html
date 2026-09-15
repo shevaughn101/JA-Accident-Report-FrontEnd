@@ -48,7 +48,6 @@
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
-        /* Light Glassmorphism utilities */
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(16px);
@@ -89,9 +88,8 @@
             <p class="text-slate-600 font-label tracking-wide">Secure Authentication Portal</p>
         </div>
 
-        <!-- Role Toggle -->
         <div class="grid grid-cols-2 gap-4 mb-8">
-            <!-- Civilian Option -->
+
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="civilian" id="role-civilian" class="peer sr-only" checked />
                 <div
@@ -103,7 +101,6 @@
                 </div>
             </label>
 
-            <!-- Officer Option -->
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="officer" id="role-officer" class="peer sr-only" />
                 <div
@@ -117,7 +114,7 @@
         </div>
 
         <div class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
-            <!-- Top decorative highlight -->
+
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald via-amber to-emerald"></div>
 
             <div id="error-message"
@@ -256,7 +253,7 @@
                 }
             } catch (err) {
                 showError(err.message);
-                auth.signOut(); // Force sign out if verification fails
+                auth.signOut(); 
             }
         }
 
@@ -291,7 +288,6 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
 
-            // Show a message if it takes a long time (Render cold boot)
             const slowBootTimer = setTimeout(() => {
                 showError("Waking up the secure server... this can take up to 60 seconds on the free tier. Please wait.");
                 errorMsg.classList.replace('text-red-700', 'text-emerald-700');
@@ -304,21 +300,21 @@
                     const cred = await createUserWithEmailAndPassword(auth, email, password);
                     await sendEmailVerification(cred.user);
                     auth.signOut();
-                    
+
                     errorMsg.classList.replace('text-red-700', 'text-emerald-700');
                     errorMsg.classList.replace('bg-red-50', 'bg-emerald-50');
                     errorMsg.classList.replace('border-red-200', 'border-emerald-200');
                     showError("Account created! Please check your email to verify your account before logging in.");
                 } else {
                     const cred = await signInWithEmailAndPassword(auth, email, password);
-                    // Check if it's a manual login (providerData usually has password as providerId)
+
                     const isManual = cred.user.providerData.some(p => p.providerId === 'password');
-                    
+
                     if (isManual && !cred.user.emailVerified) {
                         auth.signOut();
                         throw { code: 'auth/unverified-email', message: "Your email is not verified. Please check your inbox to verify it before logging in." };
                     }
-                    
+
                     await handleAuthSuccess(cred);
                 }
             } catch (err) {
@@ -335,7 +331,7 @@
             } finally {
                 clearTimeout(slowBootTimer);
                 submitBtn.disabled = false;
-                updateUI(); // restores button text
+                updateUI(); 
             }
         });
 
