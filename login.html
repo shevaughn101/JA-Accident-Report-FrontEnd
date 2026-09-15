@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Sentinel Civic Response</title>
+    <title>Login - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap"
@@ -16,7 +16,8 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: "#10b981",
+                        emerald: "#009b3a",
+                        gold: "#fed100",
                         amber: "#f59e0b"
                     },
                     fontFamily: {
@@ -81,10 +82,10 @@
     <div class="w-full max-w-md animate-slide-up">
         <div class="text-center mb-10">
             <div
-                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald text-white mb-4 shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
+                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gold text-slate-900 mb-4 shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
                 <span class="material-symbols-outlined text-4xl">security</span>
             </div>
-            <h1 class="font-headline text-3xl font-bold text-slate-900 mb-2 tracking-tight">Sentinel System</h1>
+            <h1 class="font-headline text-3xl font-bold text-slate-900 mb-2 tracking-tight">JA Accident Report</h1>
             <p class="text-slate-600 font-label tracking-wide">Secure Authentication Portal</p>
         </div>
 
@@ -152,7 +153,7 @@
                 </div>
 
                 <button type="submit" id="submit-btn"
-                    class="w-full bg-slate-900 text-white font-bold py-3 px-4 rounded-lg hover:bg-slate-800 transition-all shadow-md flex justify-center items-center gap-2 group">
+                    class="w-full bg-gold text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-gold/90 transition-all shadow-md flex justify-center items-center gap-2 group">
                     <span id="btn-text">Secure Login</span>
                     <span
                         class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">login</span>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Describe Incident - Sentinel Civic Response</title>
+    <title>Describe Incident - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -14,7 +14,8 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: "#10b981",
+                        emerald: "#009b3a",
+                        gold: "#fed100",
                         amber: "#f59e0b"
                     },
                     fontFamily: {
@@ -71,10 +72,10 @@
     <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 px-6 flex items-center justify-between">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
-                <div class="w-8 h-8 rounded-full bg-emerald text-white flex items-center justify-center shadow-md">
+                <div class="w-8 h-8 rounded-full bg-gold text-slate-900 flex items-center justify-center shadow-md">
                     <span class="material-symbols-outlined text-[20px]">security</span>
                 </div>
-                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide hidden sm:block">Sentinel System</span>
+                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide hidden sm:block">JA Accident Report</span>
             </div>
             
             <nav class="hidden md:flex gap-6">
@@ -132,7 +133,7 @@
                 <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1 bg-slate-200 -z-10 rounded-full"></div>
                 <!-- Step 1 -->
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
-                    <div class="w-10 h-10 rounded-full bg-emerald text-white flex items-center justify-center font-bold shadow-md">1</div>
+                    <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">1</div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Describe</span>
                 </div>
                 <!-- Step 2 -->
@@ -293,7 +294,7 @@
                 </div>
 
                 <div class="mt-8 pt-6 border-t border-slate-200 flex justify-end">
-                    <button type="submit" class="bg-emerald text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-emerald/90 transition-all shadow-md flex items-center gap-2 group">
+                    <button type="submit" class="bg-gold text-slate-900 font-bold font-label px-8 py-3 rounded-lg hover:bg-gold/90 transition-all shadow-md flex items-center gap-2 group">
                         Next: Evidence
                         <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
                     </button>

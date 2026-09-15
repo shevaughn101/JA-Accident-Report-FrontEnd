@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Officer Feed - Sentinel Civic Response</title>
+    <title>Officer Feed - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -12,7 +12,8 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: "#10b981",
+                        emerald: "#009b3a",
+                        gold: "#fed100",
                         amber: "#f59e0b"
                     },
                     fontFamily: {
@@ -79,7 +80,7 @@
                 <p id="jurisdiction-label" class="text-slate-500 text-sm mt-1">Loading jurisdiction...</p>
             </div>
             <div class="flex items-center gap-2 bg-white rounded-lg p-1 shadow-sm border border-slate-200">
-                <button class="px-4 py-2 text-sm font-bold rounded-md bg-emerald text-white">All</button>
+                <button class="px-4 py-2 text-sm font-bold rounded-md bg-gold text-slate-900">All</button>
                 <button class="px-4 py-2 text-sm font-bold rounded-md text-slate-500 hover:bg-slate-50">Pending</button>
             </div>
         </div>
