@@ -221,7 +221,7 @@
 
         async function loadMyReports() {
             try {
-                const response = await apiFetch('https://sentinel-system-nfqp.onrender.com/api/my-incidents');
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
                 if (!response.ok) throw new Error("Failed to fetch reports");
 
                 const data = await response.json();

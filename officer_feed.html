@@ -163,7 +163,7 @@
 
         async function loadOfficerList() {
             try {
-                const response = await apiFetch('https://sentinel-system-nfqp.onrender.com/api/officers/list');
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/officers/list');
                 if (response.ok) {
                     const data = await response.json();
                     availableOfficers = data.officers;
@@ -178,7 +178,7 @@
                 const payload = {};
                 payload[field] = value;
 
-                const response = await apiFetch(`https://sentinel-system-nfqp.onrender.com/api/officer/incidents/${incidentId}/status`, {
+                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/officer/incidents/${incidentId}/status`, {
                     method: 'PUT',
                     body: JSON.stringify(payload)
                 });
@@ -191,7 +191,7 @@
 
         async function loadIncidents(currentUserRole = 'officer') {
             try {
-                const response = await apiFetch('https://sentinel-system-nfqp.onrender.com/api/officer/incidents');
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/officer/incidents');
                 if (!response.ok) throw new Error("Failed to fetch incidents");
                 const data = await response.json();
 

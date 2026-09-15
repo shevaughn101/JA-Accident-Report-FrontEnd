@@ -205,7 +205,7 @@
                 let photoResults = [];
 
                 if (formData.getAll('files').length > 0) {
-                    const response = await apiFetch('https://sentinel-system-nfqp.onrender.com/api/upload', {
+                    const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/upload', {
                         method: 'POST',
                         body: formData
                     });
