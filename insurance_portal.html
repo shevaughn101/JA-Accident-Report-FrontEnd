@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Insurance Portal - JA Accident Report</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: "#009b3a",
+                        gold: "#fed100",
+                        amber: "#f59e0b"
+                    },
+                    fontFamily: {
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Atkinson Hyperlegible Next"]
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden">
+    <!-- Header -->
+    <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-emerald/10 text-emerald flex items-center justify-center border border-emerald/30">
+                    <span class="material-symbols-outlined text-[20px]">shield</span>
+                </div>
+                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">JA Accident Report</span>
+            </div>
+            
+            <nav class="hidden md:flex gap-6">
+                <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">home</span> Home
+                </a>
+                <a href="insurance_portal.html" class="text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-emerald pb-1">
+                    <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Insurance
+                </a>
+            </nav>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+                Logout <span class="material-symbols-outlined text-[18px]">logout</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 mb-20 animate-fade-in relative">
+
+        <!-- LOCKED STATE (DEFAULT) -->
+        <div id="locked-state" class="flex flex-col items-center justify-center py-20 text-center">
+            <div class="w-32 h-32 rounded-full bg-slate-100 flex items-center justify-center mb-6 border-4 border-slate-200">
+                <span class="material-symbols-outlined text-[64px] text-slate-400">lock</span>
+            </div>
+            <h1 class="font-headline text-4xl font-bold text-slate-900 mb-4">Coming Soon</h1>
+            <p class="text-slate-600 max-w-lg mx-auto text-lg leading-relaxed">
+                We are actively building direct integrations with major car insurance providers. Soon, you will be able to automatically forward your official accident reports directly to your claims agent.
+            </p>
+            <div class="mt-8 px-6 py-3 bg-amber-50 text-amber-800 rounded-lg font-bold border border-amber-200 flex items-center gap-2">
+                <span class="material-symbols-outlined">engineering</span>
+                Currently in Admin Beta Testing
+            </div>
+        </div>
+
+
+        <!-- UNLOCKED STATE (HIDDEN) -->
+        <div id="unlocked-state" class="hidden">
+            <div class="flex items-center gap-4 mb-8">
+                <span class="material-symbols-outlined text-4xl text-emerald bg-emerald-50 p-2 rounded-lg">send_to_mobile</span>
+                <div>
+                    <h1 class="font-headline text-3xl font-bold text-slate-900 mb-1">Insurance Portal (Beta)</h1>
+                    <p class="text-slate-600 text-sm font-label tracking-wide">Forward your reports directly to your provider.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
+                <form id="insurance-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Select Incident Report to Send</label>
+                        <select class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50">
+                            <option>Traffic Collision - 2026-09-24</option>
+                            <option>Hit and Run - 2026-09-12</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Insurance Provider</label>
+                        <select class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50">
+                            <option>Advantage General Insurance</option>
+                            <option>BCIC (British Caribbean Insurance)</option>
+                            <option>JN General Insurance</option>
+                            <option>General Accident Insurance</option>
+                            <option>Other / Not Listed</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Policy Number</label>
+                        <input type="text" class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald" placeholder="e.g. POL-123456789">
+                    </div>
+
+                    <button type="button" class="w-full bg-emerald text-white rounded-lg py-3 font-bold hover:bg-emerald/90 transition-colors flex justify-center items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">send</span> Forward to Insurance Agent
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <script type="module">
+        import { auth } from './firebase-config.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        const lockedState = document.getElementById('locked-state');
+        const unlockedState = document.getElementById('unlocked-state');
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => { window.location.href = 'login.html'; });
+        });
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Check if user is Admin or authorized
+            try {
+                const token = await user.getIdTokenResult();
+                // We unlock the UI if they have admin claims, or if their email is specifically authorized
+                if (token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com') {
+                    lockedState.classList.add('hidden');
+                    unlockedState.classList.remove('hidden');
+                } else {
+                    // Force lock for civilians
+                    lockedState.classList.remove('hidden');
+                    unlockedState.classList.add('hidden');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>
