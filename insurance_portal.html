@@ -152,7 +152,8 @@
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
                 if (!response.ok) throw new Error("Failed to load incidents");
-                const incidents = await response.json();
+                const data = await response.json();
+                const incidents = data.incidents || [];
                 
                 const select = document.getElementById('incident-select');
                 select.innerHTML = '<option value="">Select an approved incident...</option>';
@@ -179,38 +180,70 @@
             }
         }
 
-
-        async function loadResolvedIncidents() {
-            try {
-                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
-                if (!response.ok) throw new Error("Failed to load incidents");
-                const incidents = await response.json();
-                
-                const select = document.getElementById('incident-select');
-                select.innerHTML = '<option value="">Select an approved incident...</option>';
-                
-                let found = false;
-                incidents.forEach(inc => {
-                    if (inc.status === 'resolved') {
-                        found = true;
-                        const date = new Date(inc.timestamp).toLocaleDateString();
-                        const opt = document.createElement('option');
-                        opt.value = inc.id;
-                        opt.textContent = `${inc.type} - ${date}`;
-                        select.appendChild(opt);
-                    }
-                });
-                
-                if (!found) {
-                    select.innerHTML = '<option value="">No resolved incidents found.</option>';
-                    select.disabled = true;
-                }
-            } catch (e) {
-                console.error(e);
-                document.getElementById('incident-select').innerHTML = '<option value="">Error loading incidents</option>';
-            }
-        }
-
+
+
+        async function loadResolvedIncidents() {
+
+            try {
+
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
+
+                if (!response.ok) throw new Error("Failed to load incidents");
+
+                const incidents = await response.json();
+
+                
+
+                const select = document.getElementById('incident-select');
+
+                select.innerHTML = '<option value="">Select an approved incident...</option>';
+
+                
+
+                let found = false;
+
+                incidents.forEach(inc => {
+
+                    if (inc.status === 'resolved') {
+
+                        found = true;
+
+                        const date = new Date(inc.timestamp).toLocaleDateString();
+
+                        const opt = document.createElement('option');
+
+                        opt.value = inc.id;
+
+                        opt.textContent = `${inc.type} - ${date}`;
+
+                        select.appendChild(opt);
+
+                    }
+
+                });
+
+                
+
+                if (!found) {
+
+                    select.innerHTML = '<option value="">No resolved incidents found.</option>';
+
+                    select.disabled = true;
+
+                }
+
+            } catch (e) {
+
+                console.error(e);
+
+                document.getElementById('incident-select').innerHTML = '<option value="">Error loading incidents</option>';
+
+            }
+
+        }
+
+
+
             // Check if user is Admin or authorized
             try {
                 const token = await user.getIdTokenResult();
