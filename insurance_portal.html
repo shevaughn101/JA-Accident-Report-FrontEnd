@@ -152,7 +152,7 @@
             try {
                 const token = await user.getIdTokenResult();
                 // We unlock the UI if they have admin claims, or if their email is specifically authorized
-                if (token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com') {
+                if (token.claims.role === 'admin' || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com') {
                     lockedState.classList.add('hidden');
                     unlockedState.classList.remove('hidden');
                 } else {
