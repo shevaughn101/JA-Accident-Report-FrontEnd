@@ -146,7 +146,60 @@
             </form>
         </section>
 
+        
+        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
+
+            <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
+                <span class="material-symbols-outlined text-emerald-500">health_and_safety</span>
+                Assign Insurance Policy
+            </h2>
+
+            <div id="policy-status-msg" class="hidden mb-6 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
+
+            <form id="create-policy-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Target User Email</label>
+                        <input type="email" id="policy-user-email" class="glass-input w-full rounded-lg px-4 py-3" placeholder="user@example.com" required/>
+                    </div>
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Policy Number</label>
+                        <input type="text" id="policy-number" class="glass-input w-full rounded-lg px-4 py-3 uppercase" placeholder="e.g. BCIC-109283" required/>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Insurance Provider</label>
+                        <select id="policy-company" class="glass-input w-full rounded-lg px-4 py-3" required>
+                            <option value="Advantage General Insurance">Advantage General</option>
+                            <option value="BCIC">BCIC (British Caribbean)</option>
+                            <option value="JN General Insurance">JN General</option>
+                            <option value="General Accident Insurance">General Accident</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Premium Amount (JMD)</label>
+                        <input type="number" id="policy-amount" class="glass-input w-full rounded-lg px-4 py-3" placeholder="15000" required/>
+                    </div>
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Next Due Date</label>
+                        <input type="date" id="policy-date" class="glass-input w-full rounded-lg px-4 py-3" required/>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-200 flex justify-end">
+                    <button type="submit" id="policy-submit-btn" class="bg-emerald-600 text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-emerald-700 transition-all shadow-md flex items-center gap-2">
+                        Create Policy
+                        <span class="material-symbols-outlined text-[18px]">add_task</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
         <section class="glass-panel rounded-2xl shadow-xl overflow-hidden">
+
             <div class="p-6 border-b border-slate-200 bg-slate-50">
                 <div class="flex justify-between items-center">
                     <h2 class="font-headline text-lg font-bold text-slate-900 flex items-center gap-2">
@@ -285,7 +338,48 @@
             }
         });
 
+        
+        document.getElementById('create-policy-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('policy-submit-btn');
+            const msgBox = document.getElementById('policy-status-msg');
+            msgBox.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
+
+            const payload = {
+                user_email: document.getElementById('policy-user-email').value.trim(),
+                policy_number: document.getElementById('policy-number').value.trim().toUpperCase(),
+                company: document.getElementById('policy-company').value,
+                payment_amount: parseFloat(document.getElementById('policy-amount').value),
+                next_payment_date: document.getElementById('policy-date').value
+            };
+
+            try {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/admin/policy', {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.detail || "Creation failed");
+
+                msgBox.textContent = `Successfully assigned policy ${payload.policy_number} to ${payload.user_email}`;
+                msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200";
+                msgBox.classList.remove('hidden');
+                document.getElementById('create-policy-form').reset();
+            } catch (err) {
+                msgBox.textContent = err.message;
+                msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-100 text-red-700 font-bold border border-red-200";
+                msgBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Create Policy <span class="material-symbols-outlined text-[18px]">add_task</span>';
+            }
+        });
+
         document.getElementById('refresh-btn').addEventListener('click', loadOfficers);
+
 
         document.getElementById('view-feed-btn').addEventListener('click', () => {
             window.location.href = 'officer_feed.html';
