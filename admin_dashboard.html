@@ -98,7 +98,7 @@
 
             <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
                 <span class="material-symbols-outlined text-admin">person_add</span>
-                Create Officer Account
+                Create System User (Officer or Insurance Agent)
             </h2>
 
             <div id="status-msg" class="hidden mb-6 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
@@ -116,8 +116,18 @@
                 </div>
 
                 <div>
-                    <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Jurisdiction (Parish)</label>
-                    <select id="officer-jurisdiction" class="glass-input w-full rounded-lg px-4 py-3" required>
+                    
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Role</label>
+                        <select id="user-role-select" class="glass-input w-full rounded-lg px-4 py-3" required onchange="document.getElementById('insurance-company-group').classList.toggle('hidden', this.value !== 'insurance_agent'); document.getElementById('jurisdiction-group').classList.toggle('hidden', this.value === 'insurance_agent');">
+                            <option value="officer">Police Officer</option>
+                            <option value="insurance_agent">Insurance Agent</option>
+                        </select>
+                    </div>
+                    <div id="jurisdiction-group">
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Jurisdiction</label>
+                        <select id="officer-jurisdiction" class="glass-input w-full rounded-lg px-4 py-3">
                         <option value="" disabled selected>Select assigned parish</option>
                         <option value="Kingston">Kingston</option>
                         <option value="St. Andrew">St. Andrew</option>
@@ -137,6 +147,17 @@
                     </select>
                 </div>
 
+                
+                    <div id="insurance-company-group" class="hidden">
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Insurance Company</label>
+                        <select id="user-company" class="glass-input w-full rounded-lg px-4 py-3">
+                            <option value="Advantage General Insurance">Advantage General</option>
+                            <option value="BCIC">BCIC (British Caribbean)</option>
+                            <option value="JN General Insurance">JN General</option>
+                            <option value="General Accident Insurance">General Accident</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="pt-4 border-t border-slate-200 flex justify-end">
                     <button type="submit" id="submit-btn" class="bg-admin text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-admin/90 transition-all shadow-md flex items-center gap-2">
                         Create Account
@@ -147,56 +168,7 @@
         </section>
 
         
-        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-400"></div>
-
-            <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
-                <span class="material-symbols-outlined text-emerald-500">health_and_safety</span>
-                Assign Insurance Policy
-            </h2>
-
-            <div id="policy-status-msg" class="hidden mb-6 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
-
-            <form id="create-policy-form" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Target User Email</label>
-                        <input type="email" id="policy-user-email" class="glass-input w-full rounded-lg px-4 py-3" placeholder="user@example.com" required/>
-                    </div>
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Policy Number</label>
-                        <input type="text" id="policy-number" class="glass-input w-full rounded-lg px-4 py-3 uppercase" placeholder="e.g. BCIC-109283" required/>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Insurance Provider</label>
-                        <select id="policy-company" class="glass-input w-full rounded-lg px-4 py-3" required>
-                            <option value="Advantage General Insurance">Advantage General</option>
-                            <option value="BCIC">BCIC (British Caribbean)</option>
-                            <option value="JN General Insurance">JN General</option>
-                            <option value="General Accident Insurance">General Accident</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Premium Amount (JMD)</label>
-                        <input type="number" id="policy-amount" class="glass-input w-full rounded-lg px-4 py-3" placeholder="15000" required/>
-                    </div>
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Next Due Date</label>
-                        <input type="date" id="policy-date" class="glass-input w-full rounded-lg px-4 py-3" required/>
-                    </div>
-                </div>
-
-                <div class="pt-4 border-t border-slate-200 flex justify-end">
-                    <button type="submit" id="policy-submit-btn" class="bg-emerald-600 text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-emerald-700 transition-all shadow-md flex items-center gap-2">
-                        Create Policy
-                        <span class="material-symbols-outlined text-[18px]">add_task</span>
-                    </button>
-                </div>
-            </form>
-        </section>
+        
 
         <section class="glass-panel rounded-2xl shadow-xl overflow-hidden">
 
@@ -316,12 +288,14 @@
 
             const email = document.getElementById('officer-email').value;
             const password = document.getElementById('officer-password').value;
+            const role = document.getElementById('user-role-select').value;
             const jurisdiction = document.getElementById('officer-jurisdiction').value;
+            const company = document.getElementById('user-company').value;
 
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/admin/officers', {
                     method: 'POST',
-                    body: JSON.stringify({ email, password, jurisdiction })
+                    body: JSON.stringify({ email, password, role, jurisdiction, company })
                 });
 
                 const data = await response.json();
@@ -339,27 +313,7 @@
         });
 
         
-        document.getElementById('create-policy-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('policy-submit-btn');
-            const msgBox = document.getElementById('policy-status-msg');
-            msgBox.classList.add('hidden');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
-
-            const payload = {
-                user_email: document.getElementById('policy-user-email').value.trim(),
-                policy_number: document.getElementById('policy-number').value.trim().toUpperCase(),
-                company: document.getElementById('policy-company').value,
-                payment_amount: parseFloat(document.getElementById('policy-amount').value),
-                next_payment_date: document.getElementById('policy-date').value
-            };
-
-            try {
-                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/admin/policy', {
-                    method: 'POST',
-                    body: JSON.stringify(payload)
-                });
+        
 
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.detail || "Creation failed");

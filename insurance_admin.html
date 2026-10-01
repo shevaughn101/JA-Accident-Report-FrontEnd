@@ -43,7 +43,7 @@
             <div class="w-8 h-8 rounded-full bg-insurance/10 text-insurance flex items-center justify-center border border-insurance/30">
                 <span class="material-symbols-outlined text-[20px]">corporate_fare</span>
             </div>
-            <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">Insurance Company Portal</span>
+            <span id="header-company" class="font-headline font-bold text-lg text-slate-900 tracking-wide">Insurance Company Portal</span>
         </div>
         
         <div class="flex items-center gap-4">
@@ -125,9 +125,22 @@
             }
             try {
                 const token = await user.getIdTokenResult();
-                if (token.claims.role !== 'admin' && user.email !== 'admin@ja-accident-report.com' && user.email !== 'shevaughn@example.com') {
-                    alert("Unauthorized. This portal is for Insurance Agents and Admins only.");
+                const isSuperAdmin = token.claims.role === 'admin' || token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com';
+                const isAgent = token.claims.role === 'insurance_agent';
+                
+                if (!isSuperAdmin && !isAgent) {
+                    alert("Unauthorized. This portal is for Insurance Agents only.");
                     window.location.href = 'index.html';
+                    return;
+                }
+                
+                // If they are a specific agent, lock the company dropdown to their company
+                if (isAgent && token.claims.company) {
+                    const companySelect = document.getElementById('policy-company');
+                    companySelect.innerHTML = `<option value="${token.claims.company}">${token.claims.company}</option>`;
+                    companySelect.disabled = true;
+                    
+                    document.getElementById('header-company').textContent = `${token.claims.company} Portal`;
                 }
             } catch (err) {
                 console.error(err);
