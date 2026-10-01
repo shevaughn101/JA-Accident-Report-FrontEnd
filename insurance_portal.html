@@ -14,7 +14,10 @@
                     colors: {
                         emerald: "#009b3a",
                         gold: "#fed100",
-                        amber: "#f59e0b"
+                        amber: "#f59e0b",
+                        bcicRed: "#e31837",
+                        jnBlue: "#003b70",
+                        genAccBlue: "#0056b3"
                     },
                     fontFamily: {
                         "headline": ["Public Sans"],
@@ -37,27 +40,39 @@
             border: 1px solid rgba(255, 255, 255, 1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
-        /* Custom Scrollbar for chat */
         .chat-scroll::-webkit-scrollbar { width: 6px; }
         .chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* Dynamic Insurance Themes */
+        .theme-ag { --primary: #009b3a; --primary-dark: #007a2e; --primary-light: #e6f5eb; }
+        .theme-bcic { --primary: #e31837; --primary-dark: #b3122a; --primary-light: #fce8eb; }
+        .theme-jn { --primary: #003b70; --primary-dark: #002547; --primary-light: #e6ecf1; }
+        .theme-genacc { --primary: #0056b3; --primary-dark: #004085; --primary-light: #e6eef7; }
+        
+        .dyn-bg { background-color: var(--primary); }
+        .dyn-text { color: var(--primary); }
+        .dyn-border { border-color: var(--primary); }
+        .dyn-bg-light { background-color: var(--primary-light); }
+        .dyn-hover:hover { background-color: var(--primary-dark); }
+        
     </style>
 </head>
-<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden">
+<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden theme-ag" id="theme-provider">
     <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8">
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-emerald/10 text-emerald flex items-center justify-center border border-emerald/30">
+                <div class="w-8 h-8 rounded-full dyn-bg-light dyn-text flex items-center justify-center border dyn-border transition-colors duration-500">
                     <span class="material-symbols-outlined text-[20px]">shield</span>
                 </div>
-                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">JA Accident Report</span>
+                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide" id="header-title">JA Accident Report</span>
             </div>
             
             <nav class="hidden md:flex gap-6">
                 <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">home</span> Home
                 </a>
-                <a href="insurance_portal.html" class="text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-emerald pb-1">
+                <a href="insurance_portal.html" class="dyn-text font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 dyn-border pb-1">
                     <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Insurance
                 </a>
             </nav>
@@ -72,189 +87,128 @@
 
     <main class="max-w-6xl mx-auto px-6 mb-20 animate-fade-in relative">
 
-        <div id="locked-state" class="flex flex-col items-center justify-center py-20 text-center">
-            <div class="w-32 h-32 rounded-full bg-slate-100 flex items-center justify-center mb-6 border-4 border-slate-200">
-                <span class="material-symbols-outlined text-[64px] text-slate-400">lock</span>
+        <!-- 1. LOGIN STATE -->
+        <div id="login-state" class="max-w-md mx-auto mt-20">
+            <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-lg text-center">
+                <div class="w-20 h-20 rounded-full dyn-bg-light dyn-text mx-auto flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-[40px]">admin_panel_settings</span>
+                </div>
+                <h1 class="font-headline text-2xl font-bold text-slate-900 mb-2">Policy Login</h1>
+                <p class="text-slate-500 text-sm mb-8">Please enter your official Policy Number to access your insurance dashboard.</p>
+                
+                <form id="policy-login-form" class="space-y-4">
+                    <input type="text" id="policy-number-input" class="w-full text-center font-bold tracking-widest uppercase rounded-lg border-slate-300 focus:ring-emerald focus:border-emerald" placeholder="e.g. POL-12345" required>
+                    <button type="submit" class="w-full dyn-bg dyn-hover text-white py-3 rounded-lg font-bold transition-colors">
+                        Access Dashboard
+                    </button>
+                    <p id="login-error" class="text-red-500 text-sm hidden font-bold mt-2">Invalid Policy Number</p>
+                </form>
             </div>
-            <h1 class="font-headline text-4xl font-bold text-slate-900 mb-4">Coming Soon</h1>
-            <p class="text-slate-600 max-w-lg mx-auto text-lg leading-relaxed">
-                We are actively building direct integrations with major car insurance providers. Soon, you will be able to manage your policy and communicate with your claims agent directly.
-            </p>
         </div>
 
-        <div id="unlocked-state" class="hidden">
+        <!-- 2. DASHBOARD STATE -->
+        <div id="dashboard-state" class="hidden">
             <div class="flex items-center gap-4 mb-8">
-                <span class="material-symbols-outlined text-4xl text-emerald bg-emerald-50 p-2 rounded-lg">health_and_safety</span>
+                <span class="material-symbols-outlined text-4xl dyn-text dyn-bg-light p-2 rounded-lg transition-colors">health_and_safety</span>
                 <div>
-                    <h1 class="font-headline text-3xl font-bold text-slate-900 mb-1">Insurance Dashboard</h1>
+                    <h1 class="font-headline text-3xl font-bold text-slate-900 mb-1" id="dash-company-name">Loading Provider...</h1>
                     <p class="text-slate-600 text-sm font-label tracking-wide">Manage policies, track claims, and message your agent.</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- Left Column: Actions & Policy -->
+                <!-- Left Column: Policy & Payment -->
                 <div class="space-y-8">
                     <!-- Policy Status Card -->
-                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="dyn-bg rounded-2xl p-6 text-white shadow-lg relative overflow-hidden transition-colors duration-500">
                         <div class="absolute top-0 right-0 p-4 opacity-10">
                             <span class="material-symbols-outlined text-[100px]">verified_user</span>
                         </div>
                         <div class="relative z-10">
-                            <span class="px-3 py-1 bg-emerald/20 text-emerald-400 border border-emerald/30 rounded-full text-xs font-bold uppercase tracking-wide mb-4 inline-block">Active Policy</span>
-                            <h3 class="text-xl font-bold mb-1">Advantage General</h3>
-                            <p class="text-slate-400 text-sm mb-6">Comprehensive Auto • POL-123456789</p>
+                            <span class="px-3 py-1 bg-white/20 border border-white/30 rounded-full text-xs font-bold uppercase tracking-wide mb-4 inline-block">Active Policy</span>
+                            <h3 class="text-xl font-bold mb-1" id="card-company-name">-</h3>
+                            <p class="text-white/80 text-sm mb-6 font-mono" id="card-policy-num">-</p>
                             
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <p class="text-slate-400 text-xs uppercase tracking-wider mb-1">Next Payment</p>
-                                    <p class="font-bold text-2xl">$12,500 <span class="text-sm font-normal text-slate-400">JMD</span></p>
-                                    <p class="text-xs text-amber-400 mt-1">Due Oct 15, 2026</p>
-                                </div>
-                                <button class="bg-emerald hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold text-sm transition-colors shadow-lg">
-                                    Pay / Renew
-                                </button>
+                            <div class="mb-4">
+                                <p class="text-white/70 text-xs uppercase tracking-wider mb-1">Next Payment Due</p>
+                                <p class="font-bold text-3xl" id="card-amount">$0 <span class="text-sm font-normal text-white/70">JMD</span></p>
+                                <p class="text-sm font-bold mt-1 text-white flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span> <span id="card-date">-</span>
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Forward Report Form -->
+                    <!-- Manual Bank Transfer Info -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
                         <h2 class="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-emerald">send_to_mobile</span> Forward Report to Insurance
+                            <span class="material-symbols-outlined dyn-text">account_balance</span> Manual Bank Transfer
                         </h2>
-                        <form id="insurance-form" class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Select Approved Incident</label>
-                                <select id="incident-select" class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 text-sm">
-                                    <option value="">Loading your approved incidents...</option>
-                                </select>
+                        <p class="text-sm text-slate-500 mb-4">Please make your premium payments directly via your banking app. Use your Policy Number as the reference.</p>
+                        
+                        <div class="space-y-3">
+                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <p class="font-bold text-sm text-slate-800">National Commercial Bank (NCB)</p>
+                                <p class="text-xs text-slate-500">Branch: Knutsford Blvd</p>
+                                <p class="font-mono font-bold text-lg text-slate-700 mt-1">394857201</p>
                             </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Insurance Provider</label>
-                                <select class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 text-sm">
-                                    <option>Advantage General Insurance</option>
-                                    <option>BCIC (British Caribbean Insurance)</option>
-                                    <option>JN General Insurance</option>
-                                    <option>General Accident Insurance</option>
-                                    <!-- Removed "Other" as requested -->
-                                </select>
+                            <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                <p class="font-bold text-sm text-slate-800">Scotiabank</p>
+                                <p class="text-xs text-slate-500">Branch: Liguanea</p>
+                                <p class="font-mono font-bold text-lg text-slate-700 mt-1">88492019</p>
                             </div>
-
-                            <button type="button" class="w-full bg-slate-900 text-white rounded-lg py-2.5 font-bold hover:bg-slate-800 transition-colors text-sm">
-                                Submit Claim
-                            </button>
-                        </form>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Right Column: Claim Tracking & Messaging -->
                 <div class="lg:col-span-2 space-y-8">
                     
-                    <!-- Active Claims Tracker -->
+                    <!-- Forward Report Form -->
                     <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                        <h2 class="font-bold text-lg text-slate-900 mb-6 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-emerald">track_changes</span> Active Claim Status
+                        <h2 class="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined dyn-text">send_to_mobile</span> Forward Report to Insurance
                         </h2>
-                        
-                        <div class="relative">
-                            <!-- Progress Line -->
-                            <div class="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-200"></div>
-                            
-                            <!-- Steps -->
-                            <div class="space-y-6 relative">
-                                <div class="flex gap-4">
-                                    <div class="w-8 h-8 rounded-full bg-emerald text-white flex items-center justify-center relative z-10 shrink-0">
-                                        <span class="material-symbols-outlined text-[16px]">check</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-900 text-sm">Claim Submitted</h4>
-                                        <p class="text-xs text-slate-500">Report forwarded to Advantage General.</p>
-                                        <span class="text-[10px] text-slate-400 mt-1 block">Sep 24, 2026 - 10:30 AM</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex gap-4">
-                                    <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center relative z-10 shrink-0 shadow-[0_0_0_4px_white]">
-                                        <span class="material-symbols-outlined text-[16px]">search</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-900 text-sm">Under Insurance Investigation</h4>
-                                        <p class="text-xs text-slate-500">Adjuster is reviewing police notes and uploaded media.</p>
-                                        <span class="text-[10px] text-slate-400 mt-1 block">Sep 25, 2026 - 09:15 AM</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex gap-4">
-                                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center relative z-10 shrink-0 shadow-[0_0_0_4px_white]">
-                                        <span class="material-symbols-outlined text-[16px]">task_alt</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-slate-400 text-sm">Resolution & Payment</h4>
-                                        <p class="text-xs text-slate-400">Awaiting final approval.</p>
-                                    </div>
-                                </div>
+                        <form id="forward-form" class="flex gap-4 items-end">
+                            <div class="flex-1">
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Select Approved Incident</label>
+                                <select id="incident-select" class="w-full rounded-lg border-slate-300 focus:ring-2 bg-slate-50 text-sm">
+                                    <option value="">Loading your approved incidents...</option>
+                                </select>
                             </div>
-                        </div>
+                            <button type="button" class="dyn-bg dyn-hover text-white rounded-lg px-6 py-2.5 font-bold transition-colors text-sm shrink-0 shadow-md">
+                                Submit Claim
+                            </button>
+                        </form>
                     </div>
 
                     <!-- Communication Hub -->
                     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col h-[400px]">
                         <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                             <h2 class="font-bold text-slate-900 flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald">forum</span> Agent Communication
+                                <span class="material-symbols-outlined dyn-text">forum</span> Secure Agent Chat
                             </h2>
-                            <span class="flex items-center gap-1 text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div> Online
+                            <span class="flex items-center gap-1 text-xs font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+                                Policy Reference: <span id="chat-policy-ref" class="font-mono dyn-text">-</span>
                             </span>
                         </div>
                         
                         <!-- Chat Area -->
-                        <div class="flex-1 p-6 overflow-y-auto chat-scroll bg-slate-50/50 space-y-4">
-                            <!-- Agent Message -->
-                            <div class="flex gap-3 max-w-[80%]">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                                </div>
-                                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm text-sm text-slate-700">
-                                    Hello! I'm reviewing your claim for the collision on Sep 24. Could you confirm if the other driver provided their insurance information at the scene?
-                                    <span class="block text-[10px] text-slate-400 mt-2 text-right">Yesterday, 2:30 PM</span>
-                                </div>
-                            </div>
-                            
-                            <!-- User Message -->
-                            <div class="flex gap-3 max-w-[80%] ml-auto justify-end">
-                                <div class="bg-emerald text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm">
-                                    Yes, they had BCIC. I included a picture of their policy card in the original police report upload.
-                                    <span class="block text-[10px] text-emerald-100 mt-2 text-right">Yesterday, 3:15 PM</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Agent Message -->
-                            <div class="flex gap-3 max-w-[80%]">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                                    <span class="material-symbols-outlined text-[16px]">support_agent</span>
-                                </div>
-                                <div class="bg-white p-3 rounded-2xl rounded-tl-none border border-slate-100 shadow-sm text-sm text-slate-700">
-                                    Perfect, I see it now. I have contacted BCIC directly. I will update the status once they respond.
-                                    <span class="block text-[10px] text-slate-400 mt-2 text-right">Today, 9:00 AM</span>
-                                </div>
-                            </div>
+                        <div id="chat-container" class="flex-1 p-6 overflow-y-auto chat-scroll bg-slate-50/50 space-y-4">
+                            <!-- Messages will be injected here by JS -->
+                            <div class="text-center text-slate-400 text-sm mt-10">No messages yet. Send a secure message to your agent.</div>
                         </div>
 
                         <!-- Input Area -->
-                        <div class="p-4 bg-white border-t border-slate-100">
+                        <form id="chat-form" class="p-4 bg-white border-t border-slate-100">
                             <div class="flex items-center gap-2">
-                                <button class="p-2 text-slate-400 hover:text-emerald transition-colors">
-                                    <span class="material-symbols-outlined">attach_file</span>
-                                </button>
-                                <input type="text" class="flex-1 rounded-full border-slate-200 focus:border-emerald focus:ring-emerald text-sm py-2.5 px-4 bg-slate-50" placeholder="Type a message to your agent...">
-                                <button class="w-10 h-10 rounded-full bg-emerald text-white flex items-center justify-center hover:bg-emerald-600 transition-colors shadow-md">
+                                <input type="text" id="chat-input" class="flex-1 rounded-full border-slate-200 focus:ring-2 text-sm py-2.5 px-4 bg-slate-50" placeholder="Type a secure message..." required>
+                                <button type="submit" class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center dyn-hover transition-colors shadow-md shrink-0">
                                     <span class="material-symbols-outlined text-[18px]">send</span>
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
                 </div>
@@ -267,64 +221,127 @@
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        const lockedState = document.getElementById('locked-state');
-        const unlockedState = document.getElementById('unlocked-state');
+        const loginState = document.getElementById('login-state');
+        const dashboardState = document.getElementById('dashboard-state');
+        const themeProvider = document.getElementById('theme-provider');
+        let currentPolicy = null;
 
+        // Apply Theme based on company string
+        function applyTheme(companyName) {
+            themeProvider.classList.remove('theme-ag', 'theme-bcic', 'theme-jn', 'theme-genacc');
+            const name = companyName.toLowerCase();
+            if (name.includes('bcic')) themeProvider.classList.add('theme-bcic');
+            else if (name.includes('jn')) themeProvider.classList.add('theme-jn');
+            else if (name.includes('general accident')) themeProvider.classList.add('theme-genacc');
+            else themeProvider.classList.add('theme-ag'); // Default Advantage General
+        }
+
+        document.getElementById('policy-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const policyNum = document.getElementById('policy-number-input').value.trim();
+            const errorText = document.getElementById('login-error');
+            errorText.classList.add('hidden');
+            
+            try {
+                // We will build this API in Phase 1
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ policy_number: policyNum })
+                });
+                
+                if (!response.ok) throw new Error("Invalid Policy Number");
+                const data = await response.json();
+                
+                // Populate Dashboard
+                currentPolicy = data.policy;
+                document.getElementById('dash-company-name').textContent = currentPolicy.company;
+                document.getElementById('card-company-name').textContent = currentPolicy.company;
+                document.getElementById('card-policy-num').textContent = currentPolicy.policy_number;
+                document.getElementById('chat-policy-ref').textContent = currentPolicy.policy_number;
+                
+                // Format money
+                const formatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
+                document.getElementById('card-amount').innerHTML = `${formatter.format(currentPolicy.payment_amount || 0).replace('JMD','')} <span class="text-sm font-normal text-white/70">JMD</span>`;
+                document.getElementById('card-date').textContent = currentPolicy.next_payment_date || 'No Date Set';
+                
+                applyTheme(currentPolicy.company);
+                
+                loginState.classList.add('hidden');
+                dashboardState.classList.remove('hidden');
+                
+                loadResolvedIncidents();
+                loadMessages();
+                
+            } catch (err) {
+                console.error(err);
+                errorText.classList.remove('hidden');
+            }
+        });
+
+        // Placeholder for loading incidents
         async function loadResolvedIncidents() {
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
-                if (!response.ok) throw new Error("Failed to load incidents");
+                if (!response.ok) return;
                 const data = await response.json();
-                const incidents = data.incidents || [];
-                
                 const select = document.getElementById('incident-select');
                 select.innerHTML = '<option value="">Select an approved incident...</option>';
-                
-                let found = false;
+                const incidents = data.incidents || [];
                 incidents.forEach(inc => {
                     if (inc.status === 'resolved') {
-                        found = true;
-                        const date = new Date(inc.timestamp).toLocaleDateString();
                         const opt = document.createElement('option');
                         opt.value = inc.id;
-                        opt.textContent = `${inc.type} - ${date}`;
+                        opt.textContent = `${inc.type} - ${new Date(inc.timestamp).toLocaleDateString()}`;
                         select.appendChild(opt);
                     }
                 });
-                
-                if (!found) {
-                    select.innerHTML = '<option value="">No resolved incidents found.</option>';
-                    select.disabled = true;
-                }
-            } catch (e) {
-                console.error(e);
-                document.getElementById('incident-select').innerHTML = '<option value="">Error loading incidents</option>';
-            }
+            } catch (e) {}
         }
+        
+        // Placeholder for loading messages
+        async function loadMessages() {
+            document.getElementById('chat-container').innerHTML = '<div class="text-center text-slate-400 text-sm mt-10">Loading secure messages...</div>';
+            // We will hook this up to Firebase in Phase 3
+            setTimeout(() => {
+                 document.getElementById('chat-container').innerHTML = '<div class="text-center text-slate-400 text-sm mt-10">No messages yet. Send a secure message to your agent.</div>';
+            }, 1000);
+        }
+
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !currentPolicy) return;
+            
+            // Temporary UI update
+            const container = document.getElementById('chat-container');
+            if(container.innerText.includes('No messages')) container.innerHTML = '';
+            container.innerHTML += `
+                <div class="flex gap-3 max-w-[80%] ml-auto justify-end mb-4 animate-fade-in">
+                    <div class="dyn-bg text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm">
+                        ${text}
+                        <span class="block text-[10px] text-white/70 mt-2 text-right">Just now</span>
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+            
+            // Phase 3: Send to backend
+            try {
+                await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/message', {
+                    method: 'POST',
+                    body: JSON.stringify({ policy_number: currentPolicy.policy_number, message: text })
+                });
+            } catch(e) { console.error("Failed to send message", e); }
+        });
 
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            try {
-                const token = await user.getIdTokenResult();
-                if (token.claims.role === 'admin' || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com') {
-                    lockedState.classList.add('hidden');
-                    unlockedState.classList.remove('hidden');
-                    loadResolvedIncidents();
-                } else {
-                    lockedState.classList.remove('hidden');
-                    unlockedState.classList.add('hidden');
-                }
-            } catch (err) {
-                console.error(err);
-            }
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = 'login.html';
         });
     </script>
 </body>
