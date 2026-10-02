@@ -342,8 +342,23 @@
 
         window.fetchActiveClaims = async function() {
             try {
-                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/claims');
-                const claims = await response.json();
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/claims?t=' + new Date().getTime());
+                const rawText = await response.text();
+                let claims;
+                try {
+                    claims = JSON.parse(rawText);
+                } catch(e) {
+                    throw new Error("Backend returned invalid JSON: " + rawText.substring(0, 50));
+                }
+                
+                if (!response.ok) {
+                    throw new Error(claims.detail || "Server Error " + response.status);
+                }
+                
+                if (!Array.isArray(claims)) {
+                    throw new Error("Expected an array but got: " + typeof claims + " => " + JSON.stringify(claims).substring(0, 50));
+                }
+                
                 const tbody = document.getElementById('claims-list-body');
                 
                 if (claims.length === 0) {
@@ -372,7 +387,7 @@
                 `).join('');
             } catch (err) {
                 console.error("Failed to load claims:", err);
-                document.getElementById('claims-list-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold">Failed to load claims: ${err.message}</td></tr>`;
+                document.getElementById('claims-list-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold text-xs break-words">Failed to load claims: ${err.message}</td></tr>`;
             }
         }
 
