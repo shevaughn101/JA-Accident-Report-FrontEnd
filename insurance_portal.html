@@ -393,6 +393,46 @@
             } catch(e) { console.error("Failed to send message", e); }
         });
 
+        
+        document.getElementById('submit-claim-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('submit-claim-btn');
+            const msgBox = document.getElementById('claim-success-msg');
+            const select = document.getElementById('incident-select');
+            
+            if (!select.value) {
+                alert("Please select an approved incident first.");
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">autorenew</span> Submitting...';
+            
+            try {
+                const payload = {
+                    policy_number: currentPolicy.policy_number,
+                    incident_id: select.value,
+                    company: currentPolicy.company,
+                    message: "A new claim has been submitted for policy " + currentPolicy.policy_number
+                };
+                
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/submit_claim', {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) throw new Error("Failed to submit claim");
+                
+                msgBox.classList.remove('hidden');
+                btn.innerHTML = 'Submitted <span class="material-symbols-outlined text-[18px]">check</span>';
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                
+            } catch (err) {
+                alert("Failed to submit claim: " + err.message);
+                btn.disabled = false;
+                btn.innerHTML = 'Submit Claim <span class="material-symbols-outlined text-[18px]">send</span>';
+            }
+        });
+
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });

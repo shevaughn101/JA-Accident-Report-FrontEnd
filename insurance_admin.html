@@ -263,5 +263,24 @@
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
     </script>
+
+    <!-- Report Details Modal -->
+    <div id="report-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-insurance">plagiarism</span>
+                    Incident Report Details
+                </h3>
+                <button onclick="document.getElementById('report-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto" id="report-modal-content">
+                <div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-insurance">autorenew</span></div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
