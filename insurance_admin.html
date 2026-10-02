@@ -111,6 +111,31 @@
             </form>
         </section>
 
+        <!-- ACTIVE CLAIMS LIST -->
+        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-insurance to-emerald-400"></div>
+            <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
+                <span class="material-symbols-outlined text-insurance">list_alt</span>
+                Recently Submitted Claims
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider font-bold">
+                            <th class="p-4 rounded-tl-lg">Policy Number</th>
+                            <th class="p-4">Client Email</th>
+                            <th class="p-4">Current Stage</th>
+                            <th class="p-4 rounded-tr-lg">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="claims-list-body" class="divide-y divide-slate-100 text-sm">
+                        <tr><td colspan="4" class="p-8 text-center text-slate-500">Loading claims...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
     
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-amber-300"></div>
@@ -173,6 +198,7 @@
                 }
                 
                 // If they are a specific agent, lock the company dropdown to their company
+
                 if (isAgent && token.claims.company) {
                     const companySelect = document.getElementById('policy-company');
                     companySelect.innerHTML = `<option value="${token.claims.company}">${token.claims.company}</option>`;
@@ -180,6 +206,10 @@
                     
                     document.getElementById('header-company').textContent = `${token.claims.company} Portal`;
                 }
+                
+                // Fetch claims
+                window.fetchActiveClaims();
+    
             } catch (err) {
                 console.error(err);
             }
@@ -258,6 +288,92 @@
                 btn.disabled = false;
             }
         });
+
+        
+        window.viewReport = async function(incidentId) {
+            if (!incidentId || incidentId === 'undefined') {
+                alert("No accident report is attached to this claim yet.");
+                return;
+            }
+            
+            const modal = document.getElementById('report-modal');
+            const content = document.getElementById('report-modal-content');
+            modal.classList.remove('hidden');
+            content.innerHTML = '<div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-insurance">autorenew</span></div>';
+            
+            try {
+                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/incident/${incidentId}`);
+                if (!response.ok) throw new Error("Report not found in database.");
+                
+                const incident = await response.json();
+                
+                content.innerHTML = `
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Date & Time</p>
+                                <p class="font-bold text-slate-900">${new Date(incident.created_at).toLocaleString()}</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Location</p>
+                                <p class="font-bold text-slate-900">${incident.location || 'N/A'}</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Description of Incident</p>
+                            <p class="text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-lg">${incident.description || 'No description provided.'}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Evidence Photos</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                ${incident.photos && incident.photos.length > 0 ? 
+                                    incident.photos.map(p => `<img src="${p}" class="w-full h-48 object-cover rounded-lg border border-slate-200">`).join('') 
+                                    : '<p class="text-slate-500 text-sm italic">No photos attached to this report.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch(e) {
+                content.innerHTML = `<div class="p-8 text-center text-red-500 font-bold">Failed to load report details: ${e.message}</div>`;
+            }
+        };
+
+        window.fetchActiveClaims = async function() {
+            try {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/claims');
+                const claims = await response.json();
+                const tbody = document.getElementById('claims-list-body');
+                
+                if (claims.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500">No active claims found.</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = claims.map(c => `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 font-mono font-bold text-slate-900">${c.policy_number}</td>
+                        <td class="p-4 text-slate-600">${c.user_email}</td>
+                        <td class="p-4">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${c.stage === 5 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
+                                Stage ${c.stage}
+                            </span>
+                        </td>
+                        <td class="p-4 flex gap-4">
+                            <button type="button" onclick="viewReport('${c.incident_id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1 ${!c.incident_id ? 'opacity-50 cursor-not-allowed' : ''}" ${!c.incident_id ? 'disabled title="No report attached"' : ''}>
+                                View <span class="material-symbols-outlined text-[14px]">visibility</span>
+                            </button>
+                            <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('status-policy-number').focus(); window.scrollTo({top: document.getElementById('update-status-form').offsetTop, behavior: 'smooth'});" class="text-insurance hover:text-insurance-dark font-bold text-xs uppercase flex items-center gap-1">
+                                Update <span class="material-symbols-outlined text-[14px]">edit</span>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error("Failed to load claims:", err);
+            }
+        }
 
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
