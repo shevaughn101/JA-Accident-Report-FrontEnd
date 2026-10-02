@@ -88,7 +88,7 @@
             <p class="text-slate-600 font-label tracking-wide">Secure Authentication Portal</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
 
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="civilian" id="role-civilian" class="peer sr-only" checked />
@@ -197,6 +197,7 @@
         const form = document.getElementById('login-form');
         const roleCivilian = document.getElementById('role-civilian');
         const roleOfficer = document.getElementById('role-officer');
+        const roleInsurance = document.getElementById('role-insurance');
         const signupToggleContainer = document.getElementById('signup-toggle-container');
         const isSignup = document.getElementById('is-signup');
         const btnText = document.getElementById('btn-text');
@@ -209,6 +210,11 @@
                 socialLogins.classList.add('hidden');
                 isSignup.checked = false;
                 btnText.textContent = 'Officer Login';
+            } else if (roleInsurance.checked) {
+                signupToggleContainer.classList.add('hidden');
+                socialLogins.classList.add('hidden');
+                isSignup.checked = false;
+                btnText.textContent = 'Agent Login';
             } else {
                 signupToggleContainer.classList.remove('hidden');
                 socialLogins.classList.remove('hidden');
@@ -218,6 +224,7 @@
 
         roleCivilian.addEventListener('change', updateUI);
         roleOfficer.addEventListener('change', updateUI);
+        roleInsurance.addEventListener('change', updateUI);
         isSignup.addEventListener('change', updateUI);
 
         function showError(msg) {
@@ -242,6 +249,9 @@
 
                 if (data.role === 'admin') {
                     window.location.href = 'admin_dashboard.html';
+                }
+                else if (data.role === 'insurance_agent') {
+                    window.location.href = 'insurance_admin.html';
                 }
                 else if (data.role === 'officer') {
                     if (roleCivilian.checked) throw new Error("Please use the Officer Portal");

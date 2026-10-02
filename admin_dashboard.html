@@ -120,7 +120,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Role</label>
-                        <select id="user-role-select" class="glass-input w-full rounded-lg px-4 py-3" required onchange="document.getElementById('insurance-company-group').classList.toggle('hidden', this.value !== 'insurance_agent'); document.getElementById('jurisdiction-group').classList.toggle('hidden', this.value === 'insurance_agent');">
+                        <select id="user-role-select" class="glass-input w-full rounded-lg px-4 py-3" required onchange="
+                            document.getElementById('insurance-company-group').classList.toggle('hidden', this.value !== 'insurance_agent'); 
+                            document.getElementById('jurisdiction-group').classList.toggle('hidden', this.value === 'insurance_agent');
+                            document.getElementById('officer-email').placeholder = this.value === 'insurance_agent' ? 'agent@icwi.com' : 'officer@police.gov.jm';
+                        ">
                             <option value="officer">Police Officer</option>
                             <option value="insurance_agent">Insurance Agent</option>
                         </select>
