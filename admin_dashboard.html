@@ -319,24 +319,7 @@
         
         
 
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.detail || "Creation failed");
-
-                msgBox.textContent = `Successfully assigned policy ${payload.policy_number} to ${payload.user_email}`;
-                msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200";
-                msgBox.classList.remove('hidden');
-                document.getElementById('create-policy-form').reset();
-            } catch (err) {
-                msgBox.textContent = err.message;
-                msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-100 text-red-700 font-bold border border-red-200";
-                msgBox.classList.remove('hidden');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = 'Create Policy <span class="material-symbols-outlined text-[18px]">add_task</span>';
-            }
-        });
-
-        document.getElementById('refresh-btn').addEventListener('click', loadOfficers);
+                document.getElementById('refresh-btn').addEventListener('click', loadOfficers);
 
 
         document.getElementById('view-feed-btn').addEventListener('click', () => {
