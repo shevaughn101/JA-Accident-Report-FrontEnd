@@ -379,7 +379,7 @@
                             <button type="button" onclick="viewReport('${c.incident_id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1 ${!c.incident_id ? 'opacity-50 cursor-not-allowed' : ''}" ${!c.incident_id ? 'disabled title="No report attached"' : ''}>
                                 View <span class="material-symbols-outlined text-[14px]">visibility</span>
                             </button>
-                            <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('status-policy-number').focus(); window.scrollTo({top: document.getElementById('update-status-form').offsetTop, behavior: 'smooth'});" class="text-insurance hover:text-insurance-dark font-bold text-xs uppercase flex items-center gap-1">
+                            <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('update-status-form').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('status-stage').focus();" class="text-insurance hover:text-insurance-dark font-bold text-xs uppercase flex items-center gap-1">
                                 Update <span class="material-symbols-outlined text-[14px]">edit</span>
                             </button>
                         </td>
