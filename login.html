@@ -93,7 +93,7 @@
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="civilian" id="role-civilian" class="peer sr-only" checked />
                 <div
-                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-emerald/10 peer-checked:border-emerald/50 hover:bg-white/80">
+                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-emerald/10 peer-checked:border-emerald/50 hover:bg-white/80 h-full flex flex-col justify-center">
                     <span
                         class="material-symbols-outlined text-3xl mb-2 text-slate-400 peer-checked:text-emerald transition-colors">group</span>
                     <h3 class="font-bold text-slate-900 mb-1">Civilian Access</h3>
@@ -111,7 +111,18 @@
                     <p class="text-xs text-slate-600">Access Database</p>
                 </div>
             </label>
-        </div>
+            <label class="cursor-pointer group">
+                <input type="radio" name="role" value="insurance" id="role-insurance" class="peer sr-only" />
+                <div
+                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-blue-500/10 peer-checked:border-blue-500/50 hover:bg-white/80 h-full flex flex-col justify-center">
+                    <span
+                        class="material-symbols-outlined text-3xl mb-2 text-slate-400 peer-checked:text-blue-500 transition-colors">corporate_fare</span>
+                    <h3 class="font-bold text-slate-900 mb-1">Agent Portal</h3>
+                    <p class="text-xs text-slate-600">Manage Policies</p>
+                </div>
+            </label>
+
+          </div>
 
         <div class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
 
@@ -391,3 +402,4 @@
 </body>
 
 </html>
+
