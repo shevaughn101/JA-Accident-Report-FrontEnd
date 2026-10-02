@@ -284,6 +284,33 @@
         let currentPolicy = null;
 
         // Apply Theme based on company string
+        
+        function updateProgressUI(stageStr) {
+            let stage = parseInt(stageStr) || 0;
+            // Cap at 5
+            if (stage > 5) stage = 5;
+            
+            // Widths for each stage (0 to 5)
+            const widths = ["0%", "0%", "25%", "50%", "75%", "100%"];
+            document.getElementById('progress-line').style.width = widths[stage];
+            
+            for(let i=1; i<=5; i++) {
+                const dot = document.getElementById(`step-${i}-dot`);
+                const icon = document.getElementById(`step-${i}-icon`);
+                if (!dot || !icon) continue;
+                
+                if (i <= stage) {
+                    dot.classList.remove('bg-slate-200');
+                    dot.classList.add('dyn-bg');
+                    icon.classList.remove('hidden');
+                } else {
+                    dot.classList.add('bg-slate-200');
+                    dot.classList.remove('dyn-bg');
+                    icon.classList.add('hidden');
+                }
+            }
+        }
+
         function applyTheme(companyName) {
             themeProvider.classList.remove('theme-ag', 'theme-bcic', 'theme-jn', 'theme-genacc');
             const name = companyName.toLowerCase();
@@ -322,6 +349,7 @@
                 document.getElementById('card-date').textContent = currentPolicy.next_payment_date || 'No Date Set';
                 
                 applyTheme(currentPolicy.company);
+                    updateProgressUI(currentPolicy.stage);
                 
                 loginState.classList.add('hidden');
                 dashboardState.classList.remove('hidden');
@@ -423,6 +451,7 @@
                 if (!response.ok) throw new Error("Failed to submit claim");
                 
                 msgBox.classList.remove('hidden');
+                updateProgressUI(2);
                 btn.innerHTML = 'Submitted <span class="material-symbols-outlined text-[18px]">check</span>';
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
                 
@@ -462,6 +491,7 @@
                     document.getElementById('card-date').textContent = currentPolicy.next_payment_date;
                     
                     applyTheme(currentPolicy.company);
+                    updateProgressUI(currentPolicy.stage);
                     
                     loginState.classList.add('hidden');
                     dashboardState.classList.remove('hidden');
