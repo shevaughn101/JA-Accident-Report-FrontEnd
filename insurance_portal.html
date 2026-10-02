@@ -170,16 +170,23 @@
                         <h2 class="font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
                             <span class="material-symbols-outlined dyn-text">send_to_mobile</span> Forward Report to Insurance
                         </h2>
-                        <form id="forward-form" class="flex gap-4 items-end">
-                            <div class="flex-1">
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Select Approved Incident</label>
-                                <select id="incident-select" class="w-full rounded-lg border-slate-300 focus:ring-2 bg-slate-50 text-sm">
-                                    <option value="">Loading your approved incidents...</option>
-                                </select>
+                        <form id="forward-form" class="flex flex-col gap-4">
+                            <div class="flex gap-4 items-end">
+                                <div class="flex-1">
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Select Approved Incident</label>
+                                    <select id="incident-select" class="w-full rounded-lg border-slate-300 focus:ring-2 bg-slate-50 text-sm">
+                                        <option value="">Loading your approved incidents...</option>
+                                    </select>
+                                </div>
+                                <button type="button" id="submit-claim-btn" class="dyn-bg dyn-hover text-white rounded-lg px-6 py-2.5 font-bold transition-colors text-sm shrink-0 shadow-md flex items-center gap-2">
+                                    Submit Claim
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                </button>
                             </div>
-                            <button type="button" class="dyn-bg dyn-hover text-white rounded-lg px-6 py-2.5 font-bold transition-colors text-sm shrink-0 shadow-md">
-                                Submit Claim
-                            </button>
+                            <div id="claim-success-msg" class="hidden px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200 flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">mark_email_read</span>
+                                Claim Successfully Submitted! An email notification has been dispatched to your Insurance Agent.
+                            </div>
                         </form>
                     </div>
 
