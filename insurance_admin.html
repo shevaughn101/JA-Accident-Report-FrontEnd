@@ -73,14 +73,10 @@
             <form id="create-policy-form" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Client Email (New Account)</label>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Client Email Address</label>
                         <input type="email" id="policy-user-email" class="w-full rounded-lg border-slate-300 focus:border-insurance focus:ring-insurance px-4 py-3" placeholder="client@example.com" required/>
                     </div>
                     <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Temporary Password</label>
-                        <input type="password" id="policy-user-password" class="w-full rounded-lg border-slate-300 focus:border-insurance focus:ring-insurance px-4 py-3" required/>
-                    </div>
-                    <div class="md:col-span-2">
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Generated Policy Number</label>
                         <input type="text" id="policy-number" class="w-full rounded-lg border-slate-300 focus:border-insurance focus:ring-insurance px-4 py-3 uppercase font-mono tracking-wider" placeholder="e.g. BCIC-109283" required/>
                     </div>
@@ -198,8 +194,7 @@
             btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
 
             const payload = {
-                email: document.getElementById('policy-user-email').value.trim(),
-                password: document.getElementById('policy-user-password').value,
+                user_email: document.getElementById('policy-user-email').value.trim(),
                 policy_number: document.getElementById('policy-number').value.trim().toUpperCase(),
                 company: document.getElementById('policy-company').value,
                 payment_amount: parseFloat(document.getElementById('policy-amount').value),
@@ -207,7 +202,7 @@
             };
 
             try {
-                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/register_client', {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/create_policy', {
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
