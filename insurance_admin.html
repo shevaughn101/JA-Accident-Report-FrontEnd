@@ -372,6 +372,7 @@
                 `).join('');
             } catch (err) {
                 console.error("Failed to load claims:", err);
+                document.getElementById('claims-list-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold">Failed to load claims: ${err.message}</td></tr>`;
             }
         }
 
