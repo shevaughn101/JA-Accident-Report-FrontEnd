@@ -194,23 +194,23 @@
                     <h3 class="font-headline font-bold text-slate-800 md:col-span-2">Vehicle Details</h3>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Licence Plate</label>
-                        <input id="veh-plate" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. 1234 XY" maxlength="10">
+                        <input id="veh-plate" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. 1234 XY" maxlength="10" required>
                     </div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Chassis / VIN Number</label>
-                        <input id="veh-vin" type="text" class="glass-input w-full rounded-lg px-4 py-3 uppercase" placeholder="17-character VIN" pattern="[A-HJ-NPR-Z0-9a-hj-npr-z]{17}" maxlength="17" title="Must be exactly 17 characters (excluding I, O, Q)">
+                        <input id="veh-vin" type="text" class="glass-input w-full rounded-lg px-4 py-3 uppercase" placeholder="17-character VIN" pattern="[A-HJ-NPR-Z0-9a-hj-npr-z]{17}" maxlength="17" title="Must be exactly 17 characters (excluding I, O, Q)" required>
                     </div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Make</label>
-                        <input id="veh-make" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Toyota">
+                        <input id="veh-make" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Toyota" required>
                     </div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Model</label>
-                        <input id="veh-model" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Vitz">
+                        <input id="veh-model" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Vitz" required>
                     </div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Color</label>
-                        <input id="veh-color" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Silver">
+                        <input id="veh-color" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="e.g. Silver" required>
                     </div>
                 </div>
 
@@ -242,14 +242,14 @@
                     <div class="md:col-span-2 text-sm font-bold text-amber mt-4 border-b border-slate-100 pb-1">Party 2 (Other Involved)</div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">First Name</label>
-                        <input id="p2-first" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="Jane">
+                        <input id="p2-first" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="Jane" required>
                     </div>
                     <div>
                         <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Last Name</label>
-                        <input id="p2-last" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="Smith">
+                        <input id="p2-last" type="text" class="glass-input w-full rounded-lg px-4 py-3" placeholder="Smith" required>
                     </div>
                     <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Contact Number (Optional)</label>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Contact Number</label>
                         <div class="flex gap-2">
                             <select id="p2-country" class="glass-input rounded-lg px-2 py-3 w-[140px] shrink-0 text-sm">
                                 <option value="+1876">+1 (876) Jamaica</option>
@@ -257,7 +257,7 @@
                                 <option value="+1">+1 (US/CA)</option>
                                 <option value="+44">+44 (UK)</option>
                             </select>
-                            <input id="p2-phone" type="tel" class="glass-input w-full rounded-lg px-4 py-3 flex-1" placeholder="1234567" pattern="[0-9]{7,15}">
+                            <input id="p2-phone" type="tel" class="glass-input w-full rounded-lg px-4 py-3 flex-1" placeholder="1234567" pattern="[0-9]{7,15}" required>
                         </div>
                     </div>
                 </div>
