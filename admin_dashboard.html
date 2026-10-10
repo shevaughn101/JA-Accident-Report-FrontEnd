@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="JA Accident" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/shevaughn101/JA-Accident-Report-BackEnd/main/mobile-app/assets/icon.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             theme: {
@@ -15,7 +23,7 @@
                         emerald: "#009b3a",
                         gold: "#fed100",
                         amber: "#f59e0b",
-                        admin: "#8b5cf6" 
+                        admin: "#8b5cf6"
                     },
                     fontFamily: {
                         "headline": ["Public Sans"],
@@ -36,7 +44,9 @@
         }
     </script>
     <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
 
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
@@ -52,6 +62,7 @@
             color: #0f172a !important;
             transition: all 0.3s ease;
         }
+
         .glass-input:focus {
             outline: none;
             border-color: #8b5cf6;
@@ -66,22 +77,28 @@
         }
     </style>
 </head>
+
 <body class="font-body min-h-screen pt-20 pb-12 antialiased">
-    <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 flex items-center justify-between px-6">
+    <header
+        class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 flex items-center justify-between px-6">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-admin/10 text-admin flex items-center justify-center border border-admin/30">
+            <div
+                class="w-8 h-8 rounded-full bg-admin/10 text-admin flex items-center justify-center border border-admin/30">
                 <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
             </div>
             <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">JA Accident Report Admin</span>
         </div>
         <div class="flex items-center gap-6">
-            <button id="view-civilian-btn" class="hidden sm:flex text-slate-600 hover:text-emerald transition-colors text-sm font-bold tracking-wider uppercase items-center gap-1 border-r border-slate-300 pr-6">
+            <button id="view-civilian-btn"
+                class="hidden sm:flex text-slate-600 hover:text-emerald transition-colors text-sm font-bold tracking-wider uppercase items-center gap-1 border-r border-slate-300 pr-6">
                 <span class="material-symbols-outlined text-[18px]">group</span> Civilian Portal
             </button>
-            <button id="view-feed-btn" class="text-slate-600 hover:text-admin transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+            <button id="view-feed-btn"
+                class="text-slate-600 hover:text-admin transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
                 <span class="material-symbols-outlined text-[18px]">list_alt</span> Live Feed
             </button>
-            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+            <button id="logout-btn"
+                class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
                 Logout <span class="material-symbols-outlined text-[18px]">logout</span>
             </button>
         </div>
@@ -96,7 +113,8 @@
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-admin to-purple-400"></div>
 
-            <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
+            <h2
+                class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
                 <span class="material-symbols-outlined text-admin">person_add</span>
                 Create System User (Officer or Insurance Agent)
             </h2>
@@ -106,73 +124,85 @@
             <form id="create-officer-form" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Officer Email</label>
-                        <input type="email" id="officer-email" class="glass-input w-full rounded-lg px-4 py-3" placeholder="officer@police.gov.jm" required/>
+                        <label
+                            class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Officer
+                            Email</label>
+                        <input type="email" id="officer-email" class="glass-input w-full rounded-lg px-4 py-3"
+                            placeholder="officer@police.gov.jm" required />
                     </div>
                     <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Temporary Password</label>
-                        <input type="password" id="officer-password" class="glass-input w-full rounded-lg px-4 py-3" required minlength="6"/>
+                        <label
+                            class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Temporary
+                            Password</label>
+                        <input type="password" id="officer-password" class="glass-input w-full rounded-lg px-4 py-3"
+                            required minlength="6" />
                     </div>
                 </div>
 
                 <div>
-                    
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Role</label>
-                        <select id="user-role-select" class="glass-input w-full rounded-lg px-4 py-3" required onchange="
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label
+                                class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Role</label>
+                            <select id="user-role-select" class="glass-input w-full rounded-lg px-4 py-3" required
+                                onchange="
                             document.getElementById('insurance-company-group').classList.toggle('hidden', this.value !== 'insurance_agent'); 
                             document.getElementById('jurisdiction-group').classList.toggle('hidden', this.value === 'insurance_agent');
-                            document.getElementById('officer-email').placeholder = this.value === 'insurance_agent' ? 'agent@icwi.com' : 'officer@police.gov.jm';
+                            document.getElementById('officer-email').placeholder = this.value === 'insurance_agent' ? 'agent@comp.com' : 'officer@police.gov.jm';
                         ">
-                            <option value="officer">Police Officer</option>
-                            <option value="insurance_agent">Insurance Agent</option>
-                        </select>
-                    </div>
-                    <div id="jurisdiction-group">
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Jurisdiction</label>
-                        <select id="officer-jurisdiction" class="glass-input w-full rounded-lg px-4 py-3">
-                        <option value="" disabled selected>Select assigned parish</option>
-                        <option value="Kingston">Kingston</option>
-                        <option value="St. Andrew">St. Andrew</option>
-                        <option value="St. Thomas">St. Thomas</option>
-                        <option value="Portland">Portland</option>
-                        <option value="St. Mary">St. Mary</option>
-                        <option value="St. Ann">St. Ann</option>
-                        <option value="Trelawny">Trelawny</option>
-                        <option value="St. James">St. James</option>
-                        <option value="Hanover">Hanover</option>
-                        <option value="Westmoreland">Westmoreland</option>
-                        <option value="St. Elizabeth">St. Elizabeth</option>
-                        <option value="Manchester">Manchester</option>
-                        <option value="Clarendon">Clarendon</option>
-                        <option value="St. Catherine">St. Catherine</option>
-                        <option value="National">National (All Parishes)</option>
-                    </select>
-                </div>
+                                <option value="officer">Police Officer</option>
+                                <option value="insurance_agent">Insurance Agent</option>
+                            </select>
+                        </div>
+                        <div id="jurisdiction-group">
+                            <label
+                                class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Jurisdiction</label>
+                            <select id="officer-jurisdiction" class="glass-input w-full rounded-lg px-4 py-3">
+                                <option value="" disabled selected>Select assigned parish</option>
+                                <option value="Kingston">Kingston</option>
+                                <option value="St. Andrew">St. Andrew</option>
+                                <option value="St. Thomas">St. Thomas</option>
+                                <option value="Portland">Portland</option>
+                                <option value="St. Mary">St. Mary</option>
+                                <option value="St. Ann">St. Ann</option>
+                                <option value="Trelawny">Trelawny</option>
+                                <option value="St. James">St. James</option>
+                                <option value="Hanover">Hanover</option>
+                                <option value="Westmoreland">Westmoreland</option>
+                                <option value="St. Elizabeth">St. Elizabeth</option>
+                                <option value="Manchester">Manchester</option>
+                                <option value="Clarendon">Clarendon</option>
+                                <option value="St. Catherine">St. Catherine</option>
+                                <option value="National">National (All Parishes)</option>
+                            </select>
+                        </div>
 
-                
-                    <div id="insurance-company-group" class="hidden">
-                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Insurance Company</label>
-                        <select id="user-company" class="glass-input w-full rounded-lg px-4 py-3">
-                            <option value="Advantage General Insurance">Advantage General</option>
-                            <option value="BCIC">BCIC (British Caribbean)</option>
-                            <option value="JN General Insurance">JN General</option>
-                            <option value="General Accident Insurance">General Accident</option>
-                        </select>
+
+                        <div id="insurance-company-group" class="hidden">
+                            <label
+                                class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Insurance
+                                Company</label>
+                            <select id="user-company" class="glass-input w-full rounded-lg px-4 py-3">
+                                <option value="Advantage General Insurance">Advantage General</option>
+                                <option value="BCIC">BCIC (British Caribbean)</option>
+                                <option value="JN General Insurance">JN General</option>
+                                <option value="General Accident Insurance">General Accident</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="pt-4 border-t border-slate-200 flex justify-end">
-                    <button type="submit" id="submit-btn" class="bg-admin text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-admin/90 transition-all shadow-md flex items-center gap-2">
-                        Create Account
-                        <span class="material-symbols-outlined text-[18px]">add</span>
-                    </button>
-                </div>
+                    <div class="pt-4 border-t border-slate-200 flex justify-end">
+                        <button type="submit" id="submit-btn"
+                            class="bg-admin text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-admin/90 transition-all shadow-md flex items-center gap-2">
+                            Create Account
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                        </button>
+                    </div>
             </form>
         </section>
 
-        
-        
+
+
 
         <section class="glass-panel rounded-2xl shadow-xl overflow-hidden">
 
@@ -182,7 +212,8 @@
                         <span class="material-symbols-outlined text-admin">badge</span>
                         Active Officers
                     </h2>
-                    <button id="refresh-btn" class="text-slate-500 hover:text-admin transition-colors" title="Refresh List">
+                    <button id="refresh-btn" class="text-slate-500 hover:text-admin transition-colors"
+                        title="Refresh List">
                         <span class="material-symbols-outlined">refresh</span>
                     </button>
                 </div>
@@ -209,13 +240,12 @@
 
         function showStatus(msg, isError = false) {
             statusMsg.textContent = msg;
-            statusMsg.className = `mb-6 px-4 py-3 rounded-lg text-sm font-label text-center border ${
-                isError ? 'bg-red-50 border-red-200 text-red-700' : 'bg-emerald-50 border-emerald-200 text-emerald-700'
-            }`;
+            statusMsg.className = `mb-6 px-4 py-3 rounded-lg text-sm font-label text-center border ${isError ? 'bg-red-50 border-red-200 text-red-700' : 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                }`;
             statusMsg.classList.remove('hidden');
         }
 
-        window.updateRole = async function(uid, selectElem) {
+        window.updateRole = async function (uid, selectElem) {
             const newRole = selectElem.value;
             const originalValue = selectElem.getAttribute('data-original');
 
@@ -230,7 +260,7 @@
 
                 const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/admin/users/${uid}/role`, {
                     method: 'PUT',
-                    body: JSON.stringify({ role: newRole, jurisdiction: 'National' }) 
+                    body: JSON.stringify({ role: newRole, jurisdiction: 'National' })
                 });
                 if (!response.ok) throw new Error("Failed to update role");
                 showStatus(`Successfully updated role to ${newRole}`);
@@ -316,10 +346,10 @@
             }
         });
 
-        
-        
 
-                document.getElementById('refresh-btn').addEventListener('click', loadOfficers);
+
+
+        document.getElementById('refresh-btn').addEventListener('click', loadOfficers);
 
 
         document.getElementById('view-feed-btn').addEventListener('click', () => {
@@ -350,7 +380,7 @@
             }
         });
     </script>
-<script type="module">
+    <script type="module">
         // --- Notification System ---
         const notifBtn = document.getElementById('notif-btn');
         const notifDropdown = document.getElementById('notif-dropdown');
@@ -374,29 +404,29 @@
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/notifications');
                 if (!response.ok) return;
-                
+
                 const data = await response.json();
                 notifList.innerHTML = '';
                 unreadIds = [];
-                
+
                 if (data.length === 0) {
                     notifList.innerHTML = '<div class="p-4 text-center text-sm text-slate-500 font-label">No notifications</div>';
                     notifBadge.classList.add('hidden');
                     return;
                 }
-                
+
                 data.forEach(notif => {
                     if (!notif.read) unreadIds.push(notif.id);
-                    
+
                     const item = document.createElement('div');
-                    item.className = p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors ;
+                    item.className = p - 4 border - b border - slate - 50 hover: bg - slate - 50 transition - colors;
                     item.innerHTML = 
                         <p class="text-sm text-slate-800 font-medium"></p>
                         <p class="text-xs text-slate-400 mt-1"></p>
-                    ;
+                        ;
                     notifList.appendChild(item);
                 });
-                
+
                 if (unreadIds.length > 0) {
                     notifBadge.classList.remove('hidden');
                 } else {
@@ -429,6 +459,7 @@
                 setInterval(fetchNotifications, 30000);
             }
         });
-</script>
+    </script>
 </body>
+
 </html>
