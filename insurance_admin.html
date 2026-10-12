@@ -213,6 +213,46 @@
             </div>
         </section>
 
+        <!-- INCOMING CLIENT MESSAGES & CHAT INBOX -->
+        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-600">mark_chat_unread</span>
+                        Incoming Client Inquiries & Messages
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">Real-time secure messages from your policyholders requiring adjuster review</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="unread-msg-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800">
+                        0 Messages
+                    </span>
+                    <button type="button" onclick="window.fetchCompanyMessages()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center gap-1 shadow-sm transition-colors cursor-pointer">
+                        <span class="material-symbols-outlined text-sm">refresh</span> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider font-bold">
+                            <th class="p-4 rounded-tl-lg">Policy Number</th>
+                            <th class="p-4">Sender Email</th>
+                            <th class="p-4">Message Preview</th>
+                            <th class="p-4">Received</th>
+                            <th class="p-4 rounded-tr-lg">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="messages-list-body" class="divide-y divide-slate-100 text-sm">
+                        <tr><td colspan="5" class="p-8 text-center text-slate-500">Loading incoming client inquiries...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
 
     
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
@@ -258,7 +298,8 @@
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // Must be an admin to use this portal for now (since insurance agents are technically admins in our prototype)
+        let currentAgentCompany = '';
+
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'login.html';
@@ -275,28 +316,37 @@
                     return;
                 }
 
+                currentAgentCompany = token.claims.company || '';
+
                 if (isSuperAdmin) {
-                    document.getElementById('header-company').textContent = 'Administrator Oversight — All Insurance Providers';
+                    document.getElementById('header-company').textContent = 'Administrator Oversight • All Insurance Providers';
                 }
                 
-                // If they are a specific agent, lock the company dropdown to their company
-
-                if (isAgent && token.claims.company) {
+                if (isAgent && currentAgentCompany) {
                     const companySelect = document.getElementById('policy-company');
-                    companySelect.innerHTML = `<option value="${token.claims.company}">${token.claims.company}</option>`;
+                    companySelect.innerHTML = `<option value="${currentAgentCompany}">${currentAgentCompany}</option>`;
                     companySelect.disabled = true;
                     
-                    document.getElementById('header-company').textContent = `${token.claims.company} Portal`;
+                    document.getElementById('header-company').textContent = `${currentAgentCompany} Portal`;
                 }
                 
-                // Fetch claims
+                // Fetch claims and messages
                 window.fetchActiveClaims();
+                window.fetchCompanyMessages();
+
+                // Periodic automated poll every 5 seconds for incoming civilian messages
+                setInterval(() => {
+                    if (!document.hidden) {
+                        window.fetchCompanyMessages();
+                    }
+                }, 5000);
     
             } catch (err) {
-                console.error(err);
+                console.error("Auth check error in admin portal:", err);
             }
         });
 
+        // 1. Create Policy Form
         document.getElementById('create-policy-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('policy-submit-btn');
@@ -326,6 +376,7 @@
                 msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200";
                 msgBox.classList.remove('hidden');
                 document.getElementById('create-policy-form').reset();
+                window.fetchActiveClaims();
             } catch (err) {
                 msgBox.textContent = err.message;
                 msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-100 text-red-700 font-bold border border-red-200";
@@ -336,7 +387,7 @@
             }
         });
 
-        
+        // 2. Update Claim Progress Form
         document.getElementById('update-status-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('status-submit-btn');
@@ -362,6 +413,7 @@
                 msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200";
                 msgBox.classList.remove('hidden');
                 document.getElementById('update-status-form').reset();
+                window.fetchActiveClaims();
             } catch (err) {
                 msgBox.textContent = err.message;
                 msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-100 text-red-700 font-bold border border-red-200";
@@ -371,7 +423,7 @@
             }
         });
 
-        
+        // 3. View Accident Dossier Modal
         window.viewReport = async function(incidentId) {
             if (!incidentId || incidentId === 'undefined') {
                 alert("No accident report is attached to this claim yet.");
@@ -381,7 +433,7 @@
             const modal = document.getElementById('report-modal');
             const content = document.getElementById('report-modal-content');
             modal.classList.remove('hidden');
-            content.innerHTML = '<div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-insurance">autorenew</span></div>';
+            content.innerHTML = '<div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-blue-600">autorenew</span></div>';
             
             try {
                 const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/incident/${incidentId}`);
@@ -422,6 +474,7 @@
             }
         };
 
+        // 4. Fetch Active Claims (Tenant Isolated by Company)
         window.fetchActiveClaims = async function() {
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/claims?t=' + new Date().getTime());
@@ -430,28 +483,24 @@
                 try {
                     claims = JSON.parse(rawText);
                 } catch(e) {
-                    throw new Error("Backend returned invalid JSON: " + rawText.substring(0, 50));
+                    throw new Error("Invalid response format");
                 }
                 
                 if (!response.ok) {
                     throw new Error(claims.detail || "Server Error " + response.status);
                 }
                 
-                if (!Array.isArray(claims)) {
-                    throw new Error("Expected an array but got: " + typeof claims + " => " + JSON.stringify(claims).substring(0, 50));
-                }
-                
                 const tbody = document.getElementById('claims-list-body');
                 
-                if (claims.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500">No active claims found.</td></tr>';
+                if (!Array.isArray(claims) || claims.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500">No active claims found for your company.</td></tr>';
                     return;
                 }
                 
                 tbody.innerHTML = claims.map(c => `
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="p-4 font-mono font-bold text-slate-900">${c.policy_number}</td>
-                        <td class="p-4 text-slate-600">${c.user_email}</td>
+                        <td class="p-4 text-slate-600">${c.user_email || 'N/A'}</td>
                         <td class="p-4">
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold ${c.stage === 5 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
                                 Stage ${c.stage}
@@ -461,7 +510,7 @@
                             <button type="button" onclick="viewReport('${c.incident_id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1 ${!c.incident_id ? 'opacity-50 cursor-not-allowed' : ''}" ${!c.incident_id ? 'disabled title="No report attached"' : ''}>
                                 View <span class="material-symbols-outlined text-[14px]">visibility</span>
                             </button>
-                            <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('update-status-form').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('status-stage').focus();" class="text-insurance hover:text-insurance-dark font-bold text-xs uppercase flex items-center gap-1">
+                            <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('update-status-form').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('status-stage').focus();" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1">
                                 Update <span class="material-symbols-outlined text-[14px]">edit</span>
                             </button>
                         </td>
@@ -471,7 +520,125 @@
                 console.error("Failed to load claims:", err);
                 document.getElementById('claims-list-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold text-xs break-words">Failed to load claims: ${err.message}</td></tr>`;
             }
-        }
+        };
+
+        // 5. Fetch Company Messages (Tenant Isolated by Company)
+        window.fetchCompanyMessages = async function() {
+            try {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/company-messages?t=' + new Date().getTime());
+                if (!response.ok) return;
+                const msgs = await response.json();
+                
+                const tbody = document.getElementById('messages-list-body');
+                const badge = document.getElementById('unread-msg-badge');
+                
+                if (!Array.isArray(msgs) || msgs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-slate-500 font-medium">No incoming client inquiries found for your agency.</td></tr>';
+                    badge.textContent = '0 Messages';
+                    badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600';
+                    return;
+                }
+                
+                badge.textContent = `${msgs.length} Inquiries`;
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 animate-pulse';
+                
+                tbody.innerHTML = msgs.map(m => {
+                    const isCivilian = (m.sender_role || 'civilian') === 'civilian';
+                    const timeStr = m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' }) : 'Recent';
+                    return `
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4 font-mono font-bold text-slate-900">${m.policy_number}</td>
+                            <td class="p-4 text-slate-600 text-xs font-medium">${m.sender_email || 'Policyholder'}</td>
+                            <td class="p-4 text-slate-800 text-xs max-w-xs truncate font-medium">
+                                <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ${isCivilian ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'} mr-1">
+                                    ${isCivilian ? 'Client' : 'Agent'}
+                                </span>
+                                ${m.message}
+                            </td>
+                            <td class="p-4 text-slate-500 text-xs font-mono">${timeStr}</td>
+                            <td class="p-4">
+                                <button type="button" onclick="window.openReplyModal('${m.policy_number}', '${m.sender_email || ''}')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase flex items-center gap-1 shadow-sm transition-colors cursor-pointer">
+                                    Reply <span class="material-symbols-outlined text-[13px]">chat</span>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error("Failed to fetch company messages:", err);
+            }
+        };
+
+        // 6. Open Reply Modal and Load Thread
+        window.openReplyModal = async function(policyNum, clientEmail) {
+            const modal = document.getElementById('reply-modal');
+            const title = document.getElementById('reply-modal-title');
+            const subtitle = document.getElementById('reply-modal-subtitle');
+            const container = document.getElementById('reply-thread-container');
+            const polInput = document.getElementById('reply-policy-number');
+            
+            polInput.value = policyNum;
+            title.textContent = `Conversation: Policy ${policyNum}`;
+            subtitle.textContent = `Client: ${clientEmail || 'Policyholder'}`;
+            modal.classList.remove('hidden');
+            container.innerHTML = '<div class="text-center text-slate-400 text-xs py-8">Loading message history...</div>';
+            
+            try {
+                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/messages/${policyNum}`);
+                if (!response.ok) throw new Error();
+                const thread = await response.json();
+                
+                if (!Array.isArray(thread) || thread.length === 0) {
+                    container.innerHTML = '<div class="text-center text-slate-400 text-xs py-8">No previous message history for this policy. Type your response below.</div>';
+                    return;
+                }
+                
+                container.innerHTML = thread.map(t => {
+                    const isAgent = (t.sender_role === 'agent') || (t.sender_uid === auth.currentUser?.uid);
+                    const time = t.timestamp ? new Date(t.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                    return `
+                        <div class="flex gap-2 max-w-[85%] ${isAgent ? 'ml-auto justify-end' : 'mr-auto justify-start'}">
+                            <div class="${isAgent ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'} p-3 rounded-2xl shadow-sm text-xs leading-relaxed">
+                                <p class="font-bold text-[10px] ${isAgent ? 'text-blue-200' : 'text-slate-400'} mb-1">${isAgent ? 'Adjuster (You)' : (t.sender_email || 'Client')}</p>
+                                <p>${t.message}</p>
+                                <span class="block text-[10px] ${isAgent ? 'text-blue-200' : 'text-slate-400'} mt-1 text-right">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                container.scrollTop = container.scrollHeight;
+            } catch(e) {
+                container.innerHTML = '<div class="text-center text-red-500 text-xs py-8">Failed to load message thread.</div>';
+            }
+        };
+
+        // 7. Handle Agent Reply Submission
+        document.getElementById('agent-reply-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('agent-reply-input');
+            const polNum = document.getElementById('reply-policy-number').value;
+            const btn = document.getElementById('agent-reply-btn');
+            const text = input.value.trim();
+            if (!text || !polNum) return;
+            
+            btn.disabled = true;
+            try {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/reply', {
+                    method: 'POST',
+                    body: JSON.stringify({ policy_number: polNum, message: text })
+                });
+                if (!response.ok) throw new Error("Failed to send reply");
+                
+                input.value = '';
+                // Reload thread immediately
+                window.openReplyModal(polNum, '');
+                window.fetchCompanyMessages();
+            } catch(err) {
+                alert("Reply error: " + err.message);
+            } finally {
+                btn.disabled = false;
+            }
+        });
 
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
@@ -479,6 +646,42 @@
     </script>
 
     <!-- Report Details Modal -->
+    
+    <!-- AGENT CHAT REPLY MODAL -->
+    <div id="reply-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                        <span class="material-symbols-outlined text-xl">forum</span>
+                    </div>
+                    <div>
+                        <h3 class="font-headline font-bold text-lg text-slate-900" id="reply-modal-title">Client Message Thread</h3>
+                        <p class="text-xs text-slate-500" id="reply-modal-subtitle">Policy POL-XXXXXX &bull; Client Conversation</p>
+                    </div>
+                </div>
+                <button type="button" onclick="document.getElementById('reply-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+            </div>
+            
+            <!-- Conversation Thread Container -->
+            <div id="reply-thread-container" class="p-6 overflow-y-auto max-h-80 space-y-3 bg-slate-50/50">
+                <div class="text-center text-slate-400 text-xs py-8">Loading message thread...</div>
+            </div>
+
+            <!-- Reply Form -->
+            <form id="agent-reply-form" class="p-4 border-t border-slate-200 bg-white flex gap-2">
+                <input type="hidden" id="reply-policy-number">
+                <input type="text" id="agent-reply-input" class="flex-1 rounded-xl border-slate-300 focus:border-blue-600 p-3 text-xs" placeholder="Type a response to this policyholder..." required>
+                <button type="submit" id="agent-reply-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
+                    <span>Send</span>
+                    <span class="material-symbols-outlined text-sm">send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <div id="report-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">

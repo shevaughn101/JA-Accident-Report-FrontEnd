@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insurance Portal | JA Accident Report</title>
-    <!-- iOS / PWA Meta Tags -->
+
+    <meta name="theme-color" content="#007A3D">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="JA Accident">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/car-fire.png">
     <link rel="manifest" href="manifest.json">
@@ -100,10 +101,10 @@
 
         <div class="flex items-center gap-3">
             <button id="logout-btn"
-                class="hidden sm:flex text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1">
+                class="hidden sm:flex text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1 cursor-pointer">
                 Logout <span class="material-symbols-outlined text-[18px]">logout</span>
             </button>
-            <button id="portal-mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
+            <button id="portal-mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center cursor-pointer">
                 <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
@@ -135,13 +136,13 @@
 
     <main class="max-w-6xl mx-auto px-4 sm:px-6 mb-20 animate-fade-in relative">
 
-        <!-- Admin Notice Banner -->
+        <!-- Admin Notice Banner (When Agent is previewing) -->
         <div id="admin-banner" class="hidden mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-blue-600 text-2xl">admin_panel_settings</span>
                 <div>
-                    <p class="font-bold text-sm">Administrator / Insurance Agent Access Active</p>
-                    <p class="text-xs text-blue-700">You can preview the civilian portal here, or open the full management console.</p>
+                    <p class="font-bold text-sm" id="admin-banner-title">Insurance Agent Session Active</p>
+                    <p class="text-xs text-blue-700" id="admin-banner-subtitle">Scoped strictly to personal policies. Competitor portals and mock data are restricted.</p>
                 </div>
             </div>
             <a href="insurance_admin.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm flex items-center gap-1 shrink-0">
@@ -149,8 +150,32 @@
             </a>
         </div>
 
-        <!-- 1. POLICY ACCESS GATE (Shown when no policy loaded) -->
-        <div id="login-state" class="max-w-md mx-auto my-12 animate-fade-in">
+        <!-- STATE A: AGENT BOUNDARY VIEW (Shown to Agents who do NOT have a personal civilian policy) -->
+        <div id="agent-boundary-state" class="hidden max-w-xl mx-auto my-12 animate-fade-in">
+            <div class="bg-white rounded-2xl p-8 border border-blue-200 shadow-xl text-center">
+                <div class="w-16 h-16 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto mb-4 border border-blue-200 shadow-sm">
+                    <span class="material-symbols-outlined text-3xl">shield_person</span>
+                </div>
+                <div class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 uppercase tracking-wider mb-3" id="agent-boundary-badge">
+                    Agent Portal Scoped
+                </div>
+                <h2 class="font-headline text-2xl font-bold text-slate-900 mb-2">No Personal Civilian Policy</h2>
+                <p class="text-slate-600 text-sm mb-6 leading-relaxed" id="agent-boundary-desc">
+                    You are currently authenticated as an official insurance claims agent. This civilian view strictly queries personal policies registered to your user ID. To issue policies, review claims, and respond to incoming policyholder messages, please use your dedicated Agent Console.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <a href="insurance_admin.html" id="agent-boundary-btn" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-colors shadow-md flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">health_and_safety</span> Open Agent Console
+                    </a>
+                    <a href="civilian_dashboard.html" class="px-6 py-3 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-colors flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-sm">home</span> Civilian Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATE B: POLICY ACCESS GATE (Shown ONLY to civilians without an active policy loaded) -->
+        <div id="login-state" class="hidden max-w-md mx-auto my-12 animate-fade-in">
             <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-xl text-center">
                 <div class="w-16 h-16 rounded-full dyn-bg-light dyn-text flex items-center justify-center mx-auto mb-4 border dyn-border shadow-sm">
                     <span class="material-symbols-outlined text-3xl">verified_user</span>
@@ -164,35 +189,21 @@
                         <input type="text" id="policy-number-input" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald p-3.5 uppercase font-mono tracking-wider font-bold text-sm bg-slate-50" placeholder="e.g. BCIC-109283" required>
                     </div>
                     <button type="submit" id="access-btn" class="w-full dyn-bg dyn-hover text-white py-3.5 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 cursor-pointer">
-                        Access Policy Dashboard <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        <span>Access Policy Dashboard</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </button>
                     <div id="login-error" class="hidden p-3 rounded-lg bg-red-50 text-red-600 text-xs font-bold border border-red-200 text-center">
-                        Policy not found. Please verify the policy number or use one of the demo presets below.
+                        Policy not found in the official registry. Please verify with your insurance provider.
                     </div>
                 </form>
 
-                <!-- Demo Presets for Instant Preview -->
-                <div class="mt-8 pt-6 border-t border-slate-100">
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Quick Demo Presets</p>
-                    <div class="grid grid-cols-2 gap-2 text-xs">
-                        <button type="button" onclick="loadPresetPolicy('Advantage General Insurance', 'AGI-984210', 18500, '2026-11-15', 3)" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 font-bold transition-colors">
-                            Advantage General
-                        </button>
-                        <button type="button" onclick="loadPresetPolicy('BCIC', 'BCIC-482910', 22000, '2026-11-01', 2)" class="p-2.5 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-800 font-bold transition-colors">
-                            BCIC Red
-                        </button>
-                        <button type="button" onclick="loadPresetPolicy('JN General Insurance', 'JNG-552190', 16000, '2026-12-05', 4)" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-50 text-blue-800 font-bold transition-colors">
-                            JN General
-                        </button>
-                        <button type="button" onclick="loadPresetPolicy('General Accident Insurance', 'GAI-771920', 14500, '2026-10-28', 1)" class="p-2.5 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 text-sky-800 font-bold transition-colors">
-                            General Accident
-                        </button>
-                    </div>
+                <div class="mt-8 pt-6 border-t border-slate-100 text-xs text-slate-500">
+                    <p>Don't have a policy number? Contact your insurance company or claims adjuster to have a policy issued to your registered account.</p>
                 </div>
             </div>
         </div>
 
-        <!-- 2. FULL ADVANCED DASHBOARD STATE -->
+        <!-- STATE C: FULL ADVANCED LIVE DASHBOARD (Rendered strictly with genuine DB records) -->
         <div id="dashboard-state" class="hidden animate-fade-in">
 
             <!-- Top Dashboard Bar -->
@@ -201,15 +212,16 @@
                     <span class="material-symbols-outlined text-4xl dyn-text dyn-bg-light p-3 rounded-2xl border dyn-border transition-colors duration-500 shadow-sm">health_and_safety</span>
                     <div>
                         <div class="flex items-center gap-2.5">
-                            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1" id="dash-company-name">Underwriter Portal</h1>
-                            <div id="locked-policy-pill" class="hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm">
+                            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1" id="dash-company-name">-</h1>
+                            <div id="locked-policy-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm">
                                 <span class="material-symbols-outlined text-[15px] text-emerald-600">lock</span> Official Policy: <strong class="font-mono text-slate-900" id="pill-policy-num">-</strong> (Locked)
                             </div>
                         </div>
                         <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Manage your policy, track real-time claim progression, and message your adjuster.</p>
                     </div>
                 </div>
-                <button type="button" id="switch-policy-btn" class="px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors shadow-sm">
+                <!-- Policy Switcher (Only visible if user owns multiple personal policies) -->
+                <button type="button" id="switch-policy-btn" class="hidden px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer">
                     <span class="material-symbols-outlined text-sm">swap_horiz</span> Switch Policy
                 </button>
             </div>
@@ -226,15 +238,16 @@
                         </div>
                         <div class="relative z-10">
                             <span id="card-active-pill" class="px-3 py-1 bg-white/20 border border-white/30 rounded-full text-[11px] font-bold uppercase tracking-wider mb-4 inline-block shadow-sm">
-                                Verified Active Policy
+                                <span class="material-symbols-outlined text-[13px] text-emerald-300 inline-block align-middle mr-1">lock</span> Verified Active Policy
                             </span>
+
                             <h3 class="text-xl sm:text-2xl font-bold mb-0.5 tracking-tight" id="card-company-name">-</h3>
                             <p class="text-white/80 text-xs sm:text-sm mb-6 font-mono tracking-wider font-bold" id="card-policy-num">-</p>
 
                             <div class="pt-4 border-t border-white/20">
                                 <p class="text-white/70 text-[11px] uppercase tracking-wider mb-1 font-bold">Next Premium Payment</p>
                                 <p class="font-bold text-3xl sm:text-4xl tracking-tight" id="card-amount">
-                                    $0 <span class="text-sm font-normal text-white/70">JMD</span>
+                                    $0.00 <span class="text-sm font-normal text-white/70">JMD</span>
                                 </p>
                                 <p class="text-xs sm:text-sm font-bold mt-2 text-white flex items-center gap-1.5">
                                     <span class="material-symbols-outlined text-[16px]">calendar_today</span>
@@ -391,7 +404,7 @@
                         <form id="chat-form" class="p-3 sm:p-4 bg-white border-t border-slate-100">
                             <div class="flex items-center gap-2">
                                 <input type="text" id="chat-input" class="flex-1 rounded-full border-slate-200 focus:border-emerald focus:ring-emerald text-xs sm:text-sm py-2.5 px-4 bg-slate-50" placeholder="Ask your adjuster a question about your claim..." required>
-                                <button type="submit" class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center dyn-hover transition-colors shadow-md shrink-0 cursor-pointer">
+                                <button type="submit" id="chat-submit-btn" class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center dyn-hover transition-colors shadow-md shrink-0 cursor-pointer">
                                     <span class="material-symbols-outlined text-[18px]">send</span>
                                 </button>
                             </div>
@@ -404,12 +417,27 @@
 
     </main>
 
+    <!-- Owned Policies Switch Modal (Only if user has multiple policies) -->
+    <div id="switch-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 border border-slate-100">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-headline font-bold text-lg text-slate-900">Your Registered Policies</h3>
+                <button type="button" onclick="document.getElementById('switch-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Select an active policy registered to your account:</p>
+            <div id="switch-policies-list" class="space-y-2"></div>
+        </div>
+    </div>
+
     <script type="module">
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
         const loginState = document.getElementById('login-state');
         const dashboardState = document.getElementById('dashboard-state');
+        const agentBoundaryState = document.getElementById('agent-boundary-state');
         const themeProvider = document.getElementById('theme-provider');
         const adminBanner = document.getElementById('admin-banner');
         const adminNav = document.getElementById('admin-console-nav-link');
@@ -424,7 +452,8 @@
         const cardActivePill = document.getElementById('card-active-pill');
 
         let currentPolicy = null;
-        let isPolicyLocked = false;
+        let userOwnedPolicies = [];
+        let chatPollInterval = null;
 
         const stageDescriptions = {
             1: "Current Status: Report Received & Awaiting Initial Adjuster Review",
@@ -451,21 +480,8 @@
             });
         }
         document.getElementById('logout-btn').addEventListener('click', () => {
-            signOut(auth).then(() => { window.location.href = 'login.html'; });
+            signOut(auth).then(() => window.location.href = 'login.html');
         });
-
-        // Switch policy back to login screen - BLOCKED if locked
-        if (switchPolicyBtn) {
-            switchPolicyBtn.addEventListener('click', () => {
-                if (isPolicyLocked) {
-                    alert("This user account is officially registered to an active underwriter policy. Policy switching is locked.");
-                    return;
-                }
-                currentPolicy = null;
-                dashboardState.classList.add('hidden');
-                loginState.classList.remove('hidden');
-            });
-        }
 
         // Dynamic Brand Theming (Supports BCIC, BCSE, JN, General Accident, ICWI, Advantage General)
         function applyTheme(companyName) {
@@ -513,11 +529,10 @@
         }
 
         // Render Loaded Policy into Full Dashboard
-        function renderDashboard(policy, locked = false) {
+        function renderDashboard(policy, locked = true) {
             currentPolicy = policy;
-            isPolicyLocked = locked;
 
-            const compName = policy.company || 'BCSE';
+            const compName = policy.company || 'Insurance Provider';
             document.getElementById('dash-company-name').textContent = compName;
             document.getElementById('card-company-name').textContent = compName;
             document.getElementById('card-policy-num').textContent = policy.policy_number || 'N/A';
@@ -525,16 +540,15 @@
 
             // Format Currency
             const formatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
-            const amount = policy.payment_amount !== undefined ? policy.payment_amount : 22000;
+            const amount = typeof policy.payment_amount === 'number' ? policy.payment_amount : parseFloat(policy.payment_amount || 0);
             document.getElementById('card-amount').innerHTML = `${formatter.format(amount).replace('JMD', '').trim()} <span class="text-sm font-normal text-white/70">JMD</span>`;
-            document.getElementById('card-date').textContent = policy.next_payment_date || '2026-11-01';
+            document.getElementById('card-date').textContent = policy.next_payment_date || 'Pending Schedule';
 
             applyTheme(compName);
-            updateProgressUI(policy.stage !== undefined ? policy.stage : 4);
+            updateProgressUI(policy.stage !== undefined ? policy.stage : 1);
 
-            // Handle Locking vs Unassigned Switching
-            if (locked) {
-                // HIDE SWITCH BUTTON - USER CANNOT SWITCH POLICY
+            // Handle Locking vs Switching
+            if (locked || userOwnedPolicies.length <= 1) {
                 if (switchPolicyBtn) {
                     switchPolicyBtn.classList.add('hidden');
                     switchPolicyBtn.style.display = 'none';
@@ -543,7 +557,7 @@
                     lockedPolicyPill.classList.remove('hidden');
                 }
                 if (pillPolicyNum) {
-                    pillPolicyNum.textContent = policy.policy_number || 'BCSE-482910';
+                    pillPolicyNum.textContent = policy.policy_number || 'N/A';
                 }
                 if (cardActivePill) {
                     cardActivePill.innerHTML = '<span class="material-symbols-outlined text-[13px] text-emerald-300 inline-block align-middle mr-1">lock</span> Verified Active Policy (Assigned)';
@@ -557,31 +571,25 @@
                     lockedPolicyPill.classList.add('hidden');
                 }
                 if (cardActivePill) {
-                    cardActivePill.textContent = 'Verified Active Policy';
+                    cardActivePill.innerHTML = '<span class="material-symbols-outlined text-[13px] text-emerald-300 inline-block align-middle mr-1">verified_user</span> Verified Active Policy';
                 }
             }
 
+            agentBoundaryState.classList.add('hidden');
             loginState.classList.add('hidden');
             dashboardState.classList.remove('hidden');
 
             loadUserIncidents();
             loadMessages(policy.policy_number);
-        }
 
-        // Window preset loader for instant preview (only if not locked)
-        window.loadPresetPolicy = function (company, policyNum, amount, date, stage) {
-            if (isPolicyLocked) {
-                alert("Policy switching is disabled: This user account is officially locked to its registered policy.");
-                return;
-            }
-            renderDashboard({
-                company: company,
-                policy_number: policyNum,
-                payment_amount: amount,
-                next_payment_date: date,
-                stage: stage
-            }, false);
-        };
+            // Set up real-time chat sync polling every 5 seconds
+            if (chatPollInterval) clearInterval(chatPollInterval);
+            chatPollInterval = setInterval(() => {
+                if (!document.hidden && currentPolicy && currentPolicy.policy_number) {
+                    loadMessages(currentPolicy.policy_number, true);
+                }
+            }, 5000);
+        }
 
         // 1. Fetch User Incidents into dropdown
         async function loadUserIncidents() {
@@ -612,45 +620,75 @@
             }
         }
 
-        // 2. Fetch Chat Messages
-        async function loadMessages(policyNum) {
+        // 2. Fetch Chat Messages (Live Backend Query)
+        async function loadMessages(policyNum, isBackgroundPoll = false) {
             const container = document.getElementById('chat-container');
-            container.innerHTML = '<div class="text-center text-slate-400 text-xs py-6">Loading secure messages...</div>';
+            if (!isBackgroundPoll) {
+                container.innerHTML = '<div class="text-center text-slate-400 text-xs py-6">Loading secure messages...</div>';
+            }
             try {
-                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/messages/${policyNum}`);
+                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/messages/${policyNum}?t=` + Date.now());
                 if (!response.ok) throw new Error();
                 const msgs = await response.json();
 
                 if (!Array.isArray(msgs) || msgs.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center text-slate-400 text-xs py-8 font-label">
-                            <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
-                            No messages yet. Send a secure inquiry directly to your claims adjuster below.
-                        </div>
-                    `;
+                    if (!isBackgroundPoll) {
+                        container.innerHTML = `
+                            <div class="text-center text-slate-400 text-xs py-8 font-label">
+                                <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
+                                No messages yet. Send a secure inquiry directly to your claims adjuster below.
+                            </div>
+                        `;
+                    }
                     return;
                 }
 
+                // Check if scrolled near bottom before update
+                const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
+
                 container.innerHTML = msgs.map(m => {
-                    const isMe = m.sender_uid === auth.currentUser?.uid || m.sender_email === auth.currentUser?.email;
+                    const isAgent = (m.sender_role === 'agent') || (m.sender_role === 'insurance_agent');
+                    const isMe = (m.sender_uid === auth.currentUser?.uid) || (m.sender_email === auth.currentUser?.email);
                     const time = m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
-                    return `
-                        <div class="flex gap-2 max-w-[85%] ${isMe ? 'ml-auto justify-end' : 'mr-auto justify-start'}">
-                            <div class="${isMe ? 'dyn-bg text-white rounded-tr-none' : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'} p-3 rounded-2xl shadow-sm text-xs leading-relaxed">
-                                <p>${m.message}</p>
-                                <span class="block text-[10px] ${isMe ? 'text-white/70' : 'text-slate-400'} mt-1 text-right">${time}</span>
+                    
+                    if (isMe) {
+                        return `
+                            <div class="flex gap-2 max-w-[85%] ml-auto justify-end">
+                                <div class="dyn-bg text-white rounded-2xl rounded-tr-none p-3 shadow-sm text-xs leading-relaxed">
+                                    <p class="font-bold text-[10px] text-white/70 mb-1">You</p>
+                                    <p>${m.message}</p>
+                                    <span class="block text-[10px] text-white/70 mt-1 text-right">${time}</span>
+                                </div>
                             </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="flex gap-2 max-w-[85%] mr-auto justify-start">
+                                <div class="bg-white text-slate-800 border border-slate-200 rounded-2xl rounded-tl-none p-3 shadow-sm text-xs leading-relaxed">
+                                    <p class="font-bold text-[10px] text-blue-600 mb-1 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[12px]">support_agent</span>
+                                        ${isAgent ? 'Claims Adjuster (' + (m.company || currentPolicy.company || 'Agent') + ')' : (m.sender_email || 'Adjuster')}
+                                    </p>
+                                    <p>${m.message}</p>
+                                    <span class="block text-[10px] text-slate-400 mt-1 text-right">${time}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }).join('');
+
+                if (!isBackgroundPoll || isNearBottom) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            } catch (err) {
+                if (!isBackgroundPoll) {
+                    container.innerHTML = `
+                        <div class="text-center text-slate-400 text-xs py-8 font-label">
+                            <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
+                            No previous messages. Start a conversation with your agent below.
                         </div>
                     `;
-                }).join('');
-                container.scrollTop = container.scrollHeight;
-            } catch (err) {
-                container.innerHTML = `
-                    <div class="text-center text-slate-400 text-xs py-8 font-label">
-                        <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
-                        No previous messages. Start a conversation with your agent below.
-                    </div>
-                `;
+                }
             }
         }
 
@@ -658,33 +696,29 @@
         document.getElementById('chat-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const input = document.getElementById('chat-input');
+            const btn = document.getElementById('chat-submit-btn');
             const text = input.value.trim();
             if (!text || !currentPolicy) return;
 
-            const container = document.getElementById('chat-container');
-            if (container.innerText.includes('No messages') || container.innerText.includes('No previous')) {
-                container.innerHTML = '';
-            }
-
-            // Optimistic UI append
-            container.innerHTML += `
-                <div class="flex gap-2 max-w-[85%] ml-auto justify-end animate-fade-in">
-                    <div class="dyn-bg text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed">
-                        <p>${text}</p>
-                        <span class="block text-[10px] text-white/70 mt-1 text-right">Just now</span>
-                    </div>
-                </div>
-            `;
-            input.value = '';
-            container.scrollTop = container.scrollHeight;
-
+            btn.disabled = true;
             try {
-                await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/message', {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/message', {
                     method: 'POST',
                     body: JSON.stringify({ policy_number: currentPolicy.policy_number, message: text })
                 });
+
+                if (!response.ok) {
+                    const errData = await response.json().catch(() => ({}));
+                    throw new Error(errData.detail || "Failed to deliver message");
+                }
+
+                input.value = '';
+                // Reload messages immediately to get verified DB message
+                await loadMessages(currentPolicy.policy_number, false);
             } catch (err) {
-                console.error("Message error:", err);
+                alert("Message delivery error: " + err.message);
+            } finally {
+                btn.disabled = false;
             }
         });
 
@@ -726,7 +760,7 @@
             }
         });
 
-        // 5. Handle Policy Login Form
+        // 5. Handle Policy Lookup Gate Submission (For Civilians without auto-assigned policy)
         document.getElementById('policy-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const policyNum = document.getElementById('policy-number-input').value.trim().toUpperCase();
@@ -735,7 +769,7 @@
             errorText.classList.add('hidden');
 
             accessBtn.disabled = true;
-            accessBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">autorenew</span> Verifying...';
+            accessBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">autorenew</span> Verifying Policy...';
 
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/login', {
@@ -748,84 +782,120 @@
                     throw new Error(data.detail || "Invalid Policy Number");
                 }
 
-                renderDashboard(data.policy, false);
+                userOwnedPolicies = [data.policy];
+                renderDashboard(data.policy, true);
             } catch (err) {
-                console.error(err);
-                errorText.textContent = err.message || "Policy not found. Try one of the quick presets below.";
+                errorText.textContent = err.message || "Policy not found in official registry. Please verify with your provider.";
                 errorText.classList.remove('hidden');
             } finally {
                 accessBtn.disabled = false;
-                accessBtn.innerHTML = 'Access Policy Dashboard <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+                accessBtn.innerHTML = '<span>Access Policy Dashboard</span> <span class="material-symbols-outlined text-sm">arrow_forward</span>';
             }
         });
 
-        // 6. On Auth State Changed: Detect Official Policy and Lock Account
+        // 6. Handle Switch Policy (Strictly scoped to user-owned policies)
+        if (switchPolicyBtn) {
+            switchPolicyBtn.addEventListener('click', () => {
+                if (userOwnedPolicies.length <= 1) {
+                    alert("This account is locked to its registered official policy.");
+                    return;
+                }
+                const modal = document.getElementById('switch-modal');
+                const list = document.getElementById('switch-policies-list');
+                list.innerHTML = userOwnedPolicies.map(p => `
+                    <button type="button" onclick="window.selectOwnedPolicy('${p.policy_number}')" class="w-full text-left p-3.5 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition-colors flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-sm text-slate-900">${p.company}</p>
+                            <p class="font-mono text-xs text-slate-500">${p.policy_number}</p>
+                        </div>
+                        <span class="material-symbols-outlined text-blue-600">arrow_forward</span>
+                    </button>
+                `).join('');
+                modal.classList.remove('hidden');
+            });
+        }
+
+        window.selectOwnedPolicy = function(policyNum) {
+            const found = userOwnedPolicies.find(p => p.policy_number === policyNum);
+            if (found) {
+                document.getElementById('switch-modal').classList.add('hidden');
+                renderDashboard(found, false);
+            }
+        };
+
+        // 7. On Auth State Changed: Strict Role Separation and Tenant Isolation
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'login.html';
                 return;
             }
 
-            const userEmail = (user.email || '').toLowerCase();
-            const isSSmith = userEmail.includes('ssmith107');
-
             try {
                 const token = await user.getIdTokenResult();
                 const isSuperAdmin = token.claims.role === 'admin' || token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com';
                 const isAgent = token.claims.role === 'insurance_agent';
+                const agentCompany = token.claims.company || '';
 
                 if (isSuperAdmin || isAgent) {
                     adminBanner.classList.remove('hidden');
                     adminNav.classList.remove('hidden');
                     if (portalMobileAdminLink) portalMobileAdminLink.classList.remove('hidden');
-                }
-
-                // 1. SPECIFIC PROVISION FOR ssmith107: BCSE Policy at Stage 4 (second-to-last stage)
-                if (isSSmith) {
-                    const ssmithPolicy = {
-                        company: "BCSE",
-                        policy_number: "BCSE-482910",
-                        payment_amount: 22000,
-                        next_payment_date: "2026-11-01",
-                        stage: 4, // Fourth / second-to-last process (4. OFFER)!
-                        assigned_by_admin: true
-                    };
-                    renderDashboard(ssmithPolicy, true); // STRICTLY LOCKED! Cannot switch
-                    return;
-                }
-
-                // 2. Check if user has an existing policy assigned in backend
-                const claimsRes = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/my-claims');
-                if (claimsRes.ok) {
-                    const myClaims = await claimsRes.json();
-                    if (Array.isArray(myClaims) && myClaims.length > 0) {
-                        // User has an assigned policy -> lock interface and render it
-                        renderDashboard(myClaims[0], true);
-                        return;
+                    if (agentCompany) {
+                        document.getElementById('admin-banner-title').textContent = `${agentCompany} Agent Session Active`;
                     }
                 }
 
-                // 3. Admin preview
-                if (isSuperAdmin) {
-                    loadPresetPolicy('Advantage General Insurance', 'AGI-ADMIN-DEMO', 18500, '2026-11-15', 3);
+                // Strict Backend Fetch: Fetch ONLY genuine personal policies tied to authenticated user
+                const claimsRes = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/my-claims?t=' + Date.now());
+                let myClaims = [];
+                if (claimsRes.ok) {
+                    try {
+                        const raw = await claimsRes.json();
+                        myClaims = Array.isArray(raw) ? raw : [];
+                    } catch(e) {
+                        myClaims = [];
+                    }
+                }
+
+                userOwnedPolicies = myClaims;
+
+                // --- ISOLATION LOGIC ---
+                // Case 1: User has genuine personal policies registered to their account
+                if (myClaims.length > 0) {
+                    // Render personal policy directly, locked to their account
+                    renderDashboard(myClaims[0], myClaims.length === 1);
                     return;
                 }
 
-                // 4. Unassigned civilian fallback: start with BCSE or Advantage General
-                loadPresetPolicy('BCSE', 'BCSE-482910', 22000, '2026-11-01', 2);
+                // Case 2: User is an Insurance Agent with NO personal civilian policy
+                // STRICT DEFENSE: Do NOT leak competitor portals, do NOT render mock policies!
+                if (isAgent) {
+                    agentBoundaryState.classList.remove('hidden');
+                    loginState.classList.add('hidden');
+                    dashboardState.classList.add('hidden');
+
+                    if (agentCompany) {
+                        document.getElementById('agent-boundary-badge').textContent = `${agentCompany} Agent Portal Scoped`;
+                        document.getElementById('agent-boundary-btn').innerHTML = `<span class="material-symbols-outlined text-sm">health_and_safety</span> Open ${agentCompany} Claims Console`;
+                        document.getElementById('agent-boundary-desc').innerHTML = `
+                            You are currently logged in under <strong>${user.email}</strong> as an authorized claims agent for <strong>${agentCompany}</strong>.<br><br>
+                            This civilian interface strictly scopes to personal policies owned by your authenticated ID. Competitor policies and mock portfolios are strictly restricted.
+                        `;
+                    }
+                    return;
+                }
+
+                // Case 3: Regular civilian without auto-assigned policy
+                // Show official Policyholder Access Gate (No mock presets)
+                loginState.classList.remove('hidden');
+                agentBoundaryState.classList.add('hidden');
+                dashboardState.classList.add('hidden');
 
             } catch (err) {
-                console.error("Auto policy load check:", err);
-                if (isSSmith) {
-                    renderDashboard({
-                        company: "BCSE",
-                        policy_number: "BCSE-482910",
-                        payment_amount: 22000,
-                        next_payment_date: "2026-11-01",
-                        stage: 4,
-                        assigned_by_admin: true
-                    }, true);
-                }
+                console.error("Auth check and claims fetch error:", err);
+                loginState.classList.remove('hidden');
+                agentBoundaryState.classList.add('hidden');
+                dashboardState.classList.add('hidden');
             }
         });
     </script>
