@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Insurance Portal | JA Accident Report</title>
     <!-- iOS / PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,8 +14,8 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,10 +23,8 @@
                 extend: {
                     colors: {
                         emerald: "#007A3D",
-                        "emerald-dark": "#005a2d",
                         gold: "#fed100",
-                        amber: "#f59e0b",
-                        insurance: "#0284c7"
+                        amber: "#f59e0b"
                     },
                     fontFamily: {
                         "headline": ["Public Sans"],
@@ -52,19 +50,36 @@
             border: 1px solid rgba(255, 255, 255, 1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
+
+        .chat-scroll::-webkit-scrollbar { width: 6px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Dynamic Insurance Brand Themes */
+        .theme-ag { --primary: #007A3D; --primary-dark: #005a2d; --primary-light: #e6f5eb; }
+        .theme-bcic { --primary: #e31837; --primary-dark: #b3122a; --primary-light: #fce8eb; }
+        .theme-jn { --primary: #003b70; --primary-dark: #002547; --primary-light: #e6ecf1; }
+        .theme-genacc { --primary: #0056b3; --primary-dark: #004085; --primary-light: #e6eef7; }
+        .theme-icwi { --primary: #2563eb; --primary-dark: #1d4ed8; --primary-light: #eff6ff; }
+
+        .dyn-bg { background-color: var(--primary); }
+        .dyn-text { color: var(--primary); }
+        .dyn-border { border-color: var(--primary); }
+        .dyn-bg-light { background-color: var(--primary-light); }
+        .dyn-hover:hover { background-color: var(--primary-dark); }
     </style>
 </head>
 
-<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden">
+<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden theme-ag" id="theme-provider">
 
     <!-- Header Navigation -->
     <header class="glass-panel sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center mb-6 sm:mb-8 border-b border-slate-200">
         <div class="flex items-center gap-3 sm:gap-8 min-w-0">
             <div class="flex items-center gap-2 sm:gap-3 min-w-0 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
-                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald/10 text-emerald flex items-center justify-center border border-emerald/30 shadow-sm shrink-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full dyn-bg-light dyn-text flex items-center justify-center border dyn-border shadow-sm shrink-0 transition-colors duration-500">
                     <span class="material-symbols-outlined text-[20px] sm:text-[22px]">health_and_safety</span>
                 </div>
-                <span class="font-headline font-bold text-base sm:text-lg text-slate-900 tracking-wide truncate">JA Insurance</span>
+                <span class="font-headline font-bold text-base sm:text-lg text-slate-900 tracking-wide truncate" id="header-title">JA Insurance Portal</span>
             </div>
 
             <nav class="hidden md:flex gap-6 items-center">
@@ -73,11 +88,11 @@
                     <span class="material-symbols-outlined text-[18px]">home</span> Dashboard
                 </a>
                 <a href="insurance_portal.html"
-                    class="text-emerald font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-emerald pb-1">
+                    class="dyn-text font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 dyn-border pb-1">
                     <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Insurance
                 </a>
                 <a id="admin-console-nav-link" href="insurance_admin.html"
-                    class="hidden text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    class="hidden text-slate-600 hover:text-blue-600 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Agent Console
                 </a>
             </nav>
@@ -107,7 +122,7 @@
                 <span class="material-symbols-outlined text-2xl">home</span> Home Dashboard
             </a>
             <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
-                <span class="material-symbols-outlined text-2xl">health_and_safety</span> Insurance Claims (Current)
+                <span class="material-symbols-outlined text-2xl">health_and_safety</span> Insurance Portal (Current)
             </a>
             <a id="portal-mobile-admin-link" href="insurance_admin.html" class="hidden p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
                 <span class="material-symbols-outlined text-2xl">admin_panel_settings</span> Insurance Management Console
@@ -118,107 +133,266 @@
         </nav>
     </div>
 
-    <main class="max-w-4xl mx-auto px-6 mb-20 animate-fade-in relative">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 mb-20 animate-fade-in relative">
 
-        <!-- Admin Notice Banner (Only shown if user is admin or insurance agent) -->
+        <!-- Admin Notice Banner -->
         <div id="admin-banner" class="hidden mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-blue-600 text-2xl">admin_panel_settings</span>
                 <div>
-                    <p class="font-bold text-sm">Administrative / Agent Access Active</p>
-                    <p class="text-xs text-blue-700">You can test civilian claims here, or jump directly into the full Insurance Management Console.</p>
+                    <p class="font-bold text-sm">Administrator / Insurance Agent Access Active</p>
+                    <p class="text-xs text-blue-700">You can preview the civilian portal here, or open the full management console.</p>
                 </div>
             </div>
-            <a href="insurance_admin.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm flex items-center gap-1">
+            <a href="insurance_admin.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm flex items-center gap-1 shrink-0">
                 Open Console <span class="material-symbols-outlined text-sm">arrow_forward</span>
             </a>
         </div>
 
-        <!-- Title Section -->
-        <div class="flex items-center gap-4 mb-8">
-            <span class="material-symbols-outlined text-4xl text-emerald bg-emerald-50 p-3 rounded-2xl border border-emerald-100 shadow-sm">send_to_mobile</span>
-            <div>
-                <h1 class="font-headline text-3xl font-bold text-slate-900 mb-1">Insurance Claims Portal</h1>
-                <p class="text-slate-600 text-sm font-label tracking-wide">Securely forward your verified police accident report directly to your insurance provider.</p>
+        <!-- 1. POLICY ACCESS GATE (Shown when no policy loaded) -->
+        <div id="login-state" class="max-w-md mx-auto my-12 animate-fade-in">
+            <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-xl text-center">
+                <div class="w-16 h-16 rounded-full dyn-bg-light dyn-text flex items-center justify-center mx-auto mb-4 border dyn-border shadow-sm">
+                    <span class="material-symbols-outlined text-3xl">verified_user</span>
+                </div>
+                <h2 class="font-headline text-2xl font-bold text-slate-900 mb-2">Policyholder Access</h2>
+                <p class="text-slate-600 text-sm mb-6">Enter your registered Policy Number to access your billing details, claims progress, and secure agent chat.</p>
+
+                <form id="policy-login-form" class="space-y-4 text-left">
+                    <div>
+                        <label class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">Policy Number</label>
+                        <input type="text" id="policy-number-input" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald p-3.5 uppercase font-mono tracking-wider font-bold text-sm bg-slate-50" placeholder="e.g. BCIC-109283" required>
+                    </div>
+                    <button type="submit" id="access-btn" class="w-full dyn-bg dyn-hover text-white py-3.5 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 cursor-pointer">
+                        Access Policy Dashboard <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                    <div id="login-error" class="hidden p-3 rounded-lg bg-red-50 text-red-600 text-xs font-bold border border-red-200 text-center">
+                        Policy not found. Please verify the policy number or use one of the demo presets below.
+                    </div>
+                </form>
+
+                <!-- Demo Presets for Instant Preview -->
+                <div class="mt-8 pt-6 border-t border-slate-100">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Quick Demo Presets</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button type="button" onclick="loadPresetPolicy('Advantage General Insurance', 'AGI-984210', 18500, '2026-11-15', 3)" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 font-bold transition-colors">
+                            Advantage General
+                        </button>
+                        <button type="button" onclick="loadPresetPolicy('BCIC', 'BCIC-482910', 22000, '2026-11-01', 2)" class="p-2.5 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-800 font-bold transition-colors">
+                            BCIC Red
+                        </button>
+                        <button type="button" onclick="loadPresetPolicy('JN General Insurance', 'JNG-552190', 16000, '2026-12-05', 4)" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-50 text-blue-800 font-bold transition-colors">
+                            JN General
+                        </button>
+                        <button type="button" onclick="loadPresetPolicy('General Accident Insurance', 'GAI-771920', 14500, '2026-10-28', 1)" class="p-2.5 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 text-sky-800 font-bold transition-colors">
+                            General Accident
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Forward Report Form Card -->
-        <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-md mb-10">
-            <h2 class="text-lg font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
-                <span class="material-symbols-outlined text-emerald">post_add</span>
-                Submit Accident Claim to Insurance
-            </h2>
+        <!-- 2. FULL ADVANCED DASHBOARD STATE -->
+        <div id="dashboard-state" class="hidden animate-fade-in">
 
-            <div id="status-feedback" class="hidden mb-6 p-4 rounded-xl text-sm font-bold border transition-all"></div>
-
-            <form id="insurance-form" class="space-y-6">
-                <div>
-                    <label for="incident-select" class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">
-                        Select Incident Report to Forward *
-                    </label>
-                    <select id="incident-select" required
-                        class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 p-3.5 text-sm font-medium">
-                        <option value="">Loading your accident reports...</option>
-                    </select>
-                    <p class="text-xs text-slate-500 mt-1.5 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[14px]">info</span>
-                        Only accident reports submitted under your account appear in this list.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Top Dashboard Bar -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+                <div class="flex items-center gap-4">
+                    <span class="material-symbols-outlined text-4xl dyn-text dyn-bg-light p-3 rounded-2xl border dyn-border transition-colors duration-500 shadow-sm">health_and_safety</span>
                     <div>
-                        <label for="company-select" class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">
-                            Insurance Provider *
-                        </label>
-                        <select id="company-select" required
-                            class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 p-3.5 text-sm font-medium">
-                            <option value="Advantage General Insurance">Advantage General Insurance</option>
-                            <option value="BCIC">BCIC (British Caribbean Insurance)</option>
-                            <option value="JN General Insurance">JN General Insurance</option>
-                            <option value="General Accident Insurance">General Accident Insurance</option>
-                            <option value="ICWI">ICWI (Insurance Company of the West Indies)</option>
-                            <option value="Guardian General Insurance">Guardian General Insurance</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="policy-number-input" class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">
-                            Policy Number *
-                        </label>
-                        <input type="text" id="policy-number-input" required
-                            class="w-full rounded-lg border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 p-3.5 uppercase font-mono tracking-wider text-sm font-bold"
-                            placeholder="e.g. POL-123456789">
+                        <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1" id="dash-company-name">Underwriter Portal</h1>
+                        <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Manage your policy, track real-time claim progression, and message your adjuster.</p>
                     </div>
                 </div>
-
-                <button type="submit" id="submit-claim-btn"
-                    class="w-full bg-emerald text-white rounded-xl py-3.5 font-bold hover:bg-emerald-dark transition-all duration-200 shadow-md hover:shadow-lg flex justify-center items-center gap-2 cursor-pointer">
-                    <span class="material-symbols-outlined text-[20px]">send</span> Forward to Insurance Agent
-                </button>
-            </form>
-        </div>
-
-        <!-- MY CLAIMS & PROGRESS TRACKER -->
-        <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-md">
-            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
-                <div>
-                    <h2 class="text-xl font-headline font-bold text-slate-900 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-insurance">track_changes</span>
-                        My Active Insurance Claims
-                    </h2>
-                    <p class="text-xs text-slate-500 font-label tracking-wide mt-0.5">Real-time status updates from investigating adjusters.</p>
-                </div>
-                <button id="refresh-claims-btn" class="text-xs font-bold text-slate-600 hover:text-emerald flex items-center gap-1 transition-colors">
-                    <span class="material-symbols-outlined text-sm">refresh</span> Refresh
+                <button type="button" id="switch-policy-btn" class="px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-sm">swap_horiz</span> Switch Policy
                 </button>
             </div>
 
-            <div id="my-claims-container">
-                <div class="text-center py-10 text-slate-400 font-label">
-                    <span class="material-symbols-outlined text-4xl animate-spin text-slate-300">autorenew</span>
-                    <p class="mt-2 text-sm">Loading your active insurance claims...</p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Left Column: Active Policy Card & Manual Bank Details -->
+                <div class="space-y-6">
+
+                    <!-- Premium Active Policy Card -->
+                    <div class="dyn-bg rounded-2xl p-6 text-white shadow-xl relative overflow-hidden transition-colors duration-500">
+                        <div class="absolute top-0 right-0 p-4 opacity-15">
+                            <span class="material-symbols-outlined text-[110px]">verified_user</span>
+                        </div>
+                        <div class="relative z-10">
+                            <span class="px-3 py-1 bg-white/20 border border-white/30 rounded-full text-[11px] font-bold uppercase tracking-wider mb-4 inline-block shadow-sm">
+                                Verified Active Policy
+                            </span>
+                            <h3 class="text-xl sm:text-2xl font-bold mb-0.5 tracking-tight" id="card-company-name">-</h3>
+                            <p class="text-white/80 text-xs sm:text-sm mb-6 font-mono tracking-wider font-bold" id="card-policy-num">-</p>
+
+                            <div class="pt-4 border-t border-white/20">
+                                <p class="text-white/70 text-[11px] uppercase tracking-wider mb-1 font-bold">Next Premium Payment</p>
+                                <p class="font-bold text-3xl sm:text-4xl tracking-tight" id="card-amount">
+                                    $0 <span class="text-sm font-normal text-white/70">JMD</span>
+                                </p>
+                                <p class="text-xs sm:text-sm font-bold mt-2 text-white flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <span>Due: <span id="card-date">-</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Bank Transfer Info Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-md">
+                        <h2 class="font-bold text-base text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined dyn-text">account_balance</span> Manual Bank Transfer
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            Pay your premiums directly via your bank's mobile app. Please include your <strong class="text-slate-700">Policy Number</strong> in the transfer remarks.
+                        </p>
+
+                        <div class="space-y-3">
+                            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-bold text-xs text-slate-900">National Commercial Bank (NCB)</p>
+                                        <p class="text-[11px] text-slate-500">Branch: Knutsford Blvd</p>
+                                    </div>
+                                    <span class="text-[10px] uppercase font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Chequing</span>
+                                </div>
+                                <p class="font-mono font-bold text-base text-slate-800 mt-2 tracking-wider">394857201</p>
+                            </div>
+
+                            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-bold text-xs text-slate-900">Scotiabank Jamaica (BNS)</p>
+                                        <p class="text-[11px] text-slate-500">Branch: Liguanea Financial Ctr</p>
+                                    </div>
+                                    <span class="text-[10px] uppercase font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Operating</span>
+                                </div>
+                                <p class="font-mono font-bold text-base text-slate-800 mt-2 tracking-wider">88492019</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Claim Investigation Pipeline, Forwarding Form & Live Chat -->
+                <div class="lg:col-span-2 space-y-6">
+
+                    <!-- 5-Stage Claim Investigation Progress Tracker -->
+                    <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-100 shadow-md">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-bold text-slate-900 flex items-center gap-2 text-base sm:text-lg">
+                                <span class="material-symbols-outlined dyn-text">moving</span> Claim Investigation Pipeline
+                            </h2>
+                            <span id="current-phase-badge" class="px-3 py-1 rounded-full text-xs font-bold dyn-bg-light dyn-text border dyn-border">
+                                Stage 1 of 5
+                            </span>
+                        </div>
+
+                        <!-- Animated Stepper -->
+                        <div class="relative pt-4 pb-2 px-2">
+                            <!-- Background line -->
+                            <div class="absolute top-1/2 left-0 w-full h-1.5 bg-slate-200 -translate-y-1/2 rounded-full overflow-hidden">
+                                <div id="progress-line" class="h-full dyn-bg transition-all duration-1000 w-[0%]"></div>
+                            </div>
+
+                            <!-- 5 Stepper Dots -->
+                            <div class="relative flex justify-between">
+                                <div class="flex flex-col items-center">
+                                    <div id="step-1-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-1-icon">check</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">1. Filed</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-2-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-2-icon">check</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">2. Review</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-3-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-3-icon">check</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">3. Police Ok</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-4-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-4-icon">check</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">4. Offer</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-5-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-5-icon">check</span>
+                                    </div>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">5. Settled</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500 font-medium">
+                            <span id="phase-detail-text">Current Status: Report Received & Awaiting Initial Adjuster Review</span>
+                        </div>
+                    </div>
+
+                    <!-- Forward Report to Insurance Form -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-md">
+                        <h2 class="font-bold text-base text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined dyn-text">send_to_mobile</span> Link & Forward Accident Report
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-4">Attach an official accident report filed under your account to this policy claim.</p>
+
+                        <form id="forward-form" class="space-y-4">
+                            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+                                <div class="flex-1">
+                                    <label class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-1.5">Select Accident Report</label>
+                                    <select id="incident-select" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 p-3 text-xs sm:text-sm font-medium">
+                                        <option value="">Loading your accident reports...</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="submit-claim-btn" class="dyn-bg dyn-hover text-white rounded-xl px-6 py-3 font-bold transition-all text-xs sm:text-sm shrink-0 shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                                    Submit Claim
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                </button>
+                            </div>
+                            <div id="claim-success-msg" class="hidden px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-green-50 text-green-800 border border-green-200 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span>Claim successfully forwarded to your adjuster! Your claim has advanced to <strong class="text-green-900">Stage 2 (Under Investigation)</strong>.</span>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Secure Agent Chat Window -->
+                    <div class="bg-white rounded-2xl border border-slate-100 shadow-md overflow-hidden flex flex-col h-[420px]">
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                            <h2 class="font-bold text-slate-900 flex items-center gap-2 text-sm sm:text-base">
+                                <span class="material-symbols-outlined dyn-text">forum</span> Secure Claims Adjuster Chat
+                            </h2>
+                            <span class="flex items-center gap-1 text-[11px] font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+                                Policy: <span id="chat-policy-ref" class="font-mono dyn-text font-bold">-</span>
+                            </span>
+                        </div>
+
+                        <!-- Chat Messages Container -->
+                        <div id="chat-container" class="flex-1 p-6 overflow-y-auto chat-scroll bg-slate-50/50 space-y-3">
+                            <div class="text-center text-slate-400 text-xs py-8 font-label">
+                                <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
+                                No messages yet. Send a secure inquiry directly to your claims adjuster below.
+                            </div>
+                        </div>
+
+                        <!-- Chat Input Box -->
+                        <form id="chat-form" class="p-3 sm:p-4 bg-white border-t border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <input type="text" id="chat-input" class="flex-1 rounded-full border-slate-200 focus:border-emerald focus:ring-emerald text-xs sm:text-sm py-2.5 px-4 bg-slate-50" placeholder="Ask your adjuster a question about your claim..." required>
+                                <button type="submit" class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center dyn-hover transition-colors shadow-md shrink-0 cursor-pointer">
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -229,203 +403,310 @@
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        const incidentSelect = document.getElementById('incident-select');
-        const companySelect = document.getElementById('company-select');
-        const policyInput = document.getElementById('policy-number-input');
-        const form = document.getElementById('insurance-form');
-        const submitBtn = document.getElementById('submit-claim-btn');
-        const feedback = document.getElementById('status-feedback');
-        const myClaimsContainer = document.getElementById('my-claims-container');
+        const loginState = document.getElementById('login-state');
+        const dashboardState = document.getElementById('dashboard-state');
+        const themeProvider = document.getElementById('theme-provider');
         const adminBanner = document.getElementById('admin-banner');
         const adminNav = document.getElementById('admin-console-nav-link');
-        const userDisplayEmail = document.getElementById('user-display-email');
+        const portalMobileAdminLink = document.getElementById('portal-mobile-admin-link');
+        const portalMobileMenuBtn = document.getElementById('portal-mobile-menu-btn');
+        const portalMobileMenu = document.getElementById('portal-mobile-menu');
+        const portalMobileCloseBtn = document.getElementById('portal-mobile-close-btn');
+        const portalMobileLogoutBtn = document.getElementById('portal-mobile-logout-btn');
+
+        let currentPolicy = null;
 
         const stageDescriptions = {
-            1: "Stage 1: Claim Received / Awaiting Review",
-            2: "Stage 2: Under Investigation by Adjuster",
-            3: "Stage 3: Police Report Verified by JCF",
-            4: "Stage 4: Settlement Negotiation / Offer Prepared",
-            5: "Stage 5: Claim Settled & Remitted"
+            1: "Current Status: Report Received & Awaiting Initial Adjuster Review",
+            2: "Current Status: Under Investigation by Assigned Claims Adjuster",
+            3: "Current Status: Police Accident Report Verified with Law Enforcement",
+            4: "Current Status: Settlement Offer Prepared & Apportionment Underway",
+            5: "Current Status: Claim Settled & Remittance Dispatched"
         };
 
+        // --- Mobile Menu Toggle ---
+        if (portalMobileMenuBtn && portalMobileMenu) {
+            portalMobileMenuBtn.addEventListener('click', () => {
+                portalMobileMenu.classList.toggle('hidden');
+            });
+        }
+        if (portalMobileCloseBtn && portalMobileMenu) {
+            portalMobileCloseBtn.addEventListener('click', () => {
+                portalMobileMenu.classList.add('hidden');
+            });
+        }
+        if (portalMobileLogoutBtn) {
+            portalMobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => window.location.href = 'login.html');
+            });
+        }
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        document.getElementById('refresh-claims-btn').addEventListener('click', () => {
-            loadMyClaims();
+        // Switch policy back to login screen
+        document.getElementById('switch-policy-btn').addEventListener('click', () => {
+            currentPolicy = null;
+            dashboardState.classList.add('hidden');
+            loginState.classList.remove('hidden');
         });
 
-        function showMessage(msg, isError = false) {
-            feedback.textContent = msg;
-            feedback.className = `mb-6 p-4 rounded-xl text-sm font-bold border transition-all ${
-                isError 
-                    ? 'bg-red-50 text-red-700 border-red-200' 
-                    : 'bg-emerald-50 text-emerald-800 border-emerald-200'
-            }`;
-            feedback.classList.remove('hidden');
-            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Dynamic Brand Theming
+        function applyTheme(companyName) {
+            themeProvider.classList.remove('theme-ag', 'theme-bcic', 'theme-jn', 'theme-genacc', 'theme-icwi');
+            const name = (companyName || '').toLowerCase();
+            if (name.includes('bcic')) themeProvider.classList.add('theme-bcic');
+            else if (name.includes('jn')) themeProvider.classList.add('theme-jn');
+            else if (name.includes('general accident')) themeProvider.classList.add('theme-genacc');
+            else if (name.includes('icwi')) themeProvider.classList.add('theme-icwi');
+            else themeProvider.classList.add('theme-ag'); // Default Advantage General
         }
 
-        // 1. Fetch user's reported incidents
+        // Stepper Progress Line and Dots Update
+        function updateProgressUI(stageNum) {
+            let stage = parseInt(stageNum) || 1;
+            if (stage > 5) stage = 5;
+            if (stage < 1) stage = 1;
+
+            const widths = ["0%", "0%", "25%", "50%", "75%", "100%"];
+            document.getElementById('progress-line').style.width = widths[stage];
+            document.getElementById('current-phase-badge').textContent = `Stage ${stage} of 5`;
+            document.getElementById('phase-detail-text').textContent = stageDescriptions[stage] || `Stage ${stage} Processing`;
+
+            for (let i = 1; i <= 5; i++) {
+                const dot = document.getElementById(`step-${i}-dot`);
+                const icon = document.getElementById(`step-${i}-icon`);
+                if (!dot || !icon) continue;
+
+                if (i <= stage) {
+                    dot.classList.remove('bg-slate-200');
+                    dot.classList.add('dyn-bg');
+                    icon.classList.remove('hidden');
+                } else {
+                    dot.classList.add('bg-slate-200');
+                    dot.classList.remove('dyn-bg');
+                    icon.classList.add('hidden');
+                }
+            }
+        }
+
+        // Render Loaded Policy into Full Dashboard
+        function renderDashboard(policy) {
+            currentPolicy = policy;
+            document.getElementById('dash-company-name').textContent = policy.company || 'Insurance Provider';
+            document.getElementById('card-company-name').textContent = policy.company || 'Insurance Provider';
+            document.getElementById('card-policy-num').textContent = policy.policy_number || 'N/A';
+            document.getElementById('chat-policy-ref').textContent = policy.policy_number || 'N/A';
+
+            // Format Currency
+            const formatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
+            const amount = policy.payment_amount || 0;
+            document.getElementById('card-amount').innerHTML = `${formatter.format(amount).replace('JMD', '').trim()} <span class="text-sm font-normal text-white/70">JMD</span>`;
+            document.getElementById('card-date').textContent = policy.next_payment_date || 'No Date Set';
+
+            applyTheme(policy.company);
+            updateProgressUI(policy.stage || 1);
+
+            loginState.classList.add('hidden');
+            dashboardState.classList.remove('hidden');
+
+            loadUserIncidents();
+            loadMessages(policy.policy_number);
+        }
+
+        // Window preset loader for instant preview
+        window.loadPresetPolicy = function (company, policyNum, amount, date, stage) {
+            renderDashboard({
+                company: company,
+                policy_number: policyNum,
+                payment_amount: amount,
+                next_payment_date: date,
+                stage: stage
+            });
+        };
+
+        // 1. Fetch User Incidents into dropdown
         async function loadUserIncidents() {
+            const select = document.getElementById('incident-select');
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/my-incidents');
-                if (!response.ok) {
-                    throw new Error("Failed to load incidents");
-                }
-                const incidents = await response.json();
-                incidentSelect.innerHTML = '';
+                if (!response.ok) return;
+                const data = await response.json();
+                select.innerHTML = '<option value="">-- Select an accident report to link --</option>';
 
-                if (!Array.isArray(incidents) || incidents.length === 0) {
-                    incidentSelect.innerHTML = '<option value="">No incident reports found on your account</option>';
+                const incidents = Array.isArray(data) ? data : (data.incidents || []);
+                if (incidents.length === 0) {
+                    select.innerHTML = '<option value="">No incident reports found on your account</option>';
                     return;
                 }
 
-                incidentSelect.innerHTML = '<option value="">-- Select an accident report to forward --</option>';
                 incidents.forEach(inc => {
                     const opt = document.createElement('option');
                     opt.value = inc.id || inc.incident_id;
                     const dateStr = inc.created_at || inc.timestamp ? new Date(inc.created_at || inc.timestamp).toLocaleDateString() : 'Recent';
-                    const title = inc.type || inc.incident_type || 'Vehicle Collision';
+                    const title = inc.type || inc.incident_type || 'Accident';
                     const location = inc.location ? ` - ${inc.location}` : '';
                     opt.textContent = `${title}${location} (${dateStr})`;
-                    incidentSelect.appendChild(opt);
+                    select.appendChild(opt);
                 });
-            } catch (err) {
-                console.error("Error loading incidents:", err);
-                incidentSelect.innerHTML = '<option value="">Unable to load incidents automatically</option>';
+            } catch (e) {
+                select.innerHTML = '<option value="">Failed to load incidents</option>';
             }
         }
 
-        // 2. Fetch user's claims and render status pipeline
-        async function loadMyClaims() {
+        // 2. Fetch Chat Messages
+        async function loadMessages(policyNum) {
+            const container = document.getElementById('chat-container');
+            container.innerHTML = '<div class="text-center text-slate-400 text-xs py-6">Loading secure messages...</div>';
             try {
-                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/my-claims');
-                if (!response.ok) {
-                    myClaimsContainer.innerHTML = '<p class="text-sm text-slate-500 text-center py-6">Unable to load claims history at this time.</p>';
-                    return;
-                }
-                const claims = await response.json();
-                
-                if (!Array.isArray(claims) || claims.length === 0) {
-                    myClaimsContainer.innerHTML = `
-                        <div class="text-center py-8">
-                            <span class="material-symbols-outlined text-4xl text-slate-300">folder_open</span>
-                            <p class="text-sm text-slate-500 font-label mt-2">No insurance claims filed yet.</p>
-                            <p class="text-xs text-slate-400 mt-1">Use the form above to forward an accident report to your underwriter.</p>
+                const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/messages/${policyNum}`);
+                if (!response.ok) throw new Error();
+                const msgs = await response.json();
+
+                if (!Array.isArray(msgs) || msgs.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center text-slate-400 text-xs py-8 font-label">
+                            <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
+                            No messages yet. Send a secure inquiry directly to your claims adjuster below.
                         </div>
                     `;
                     return;
                 }
 
-                myClaimsContainer.innerHTML = `
-                    <div class="space-y-6">
-                        ${claims.map(claim => {
-                            const currentStage = claim.stage || 1;
-                            const stagePercent = Math.min(100, Math.max(20, currentStage * 20));
-                            return `
-                                <div class="border border-slate-200 rounded-xl p-6 bg-slate-50/50 hover:bg-white transition-all shadow-sm">
-                                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
-                                        <div>
-                                            <span class="text-xs font-mono font-bold px-2.5 py-1 bg-slate-200 text-slate-700 rounded-md">
-                                                Policy #${claim.policy_number}
-                                            </span>
-                                            <span class="ml-2 font-bold text-slate-800 text-sm">${claim.company || 'Insurance Provider'}</span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${
-                                                currentStage === 5 ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-blue-100 text-blue-800 border border-blue-200'
-                                            }">
-                                                <span class="material-symbols-outlined text-[14px]">${currentStage === 5 ? 'verified' : 'pending'}</span>
-                                                Stage ${currentStage} of 5
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Progress Bar -->
-                                    <div class="w-full bg-slate-200 rounded-full h-2.5 mb-2 overflow-hidden">
-                                        <div class="bg-gradient-to-r from-blue-500 to-emerald h-2.5 rounded-full transition-all duration-500" style="width: ${stagePercent}%"></div>
-                                    </div>
-                                    <div class="flex justify-between text-xs text-slate-500 font-bold mb-3">
-                                        <span>Stage 1: Filed</span>
-                                        <span>Stage 3: Verified</span>
-                                        <span>Stage 5: Settled</span>
-                                    </div>
-
-                                    <div class="pt-3 border-t border-slate-200 flex flex-col sm:flex-row justify-between text-xs text-slate-600 gap-2">
-                                        <div>
-                                            <span class="font-bold text-slate-700">Current Phase:</span>
-                                            <span class="text-slate-900 font-medium">${stageDescriptions[currentStage] || 'Processing'}</span>
-                                        </div>
-                                        ${claim.incident_id ? `<div class="font-mono text-slate-500">Incident Ref: ${claim.incident_id.substring(0, 16)}...</div>` : ''}
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
+                container.innerHTML = msgs.map(m => {
+                    const isMe = m.sender_uid === auth.currentUser?.uid || m.sender_email === auth.currentUser?.email;
+                    const time = m.timestamp ? new Date(m.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                    return `
+                        <div class="flex gap-2 max-w-[85%] ${isMe ? 'ml-auto justify-end' : 'mr-auto justify-start'}">
+                            <div class="${isMe ? 'dyn-bg text-white rounded-tr-none' : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none'} p-3 rounded-2xl shadow-sm text-xs leading-relaxed">
+                                <p>${m.message}</p>
+                                <span class="block text-[10px] ${isMe ? 'text-white/70' : 'text-slate-400'} mt-1 text-right">${time}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                container.scrollTop = container.scrollHeight;
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="text-center text-slate-400 text-xs py-8 font-label">
+                        <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
+                        No previous messages. Start a conversation with your agent below.
                     </div>
                 `;
-            } catch (err) {
-                console.error("Error loading claims:", err);
-                myClaimsContainer.innerHTML = '<p class="text-sm text-red-500 text-center py-6">Could not refresh active claims.</p>';
             }
         }
 
-        // 3. Handle Form Submission
-        form.addEventListener('submit', async (e) => {
+        // 3. Handle Chat Submission
+        document.getElementById('chat-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            feedback.classList.add('hidden');
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !currentPolicy) return;
 
-            const incidentId = incidentSelect.value;
-            const company = companySelect.value;
-            const policyNum = policyInput.value.trim().toUpperCase();
-
-            if (!incidentId) {
-                showMessage("Please select an incident report to forward.", true);
-                return;
-            }
-            if (!policyNum) {
-                showMessage("Please enter your official Policy Number.", true);
-                return;
+            const container = document.getElementById('chat-container');
+            if (container.innerText.includes('No messages') || container.innerText.includes('No previous')) {
+                container.innerHTML = '';
             }
 
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">autorenew</span> Submitting Claim...';
+            // Optimistic UI append
+            container.innerHTML += `
+                <div class="flex gap-2 max-w-[85%] ml-auto justify-end animate-fade-in">
+                    <div class="dyn-bg text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed">
+                        <p>${text}</p>
+                        <span class="block text-[10px] text-white/70 mt-1 text-right">Just now</span>
+                    </div>
+                </div>
+            `;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/message', {
+                    method: 'POST',
+                    body: JSON.stringify({ policy_number: currentPolicy.policy_number, message: text })
+                });
+            } catch (err) {
+                console.error("Message error:", err);
+            }
+        });
+
+        // 4. Handle Forward Report Claim Submission
+        document.getElementById('forward-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-claim-btn');
+            const msgBox = document.getElementById('claim-success-msg');
+            const select = document.getElementById('incident-select');
+
+            if (!select.value) {
+                alert("Please select an accident report to link with your claim.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[16px]">autorenew</span> Submitting...';
 
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/submit_claim', {
                     method: 'POST',
                     body: JSON.stringify({
-                        policy_number: policyNum,
-                        company: company,
-                        incident_id: incidentId
+                        policy_number: currentPolicy.policy_number,
+                        incident_id: select.value,
+                        company: currentPolicy.company
                     })
                 });
 
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.detail || "Submission failed");
-                }
+                if (!response.ok) throw new Error("Server rejected claim submission");
 
-                showMessage(`Success! Your accident report has been forwarded to ${company} under Policy #${policyNum}. Your claim is now under review (Stage 2).`, false);
-                form.reset();
-                loadMyClaims();
+                msgBox.classList.remove('hidden');
+                updateProgressUI(2);
+                btn.innerHTML = 'Submitted <span class="material-symbols-outlined text-[16px]">check</span>';
+                btn.classList.add('opacity-75');
             } catch (err) {
-                showMessage(`Error: ${err.message}`, true);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">send</span> Forward to Insurance Agent';
+                alert("Submission error: " + err.message);
+                btn.disabled = false;
+                btn.innerHTML = 'Submit Claim <span class="material-symbols-outlined text-[18px]">send</span>';
             }
         });
 
-        // 4. Auth State Listener
+        // 5. Handle Policy Login Form
+        document.getElementById('policy-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const policyNum = document.getElementById('policy-number-input').value.trim().toUpperCase();
+            const errorText = document.getElementById('login-error');
+            const accessBtn = document.getElementById('access-btn');
+            errorText.classList.add('hidden');
+
+            accessBtn.disabled = true;
+            accessBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">autorenew</span> Verifying...';
+
+            try {
+                const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ policy_number: policyNum })
+                });
+
+                const data = await response.json();
+                if (!response.ok || !data.policy) {
+                    throw new Error(data.detail || "Invalid Policy Number");
+                }
+
+                renderDashboard(data.policy);
+            } catch (err) {
+                console.error(err);
+                errorText.textContent = err.message || "Policy not found. Try one of the quick presets below.";
+                errorText.classList.remove('hidden');
+            } finally {
+                accessBtn.disabled = false;
+                accessBtn.innerHTML = 'Access Policy Dashboard <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+            }
+        });
+
+        // 6. On Auth State Changed: Auto-Detect user's policy
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'login.html';
                 return;
             }
-
-            userDisplayEmail.textContent = user.email || '';
 
             try {
                 const token = await user.getIdTokenResult();
@@ -438,13 +719,23 @@
                     if (portalMobileAdminLink) portalMobileAdminLink.classList.remove('hidden');
                 }
 
-                // Load live civilian data immediately
-                loadUserIncidents();
-                loadMyClaims();
+                // Check if user has an existing policy in backend
+                const claimsRes = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/my-claims');
+                if (claimsRes.ok) {
+                    const myClaims = await claimsRes.json();
+                    if (Array.isArray(myClaims) && myClaims.length > 0) {
+                        // Automatically load the first registered active policy!
+                        renderDashboard(myClaims[0]);
+                        return;
+                    }
+                }
+
+                // If user is Admin, preview with a realistic policy
+                if (isSuperAdmin) {
+                    loadPresetPolicy('Advantage General Insurance', 'AGI-ADMIN-DEMO', 18500, '2026-11-15', 3);
+                }
             } catch (err) {
-                console.error("Auth claim inspection error:", err);
-                loadUserIncidents();
-                loadMyClaims();
+                console.error("Auto policy load check:", err);
             }
         });
     </script>
