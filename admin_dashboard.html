@@ -429,6 +429,28 @@
             window.location.href = 'civilian_dashboard.html';
         });
 
+        // --- Mobile Menu Drawer Toggle ---
+        const adminMobileMenuBtn = document.getElementById('admin-mobile-menu-btn');
+        const adminMobileMenu = document.getElementById('admin-mobile-menu');
+        const adminMobileCloseBtn = document.getElementById('admin-mobile-close-btn');
+        const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+        if (adminMobileMenuBtn && adminMobileMenu) {
+            adminMobileMenuBtn.addEventListener('click', () => {
+                adminMobileMenu.classList.toggle('hidden');
+            });
+        }
+        if (adminMobileCloseBtn && adminMobileMenu) {
+            adminMobileCloseBtn.addEventListener('click', () => {
+                adminMobileMenu.classList.add('hidden');
+            });
+        }
+        if (mobileLogoutBtn) {
+            mobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => { window.location.href = 'login.html'; });
+            });
+        }
+
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => window.location.href = 'login.html');
         });

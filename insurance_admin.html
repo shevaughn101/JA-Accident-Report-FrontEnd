@@ -640,6 +640,28 @@
             }
         });
 
+        // --- Mobile Menu Drawer Toggle ---
+        const insMobileMenuBtn = document.getElementById('ins-mobile-menu-btn');
+        const insMobileMenu = document.getElementById('ins-mobile-menu');
+        const insMobileCloseBtn = document.getElementById('ins-mobile-close-btn');
+        const insMobileLogoutBtn = document.getElementById('ins-mobile-logout-btn');
+
+        if (insMobileMenuBtn && insMobileMenu) {
+            insMobileMenuBtn.addEventListener('click', () => {
+                insMobileMenu.classList.toggle('hidden');
+            });
+        }
+        if (insMobileCloseBtn && insMobileMenu) {
+            insMobileCloseBtn.addEventListener('click', () => {
+                insMobileMenu.classList.add('hidden');
+            });
+        }
+        if (insMobileLogoutBtn) {
+            insMobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => { window.location.href = 'login.html'; });
+            });
+        }
+
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });

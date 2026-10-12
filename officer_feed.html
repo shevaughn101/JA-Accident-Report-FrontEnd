@@ -130,6 +130,28 @@
         import { signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { collection, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
+        // --- Mobile Menu Drawer Toggle ---
+        const officerMobileMenuBtn = document.getElementById('officer-mobile-menu-btn');
+        const officerMobileMenu = document.getElementById('officer-mobile-menu');
+        const officerMobileCloseBtn = document.getElementById('officer-mobile-close-btn');
+        const officerMobileLogoutBtn = document.getElementById('officer-mobile-logout-btn');
+
+        if (officerMobileMenuBtn && officerMobileMenu) {
+            officerMobileMenuBtn.addEventListener('click', () => {
+                officerMobileMenu.classList.toggle('hidden');
+            });
+        }
+        if (officerMobileCloseBtn && officerMobileMenu) {
+            officerMobileCloseBtn.addEventListener('click', () => {
+                officerMobileMenu.classList.add('hidden');
+            });
+        }
+        if (officerMobileLogoutBtn) {
+            officerMobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => { window.location.href = 'login.html'; });
+            });
+        }
+
         document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => window.location.href = 'login.html');
         });
