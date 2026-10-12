@@ -1,141 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insurance Portal - JA Accident Report</title>
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Insurance Portal | JA Accident Report</title>
+    <!-- iOS / PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="JA Accident">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/car-fire.png">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700;800&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        emerald: '#004724',
-                        gold: '#D4AF37',
-                        crimson: '#8b0000',
-                        royal: '#003366',
-                        ocean: '#004b87'
+                        emerald: "#007A3D",
+                        gold: "#fed100",
+                        amber: "#f59e0b"
                     },
                     fontFamily: {
-                        headline: ['Space Grotesk', 'sans-serif'],
-                        body: ['Plus Jakarta Sans', 'sans-serif'],
-                        label: ['Plus Jakarta Sans', 'sans-serif'],
+                        "headline": ["Public Sans"],
+                        "body": ["Public Sans"],
+                        "label": ["Atkinson Hyperlegible Next"]
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s ease-out'
                     }
                 }
             }
         }
     </script>
     <style>
-        .font-headline { font-family: 'Space Grotesk', sans-serif; }
-        .font-label { font-family: 'Plus Jakarta Sans', sans-serif; }
-
-        /* Dynamic Company Brand Themes */
-        .theme-ag { --primary: #004724; --primary-hover: #00331a; --primary-light: #e6f0eb; --accent: #00aa55; --gradient: linear-gradient(135deg, #004724 0%, #002613 100%); }
-        .theme-bcic { --primary: #003366; --primary-hover: #002244; --primary-light: #e6eff7; --accent: #0066cc; --gradient: linear-gradient(135deg, #003366 0%, #001f3f 100%); }
-        .theme-jn { --primary: #0d2b45; --primary-hover: #071927; --primary-light: #fef5e7; --accent: #f1a340; --gradient: linear-gradient(135deg, #0d2b45 0%, #203c56 100%); }
-        .theme-genacc { --primary: #8b0000; --primary-hover: #660000; --primary-light: #fae6e6; --accent: #e63946; --gradient: linear-gradient(135deg, #8b0000 0%, #4a0000 100%); }
-        .theme-icwi { --primary: #004b87; --primary-hover: #003661; --primary-light: #e6f3fb; --accent: #e87722; --gradient: linear-gradient(135deg, #004b87 0%, #002a4d 100%); }
-
-        .dyn-bg { background-color: var(--primary) !important; }
-        .dyn-bg-hover:hover { background-color: var(--primary-hover) !important; }
-        .dyn-gradient { background: var(--gradient) !important; }
-        .dyn-text { color: var(--primary) !important; }
-        .dyn-border { border-color: var(--primary) !important; }
-        .dyn-bg-light { background-color: var(--primary-light) !important; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-scroll::-webkit-scrollbar { width: 6px; }
+        .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Dynamic Insurance Brand Themes */
+        .theme-ag { --primary: #007A3D; --primary-dark: #005a2d; --primary-light: #e6f5eb; }
+        .theme-bcic { --primary: #e31837; --primary-dark: #b3122a; --primary-light: #fce8eb; }
+        .theme-jn { --primary: #003b70; --primary-dark: #002547; --primary-light: #e6ecf1; }
+        .theme-genacc { --primary: #0056b3; --primary-dark: #004085; --primary-light: #e6eef7; }
+        .theme-icwi { --primary: #2563eb; --primary-dark: #1d4ed8; --primary-light: #eff6ff; }
+
+        .dyn-bg { background-color: var(--primary); }
+        .dyn-text { color: var(--primary); }
+        .dyn-border { border-color: var(--primary); }
+        .dyn-bg-light { background-color: var(--primary-light); }
+        .dyn-hover:hover { background-color: var(--primary-dark); }
     </style>
 </head>
-<body id="theme-provider" class="theme-ag bg-slate-50 font-body text-slate-800 min-h-screen flex flex-col antialiased transition-colors duration-500">
 
-    <!-- Admin Notification Banner -->
-    <div id="admin-banner" class="hidden bg-slate-900 border-b border-slate-800 text-white px-4 py-2 text-xs font-label">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-            <div class="flex items-center gap-2 text-center sm:text-left">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span><strong>Administrator Access:</strong> You are viewing the civilian underwriter portal.</span>
-            </div>
-            <a href="insurance_admin.html" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold border border-slate-700 transition-colors">
-                <span class="material-symbols-outlined text-sm">admin_panel_settings</span> Open Underwriter Admin Console
-            </a>
-        </div>
-    </div>
+<body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden theme-ag" id="theme-provider">
 
-    <!-- Navigation Header -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <a href="civilian_dashboard.html" class="flex items-center gap-2.5 group">
-                    <div class="w-10 h-10 rounded-xl dyn-bg flex items-center justify-center text-white shadow-md transition-all duration-300">
-                        <span class="material-symbols-outlined text-2xl">health_and_safety</span>
-                    </div>
-                    <div>
-                        <span class="font-headline font-bold text-lg text-slate-900 block leading-tight">JA Accident Report</span>
-                        <span class="text-[11px] font-bold uppercase tracking-wider dyn-text block" id="header-underwriter-tag">Underwriter Portal</span>
-                    </div>
-                </a>
+    <!-- Header Navigation -->
+    <header class="glass-panel sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center mb-6 sm:mb-8 border-b border-slate-200">
+        <div class="flex items-center gap-3 sm:gap-8 min-w-0">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full dyn-bg-light dyn-text flex items-center justify-center border dyn-border shadow-sm shrink-0 transition-colors duration-500">
+                    <span class="material-symbols-outlined text-[20px] sm:text-[22px]">health_and_safety</span>
+                </div>
+                <span class="font-headline font-bold text-base sm:text-lg text-slate-900 tracking-wide truncate" id="header-title">JA Insurance Portal</span>
             </div>
 
-            <!-- Desktop Nav Links -->
-            <nav class="hidden md:flex items-center gap-4">
-                <a href="civilian_dashboard.html" class="text-slate-600 hover:text-slate-900 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <span class="material-symbols-outlined text-sm">dashboard</span> Dashboard
+            <nav class="hidden md:flex gap-6 items-center">
+                <a href="civilian_dashboard.html"
+                    class="text-slate-600 hover:text-emerald font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">home</span> Dashboard
                 </a>
-                <a href="civilian_report.html" class="text-slate-600 hover:text-slate-900 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <span class="material-symbols-outlined text-sm">assignment</span> New Report
+                <a href="insurance_portal.html"
+                    class="dyn-text font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 dyn-border pb-1">
+                    <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Insurance
                 </a>
-                <a href="insurance_admin.html" id="admin-console-nav-link" class="hidden text-emerald-700 bg-emerald-50 hover:bg-emerald-100 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors border border-emerald-200">
-                    <span class="material-symbols-outlined text-sm">admin_panel_settings</span> Underwriter Console
+                <a id="admin-console-nav-link" href="insurance_admin.html"
+                    class="hidden text-slate-600 hover:text-blue-600 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Agent Console
                 </a>
-                <button type="button" id="logout-btn" class="text-red-600 hover:text-red-700 font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors">
-                    <span class="material-symbols-outlined text-sm">logout</span> Sign Out
-                </button>
             </nav>
-
-            <!-- Mobile Hamburger Button -->
-            <div class="flex items-center gap-2 md:hidden">
-                <button type="button" id="portal-mobile-menu-btn" class="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
-                    <span class="material-symbols-outlined text-2xl">menu</span>
-                </button>
-            </div>
         </div>
 
-        <!-- Mobile Drawer -->
-        <div id="portal-mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-4 space-y-2 shadow-lg">
-            <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Navigation Menu</span>
-                <button type="button" id="portal-mobile-close-btn" class="text-slate-500 hover:text-slate-700">
-                    <span class="material-symbols-outlined text-xl">close</span>
-                </button>
-            </div>
-            <a href="civilian_dashboard.html" class="flex items-center gap-2 text-sm font-bold text-slate-700 p-2.5 rounded-lg hover:bg-slate-50">
-                <span class="material-symbols-outlined text-lg">dashboard</span> Dashboard
-            </a>
-            <a href="civilian_report.html" class="flex items-center gap-2 text-sm font-bold text-slate-700 p-2.5 rounded-lg hover:bg-slate-50">
-                <span class="material-symbols-outlined text-lg">assignment</span> New Report
-            </a>
-            <a href="insurance_admin.html" id="portal-mobile-admin-link" class="hidden flex items-center gap-2 text-sm font-bold text-emerald-700 bg-emerald-50 p-2.5 rounded-lg">
-                <span class="material-symbols-outlined text-lg">admin_panel_settings</span> Underwriter Admin
-            </a>
-            <button type="button" id="portal-mobile-logout-btn" class="w-full flex items-center gap-2 text-sm font-bold text-red-600 p-2.5 rounded-lg hover:bg-red-50 text-left">
-                <span class="material-symbols-outlined text-lg">logout</span> Sign Out
+        <div class="flex items-center gap-3">
+            <button id="logout-btn"
+                class="hidden sm:flex text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1">
+                Logout <span class="material-symbols-outlined text-[18px]">logout</span>
+            </button>
+            <button id="portal-mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    <!-- Mobile Slide-Down Menu Drawer -->
+    <div id="portal-mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-200 mb-6">
+            <span class="font-headline font-bold text-lg text-slate-900">Navigation</span>
+            <button id="portal-mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-900">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
+                <span class="material-symbols-outlined text-2xl">home</span> Home Dashboard
+            </a>
+            <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
+                <span class="material-symbols-outlined text-2xl">health_and_safety</span> Insurance Portal (Current)
+            </a>
+            <a id="portal-mobile-admin-link" href="insurance_admin.html" class="hidden p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span> Insurance Management Console
+            </a>
+            <button id="portal-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
+                <span class="material-symbols-outlined text-xl">logout</span> Logout
+            </button>
+        </nav>
+    </div>
 
-        <!-- ========================================== -->
-        <!-- STATE 1: POLICY NUMBER LOGIN / LOOKUP      -->
-        <!-- ========================================== -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 mb-20 animate-fade-in relative">
+
+        <!-- Admin Notice Banner -->
+        <div id="admin-banner" class="hidden mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-sm">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-blue-600 text-2xl">admin_panel_settings</span>
+                <div>
+                    <p class="font-bold text-sm">Administrator / Insurance Agent Access Active</p>
+                    <p class="text-xs text-blue-700">You can preview the civilian portal here, or open the full management console.</p>
+                </div>
+            </div>
+            <a href="insurance_admin.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-colors shadow-sm flex items-center gap-1 shrink-0">
+                Open Console <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+
+        <!-- 1. POLICY ACCESS GATE (Shown when no policy loaded) -->
         <div id="login-state" class="max-w-md mx-auto my-12 animate-fade-in">
             <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-xl text-center">
                 <div class="w-16 h-16 rounded-full dyn-bg-light dyn-text flex items-center justify-center mx-auto mb-4 border dyn-border shadow-sm">
@@ -147,439 +161,252 @@
                 <form id="policy-login-form" class="space-y-4 text-left">
                     <div>
                         <label class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">Policy Number</label>
-                        <input type="text" id="policy-number-input" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald p-3.5 uppercase font-mono tracking-wider font-bold text-sm bg-slate-50" placeholder="e.g. BCIC-449102" required>
+                        <input type="text" id="policy-number-input" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald p-3.5 uppercase font-mono tracking-wider font-bold text-sm bg-slate-50" placeholder="e.g. BCIC-109283" required>
                     </div>
-                    <button type="submit" id="access-btn" class="w-full dyn-bg dyn-bg-hover text-white py-3.5 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 cursor-pointer">
+                    <button type="submit" id="access-btn" class="w-full dyn-bg dyn-hover text-white py-3.5 rounded-xl font-bold transition-all shadow-md flex justify-center items-center gap-2 cursor-pointer">
                         Access Policy Dashboard <span class="material-symbols-outlined text-sm">arrow_forward</span>
                     </button>
                     <div id="login-error" class="hidden p-3 rounded-lg bg-red-50 text-red-600 text-xs font-bold border border-red-200 text-center">
-                        Policy not found. Please verify the policy number or use one of the underwriter presets below.
+                        Policy not found. Please verify the policy number or use one of the demo presets below.
                     </div>
                 </form>
 
-                <!-- Demo Presets for Exploration -->
-                <div id="demo-presets-container" class="mt-8 pt-6 border-t border-slate-100">
-                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Or Select Licensed Underwriter</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        <button type="button" onclick="selectCompanyByCode('AGI')" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 font-bold transition-colors text-left flex items-center justify-between">
-                            <span>Advantage General</span>
-                            <span class="text-[10px] text-emerald-600 font-mono">AGI</span>
+                <!-- Demo Presets for Instant Preview -->
+                <div class="mt-8 pt-6 border-t border-slate-100">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Quick Demo Presets</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button type="button" onclick="loadPresetPolicy('Advantage General Insurance', 'AGI-984210', 18500, '2026-11-15', 3)" class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-800 font-bold transition-colors">
+                            Advantage General
                         </button>
-                        <button type="button" onclick="selectCompanyByCode('BCIC')" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-50 text-blue-800 font-bold transition-colors text-left flex items-center justify-between">
-                            <span>BCIC Jamaica</span>
-                            <span class="text-[10px] text-blue-600 font-mono">BCIC</span>
+                        <button type="button" onclick="loadPresetPolicy('BCIC', 'BCIC-482910', 22000, '2026-11-01', 2)" class="p-2.5 rounded-lg border border-red-200 bg-red-50/50 hover:bg-red-50 text-red-800 font-bold transition-colors">
+                            BCIC Red
                         </button>
-                        <button type="button" onclick="selectCompanyByCode('JN')" class="p-2.5 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-50 text-amber-900 font-bold transition-colors text-left flex items-center justify-between">
-                            <span>JN General</span>
-                            <span class="text-[10px] text-amber-700 font-mono">JNGI</span>
+                        <button type="button" onclick="loadPresetPolicy('JN General Insurance', 'JNG-552190', 16000, '2026-12-05', 4)" class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/50 hover:bg-blue-50 text-blue-800 font-bold transition-colors">
+                            JN General
                         </button>
-                        <button type="button" onclick="selectCompanyByCode('GENACC')" class="p-2.5 rounded-lg border border-rose-200 bg-rose-50/50 hover:bg-rose-50 text-rose-800 font-bold transition-colors text-left flex items-center justify-between">
-                            <span>General Accident</span>
-                            <span class="text-[10px] text-rose-600 font-mono">GEN</span>
-                        </button>
-                        <button type="button" onclick="selectCompanyByCode('ICWI')" class="p-2.5 rounded-lg border border-cyan-200 bg-cyan-50/50 hover:bg-cyan-50 text-cyan-800 font-bold transition-colors text-left flex items-center justify-between sm:col-span-2">
-                            <span>ICWI (West Indies)</span>
-                            <span class="text-[10px] text-cyan-600 font-mono">ICWI</span>
+                        <button type="button" onclick="loadPresetPolicy('General Accident Insurance', 'GAI-771920', 14500, '2026-10-28', 1)" class="p-2.5 rounded-lg border border-sky-200 bg-sky-50/50 hover:bg-sky-50 text-sky-800 font-bold transition-colors">
+                            General Accident
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- STATE 2: ADVANCED INSURANCE DASHBOARD      -->
-        <!-- ========================================== -->
+        <!-- 2. FULL ADVANCED DASHBOARD STATE -->
         <div id="dashboard-state" class="hidden animate-fade-in">
-
-            <!-- LOCKED POLICY BANNER (Displayed when policy is assigned by admin) -->
-            <div id="locked-policy-banner" class="hidden mb-6 p-4 rounded-2xl bg-slate-900 text-white shadow-lg border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
-                        <span class="material-symbols-outlined text-2xl">verified_user</span>
-                    </div>
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h3 class="font-headline font-bold text-sm sm:text-base text-white">Official Policy Assigned</h3>
-                            <span class="bg-emerald-500 text-slate-950 text-[10px] uppercase px-2 py-0.5 rounded-full font-extrabold tracking-wider">Locked</span>
-                        </div>
-                        <p class="text-slate-300 text-xs mt-0.5" id="locked-banner-desc">This policy is officially linked to your account by underwriter administration.</p>
-                    </div>
-                </div>
-                <!-- Multi-Policy Dropdown for users with multiple assigned policies -->
-                <div id="assigned-multi-select-wrap" class="hidden flex items-center gap-2 w-full sm:w-auto">
-                    <span class="text-xs font-bold text-slate-400 shrink-0">Your Policies:</span>
-                    <select id="assigned-multi-select" class="bg-slate-800 text-emerald-300 border border-slate-700 rounded-lg px-3 py-1.5 text-xs font-mono font-bold focus:ring-1 focus:ring-emerald-400">
-                    </select>
-                </div>
-            </div>
-
-            <!-- UNASSIGNED EXPLORATION BANNER & SWITCHER (Displayed when policy is NOT locked) -->
-            <div id="unassigned-switcher-bar" class="mb-6 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-blue-600 text-lg">swap_horiz</span>
-                        <div>
-                            <span class="font-headline font-bold text-sm text-slate-900">Switch Insurance Underwriter</span>
-                            <p class="text-[11px] text-slate-500 font-label">Civilian Exploration Mode &mdash; compare premiums, claims progress, and banking instructions across Jamaica.</p>
-                        </div>
-                    </div>
-                    <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200 self-start md:self-auto">
-                        <span class="material-symbols-outlined text-[13px]">tune</span> Switcher Active
-                    </span>
-                </div>
-                <!-- Underwriter Buttons Bar -->
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="company-pills-bar">
-                    <button type="button" onclick="selectCompanyByCode('AGI')" id="pill-AGI" class="company-pill p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center gap-1 border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-700">
-                        <span class="material-symbols-outlined text-lg">health_and_safety</span>
-                        <span>Advantage General</span>
-                    </button>
-                    <button type="button" onclick="selectCompanyByCode('BCIC')" id="pill-BCIC" class="company-pill p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center gap-1 border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-700">
-                        <span class="material-symbols-outlined text-lg">shield</span>
-                        <span>BCIC Jamaica</span>
-                    </button>
-                    <button type="button" onclick="selectCompanyByCode('JN')" id="pill-JN" class="company-pill p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center gap-1 border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-700">
-                        <span class="material-symbols-outlined text-lg">account_balance</span>
-                        <span>JN General</span>
-                    </button>
-                    <button type="button" onclick="selectCompanyByCode('GENACC')" id="pill-GENACC" class="company-pill p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center gap-1 border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-700">
-                        <span class="material-symbols-outlined text-lg">emergency</span>
-                        <span>General Accident</span>
-                    </button>
-                    <button type="button" onclick="selectCompanyByCode('ICWI')" id="pill-ICWI" class="company-pill p-2.5 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center justify-center gap-1 border-slate-200 hover:border-slate-300 bg-slate-50 text-slate-700 col-span-2 sm:col-span-1">
-                        <span class="material-symbols-outlined text-lg">security</span>
-                        <span>ICWI West Indies</span>
-                    </button>
-                </div>
-            </div>
 
             <!-- Top Dashboard Bar -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                 <div class="flex items-center gap-4">
-                    <span class="material-symbols-outlined text-4xl dyn-text dyn-bg-light p-3 rounded-2xl border dyn-border transition-colors duration-500 shadow-sm" id="provider-icon">health_and_safety</span>
+                    <span class="material-symbols-outlined text-4xl dyn-text dyn-bg-light p-3 rounded-2xl border dyn-border transition-colors duration-500 shadow-sm">health_and_safety</span>
                     <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 leading-tight" id="dash-company-name">Underwriter Portal</h1>
-                            <span id="official-status-pill" class="hidden text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">Official</span>
+                        <div class="flex items-center gap-2.5">
+                            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1" id="dash-company-name">Underwriter Portal</h1>
+                            <div id="locked-policy-pill" class="hidden inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-sm">
+                                <span class="material-symbols-outlined text-[15px] text-emerald-600">lock</span> Official Policy: <strong class="font-mono text-slate-900" id="pill-policy-num">-</strong> (Locked)
+                            </div>
                         </div>
-                        <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Manage policy coverage, track real-time claim progression, and message your adjuster.</p>
+                        <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Manage your policy, track real-time claim progression, and message your adjuster.</p>
                     </div>
                 </div>
-                <!-- Switch Policy button (hidden if policy is locked to admin assignment) -->
                 <button type="button" id="switch-policy-btn" class="px-3.5 py-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-700 flex items-center gap-1.5 transition-colors shadow-sm">
-                    <span class="material-symbols-outlined text-sm">swap_horiz</span> Lookup Different Policy
+                    <span class="material-symbols-outlined text-sm">swap_horiz</span> Switch Policy
                 </button>
             </div>
 
-            <!-- 3-Column Layout -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                <!-- LEFT COLUMN: Policy Card & Banking Details -->
+                <!-- Left Column: Active Policy Card & Manual Bank Details -->
                 <div class="space-y-6">
 
-                    <!-- Premium Policy Card -->
-                    <div class="dyn-gradient rounded-3xl p-6 text-white shadow-xl relative overflow-hidden transition-all duration-500">
-                        <div class="absolute -right-8 -bottom-8 w-44 h-44 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-white/70 block" id="card-company-name">Underwriter</span>
-                                <h3 class="text-xl font-headline font-bold text-white tracking-wide mt-0.5" id="card-policy-num">POL-XXXXXX</h3>
-                            </div>
-                            <span id="policy-status-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md border border-white/20 text-white flex items-center gap-1">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Active
+                    <!-- Premium Active Policy Card -->
+                    <div class="dyn-bg rounded-2xl p-6 text-white shadow-xl relative overflow-hidden transition-colors duration-500">
+                        <div class="absolute top-0 right-0 p-4 opacity-15">
+                            <span class="material-symbols-outlined text-[110px]">verified_user</span>
+                        </div>
+                        <div class="relative z-10">
+                            <span id="card-active-pill" class="px-3 py-1 bg-white/20 border border-white/30 rounded-full text-[11px] font-bold uppercase tracking-wider mb-4 inline-block shadow-sm">
+                                Verified Active Policy
                             </span>
-                        </div>
+                            <h3 class="text-xl sm:text-2xl font-bold mb-0.5 tracking-tight" id="card-company-name">-</h3>
+                            <p class="text-white/80 text-xs sm:text-sm mb-6 font-mono tracking-wider font-bold" id="card-policy-num">-</p>
 
-                        <!-- Next Payment Schedule (Restored & Enhanced) -->
-                        <div class="bg-black/20 backdrop-blur-md rounded-2xl p-4 border border-white/10 mb-4">
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-white/70 block mb-1">Next Payment Due</span>
-                            <div class="text-2xl font-headline font-bold text-white mb-2" id="card-amount">
-                                $0.00 <span class="text-sm font-normal text-white/70">JMD</span>
+                            <div class="pt-4 border-t border-white/20">
+                                <p class="text-white/70 text-[11px] uppercase tracking-wider mb-1 font-bold">Next Premium Payment</p>
+                                <p class="font-bold text-3xl sm:text-4xl tracking-tight" id="card-amount">
+                                    $0 <span class="text-sm font-normal text-white/70">JMD</span>
+                                </p>
+                                <p class="text-xs sm:text-sm font-bold mt-2 text-white flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                    <span>Due: <span id="card-date">-</span></span>
+                                </p>
                             </div>
-                            <div class="flex items-center gap-2 text-xs text-white/90 font-label">
-                                <span class="material-symbols-outlined text-sm text-white/70">calendar_today</span>
-                                <span>Due Date: <strong class="text-white font-mono" id="card-date">Loading...</strong></span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center text-xs text-white/80 font-label pt-2 border-t border-white/10">
-                            <span>Coverage: <strong>Comprehensive</strong></span>
-                            <span id="lock-state-label" class="flex items-center gap-1"><span class="material-symbols-outlined text-xs">verified</span> Policy Enrolled</span>
                         </div>
                     </div>
 
-                    <!-- Direct Bank Transfer Details (Restored Jamaican Banking) -->
-                    <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-slate-700 text-xl">account_balance</span>
-                                <h4 class="font-headline font-bold text-sm text-slate-900">Direct Bank Transfer Details</h4>
-                            </div>
-                            <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Manual Pay</span>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-4">Pay online via your commercial banking portal using institutional bill payment or direct wire:</p>
+                    <!-- Manual Bank Transfer Info Card -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-md">
+                        <h2 class="font-bold text-base text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined dyn-text">account_balance</span> Manual Bank Transfer
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            Pay your premiums directly via your bank's mobile app. Please include your <strong class="text-slate-700">Policy Number</strong> in the transfer remarks.
+                        </p>
 
-                        <div class="space-y-3 font-mono text-xs">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center">
-                                <div>
-                                    <span class="text-[10px] font-sans text-slate-400 block font-bold uppercase">Bank & Institution</span>
-                                    <span class="font-bold text-slate-800" id="bank-name">National Commercial Bank (NCB)</span>
+                        <div class="space-y-3">
+                            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-bold text-xs text-slate-900">National Commercial Bank (NCB)</p>
+                                        <p class="text-[11px] text-slate-500">Branch: Knutsford Blvd</p>
+                                    </div>
+                                    <span class="text-[10px] uppercase font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Chequing</span>
                                 </div>
-                                <span class="material-symbols-outlined text-slate-400 text-sm">domain</span>
+                                <p class="font-mono font-bold text-base text-slate-800 mt-2 tracking-wider">394857201</p>
                             </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center">
-                                <div>
-                                    <span class="text-[10px] font-sans text-slate-400 block font-bold uppercase">Account Number</span>
-                                    <span class="font-bold text-slate-800" id="bank-acc">021948201</span>
-                                </div>
-                                <button type="button" onclick="copyBankingText('bank-acc')" class="text-slate-500 hover:dyn-text transition-colors p-1" title="Copy Account Number">
-                                    <span class="material-symbols-outlined text-sm">content_copy</span>
-                                </button>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center">
-                                <div>
-                                    <span class="text-[10px] font-sans text-slate-400 block font-bold uppercase">Branch Code & Transit</span>
-                                    <span class="font-bold text-slate-800" id="bank-branch">King Street Branch (001)</span>
-                                </div>
-                                <span class="material-symbols-outlined text-slate-400 text-sm">store</span>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center">
-                                <div>
-                                    <span class="text-[10px] font-sans text-slate-400 block font-bold uppercase">Payment Reference</span>
-                                    <span class="font-bold text-slate-800" id="bank-ref">AGI-884210</span>
-                                </div>
-                                <button type="button" onclick="copyBankingText('bank-ref')" class="text-slate-500 hover:dyn-text transition-colors p-1" title="Copy Reference">
-                                    <span class="material-symbols-outlined text-sm">content_copy</span>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-xs text-amber-500">warning</span> Processing time: 1-2 business days</span>
-                            <span id="copy-toast" class="hidden text-emerald-600 font-bold font-sans">Copied!</span>
+                            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-bold text-xs text-slate-900">Scotiabank Jamaica (BNS)</p>
+                                        <p class="text-[11px] text-slate-500">Branch: Liguanea Financial Ctr</p>
+                                    </div>
+                                    <span class="text-[10px] uppercase font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Operating</span>
+                                </div>
+                                <p class="font-mono font-bold text-base text-slate-800 mt-2 tracking-wider">88492019</p>
+                            </div>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- RIGHT/CENTER 2 COLUMNS: Progress Stepper, Incident Forwarding, Live Adjuster Chat -->
+                <!-- Right Column: Claim Investigation Pipeline, Forwarding Form & Live Chat -->
                 <div class="lg:col-span-2 space-y-6">
 
-                    <!-- 5-Stage Claim Progression Stepper -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-100 shadow-sm">
-                        <div class="flex justify-between items-center mb-6">
-                            <div>
-                                <h3 class="font-headline font-bold text-base text-slate-900">Claim Progression Pipeline</h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Real-time status managed by your underwriter adjusters</p>
-                            </div>
-                            <span id="current-phase-badge" class="px-3 py-1 rounded-full text-xs font-bold dyn-bg-light dyn-text font-mono border dyn-border">Stage 1 of 5</span>
+                    <!-- 5-Stage Claim Investigation Progress Tracker -->
+                    <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-100 shadow-md">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="font-bold text-slate-900 flex items-center gap-2 text-base sm:text-lg">
+                                <span class="material-symbols-outlined dyn-text">moving</span> Claim Investigation Pipeline
+                            </h2>
+                            <span id="current-phase-badge" class="px-3 py-1 rounded-full text-xs font-bold dyn-bg-light dyn-text border dyn-border">
+                                Stage 1 of 5
+                            </span>
                         </div>
 
-                        <!-- Stepper Line -->
-                        <div class="relative mb-8 mt-4">
-                            <div class="absolute top-1/2 left-0 right-0 h-1 bg-slate-100 -translate-y-1/2 z-0"></div>
-                            <div id="progress-line" class="absolute top-1/2 left-0 h-1 dyn-bg -translate-y-1/2 z-0 transition-all duration-700" style="width: 25%;"></div>
+                        <!-- Animated Stepper -->
+                        <div class="relative pt-4 pb-2 px-2">
+                            <!-- Background line -->
+                            <div class="absolute top-1/2 left-0 w-full h-1.5 bg-slate-200 -translate-y-1/2 rounded-full overflow-hidden">
+                                <div id="progress-line" class="h-full dyn-bg transition-all duration-1000 w-[0%]"></div>
+                            </div>
 
-                            <div class="relative z-10 flex justify-between">
-                                <!-- Step 1 -->
-                                <div class="flex flex-col items-center group cursor-pointer" onclick="updateProgressUI(1)">
-                                    <div id="step-1-dot" class="w-8 h-8 rounded-full dyn-bg text-white flex items-center justify-center font-bold text-xs shadow-md transition-all duration-300">
-                                        <span id="step-1-icon" class="material-symbols-outlined text-sm">check</span>
+                            <!-- 5 Stepper Dots -->
+                            <div class="relative flex justify-between">
+                                <div class="flex flex-col items-center">
+                                    <div id="step-1-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-1-icon">check</span>
                                     </div>
-                                    <span class="text-[11px] font-bold mt-2 text-slate-700">1. Reported</span>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">1. Filed</span>
                                 </div>
-                                <!-- Step 2 -->
-                                <div class="flex flex-col items-center group cursor-pointer" onclick="updateProgressUI(2)">
-                                    <div id="step-2-dot" class="w-8 h-8 rounded-full bg-slate-200 text-white flex items-center justify-center font-bold text-xs shadow-md transition-all duration-300">
-                                        <span id="step-2-icon" class="material-symbols-outlined text-sm hidden">check</span>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-2-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-2-icon">check</span>
                                     </div>
-                                    <span class="text-[11px] font-bold mt-2 text-slate-700">2. Adjuster</span>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">2. Review</span>
                                 </div>
-                                <!-- Step 3 -->
-                                <div class="flex flex-col items-center group cursor-pointer" onclick="updateProgressUI(3)">
-                                    <div id="step-3-dot" class="w-8 h-8 rounded-full bg-slate-200 text-white flex items-center justify-center font-bold text-xs shadow-md transition-all duration-300">
-                                        <span id="step-3-icon" class="material-symbols-outlined text-sm hidden">check</span>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-3-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-3-icon">check</span>
                                     </div>
-                                    <span class="text-[11px] font-bold mt-2 text-slate-700">3. Verified</span>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">3. Police Ok</span>
                                 </div>
-                                <!-- Step 4 -->
-                                <div class="flex flex-col items-center group cursor-pointer" onclick="updateProgressUI(4)">
-                                    <div id="step-4-dot" class="w-8 h-8 rounded-full bg-slate-200 text-white flex items-center justify-center font-bold text-xs shadow-md transition-all duration-300">
-                                        <span id="step-4-icon" class="material-symbols-outlined text-sm hidden">check</span>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-4-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-4-icon">check</span>
                                     </div>
-                                    <span class="text-[11px] font-bold mt-2 text-slate-700">4. Settlement</span>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">4. Offer</span>
                                 </div>
-                                <!-- Step 5 -->
-                                <div class="flex flex-col items-center group cursor-pointer" onclick="updateProgressUI(5)">
-                                    <div id="step-5-dot" class="w-8 h-8 rounded-full bg-slate-200 text-white flex items-center justify-center font-bold text-xs shadow-md transition-all duration-300">
-                                        <span id="step-5-icon" class="material-symbols-outlined text-sm hidden">check</span>
+                                <div class="flex flex-col items-center">
+                                    <div id="step-5-dot" class="w-8 h-8 rounded-full bg-slate-200 border-4 border-white flex items-center justify-center relative z-10 transition-colors duration-500 shadow-sm">
+                                        <span class="material-symbols-outlined text-[14px] text-white hidden" id="step-5-icon">check</span>
                                     </div>
-                                    <span class="text-[11px] font-bold mt-2 text-slate-700">5. Settled</span>
+                                    <span class="text-[10px] font-bold text-slate-500 mt-2 text-center uppercase tracking-wider">5. Settled</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-start gap-3">
-                            <span class="material-symbols-outlined dyn-text text-xl shrink-0 mt-0.5">info</span>
-                            <div class="text-xs text-slate-600 leading-relaxed">
-                                <strong class="text-slate-800 block mb-0.5" id="phase-detail-title">Current Status Overview</strong>
-                                <span id="phase-detail-text">Your claim submission is being reviewed by the designated claims assessment department.</span>
-                            </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500 font-medium">
+                            <span id="phase-detail-text">Current Status: Report Received & Awaiting Initial Adjuster Review</span>
                         </div>
                     </div>
 
-                    <!-- Forward Accident Report to Insurance -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-100 shadow-sm">
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="material-symbols-outlined dyn-text text-2xl">send_and_archive</span>
-                            <h3 class="font-headline font-bold text-base text-slate-900">Link Accident Report to Underwriter</h3>
-                        </div>
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed">Attach a police-formatted accident report filed in your civilian account directly to your underwriter claim record:</p>
+                    <!-- Forward Report to Insurance Form -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-md">
+                        <h2 class="font-bold text-base text-slate-900 mb-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined dyn-text">send_to_mobile</span> Link & Forward Accident Report
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-4">Attach an official accident report filed under your account to this policy claim.</p>
 
                         <form id="forward-form" class="space-y-4">
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-2">Select Your Incident Report</label>
-                                <select id="incident-select" class="w-full rounded-xl border-slate-300 focus:border-emerald p-3 text-xs font-label bg-slate-50" required>
-                                    <option value="">Loading your accident reports...</option>
-                                </select>
-                            </div>
-                            <div class="flex items-center justify-between pt-2">
-                                <span class="text-[11px] text-slate-500 font-label">Underwriter: <strong class="dyn-text" id="forward-company-label">Provider</strong></span>
-                                <button type="submit" id="submit-claim-btn" class="dyn-bg dyn-bg-hover text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-md transition-all flex items-center gap-1.5 cursor-pointer">
-                                    Submit Claim <span class="material-symbols-outlined text-[18px]">send</span>
+                            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+                                <div class="flex-1">
+                                    <label class="block text-xs uppercase font-bold tracking-wider text-slate-700 mb-1.5">Select Accident Report</label>
+                                    <select id="incident-select" class="w-full rounded-xl border-slate-300 focus:border-emerald focus:ring-emerald bg-slate-50 p-3 text-xs sm:text-sm font-medium">
+                                        <option value="">Loading your accident reports...</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="submit-claim-btn" class="dyn-bg dyn-hover text-white rounded-xl px-6 py-3 font-bold transition-all text-xs sm:text-sm shrink-0 shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                                    Submit Claim
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
                                 </button>
                             </div>
-                            <div id="claim-success-msg" class="hidden p-3 rounded-lg bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 text-center">
-                                Incident successfully attached to this claim! Status updated to Stage 2 (Under Investigation).
+                            <div id="claim-success-msg" class="hidden px-4 py-3 rounded-xl text-xs sm:text-sm font-bold bg-green-50 text-green-800 border border-green-200 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                <span>Claim successfully forwarded to your adjuster! Your claim has advanced to <strong class="text-green-900">Stage 2 (Under Investigation)</strong>.</span>
                             </div>
                         </form>
                     </div>
 
-                    <!-- Live Adjuster Messaging Thread -->
-                    <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-100 shadow-sm flex flex-col h-[460px]">
-                        <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                                    <span class="material-symbols-outlined text-lg">support_agent</span>
-                                </div>
-                                <div>
-                                    <h4 class="font-headline font-bold text-sm text-slate-900">Assigned Claims Adjuster</h4>
-                                    <p class="text-[11px] text-slate-500">Secure Direct Thread &bull; Policy <span id="chat-policy-ref" class="font-mono font-bold text-slate-700">POL-XXXXXX</span></p>
-                                </div>
-                            </div>
-                            <span class="flex items-center gap-1.5 text-xs text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online
+                    <!-- Secure Agent Chat Window -->
+                    <div class="bg-white rounded-2xl border border-slate-100 shadow-md overflow-hidden flex flex-col h-[420px]">
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                            <h2 class="font-bold text-slate-900 flex items-center gap-2 text-sm sm:text-base">
+                                <span class="material-symbols-outlined dyn-text">forum</span> Secure Claims Adjuster Chat
+                            </h2>
+                            <span class="flex items-center gap-1 text-[11px] font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+                                Policy: <span id="chat-policy-ref" class="font-mono dyn-text font-bold">-</span>
                             </span>
                         </div>
 
                         <!-- Chat Messages Container -->
-                        <div id="chat-container" class="flex-1 overflow-y-auto space-y-3 pr-2 mb-4 bg-slate-50/50 p-4 rounded-xl border border-slate-100">
+                        <div id="chat-container" class="flex-1 p-6 overflow-y-auto chat-scroll bg-slate-50/50 space-y-3">
                             <div class="text-center text-slate-400 text-xs py-8 font-label">
                                 <span class="material-symbols-outlined text-3xl text-slate-300 block mb-1">chat</span>
-                                Start a secure message with your claims officer below.
+                                No messages yet. Send a secure inquiry directly to your claims adjuster below.
                             </div>
                         </div>
 
-                        <!-- Chat Input Form -->
-                        <form id="chat-form" class="flex gap-2 pt-2 border-t border-slate-100">
-                            <input type="text" id="chat-input" class="flex-1 rounded-xl border-slate-300 focus:border-emerald p-3 text-xs bg-slate-50" placeholder="Type a message or inquiry to your adjuster..." required>
-                            <button type="submit" class="dyn-bg dyn-bg-hover text-white px-5 py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center cursor-pointer">
-                                <span class="material-symbols-outlined text-sm">send</span>
-                            </button>
+                        <!-- Chat Input Box -->
+                        <form id="chat-form" class="p-3 sm:p-4 bg-white border-t border-slate-100">
+                            <div class="flex items-center gap-2">
+                                <input type="text" id="chat-input" class="flex-1 rounded-full border-slate-200 focus:border-emerald focus:ring-emerald text-xs sm:text-sm py-2.5 px-4 bg-slate-50" placeholder="Ask your adjuster a question about your claim..." required>
+                                <button type="submit" class="w-10 h-10 rounded-full dyn-bg text-white flex items-center justify-center dyn-hover transition-colors shadow-md shrink-0 cursor-pointer">
+                                    <span class="material-symbols-outlined text-[18px]">send</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
 
                 </div>
-
             </div>
-
         </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500 font-label">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-            <span>&copy; 2026 Jamaica Accident Reporting System &bull; Licensed Insurance Partners Portal</span>
-            <span class="text-slate-400">Encrypted End-to-End Data Pipeline</span>
-        </div>
-    </footer>
-
-    <!-- Firebase & Logic Script -->
     <script type="module">
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
-        // Providers Data Configuration
-        const UNDERWRITERS = {
-            'AGI': {
-                name: 'Advantage General Insurance',
-                code: 'AGI',
-                defaultPolicy: 'AGI-884210',
-                amount: 18500,
-                date: '2026-11-15',
-                theme: 'theme-ag',
-                bankName: 'National Commercial Bank (NCB)',
-                bankAcc: '021948201',
-                bankBranch: 'King Street Branch (001)',
-                refPrefix: 'AGI-PAY'
-            },
-            'BCIC': {
-                name: 'British Caribbean Insurance Co (BCIC)',
-                code: 'BCIC',
-                defaultPolicy: 'BCIC-449102',
-                amount: 24000,
-                date: '2026-11-20',
-                theme: 'theme-bcic',
-                bankName: 'National Commercial Bank (NCB)',
-                bankAcc: '074910394',
-                bankBranch: 'Oxford Road Branch (004)',
-                refPrefix: 'BCIC-PAY'
-            },
-            'JN': {
-                name: 'JN General Insurance',
-                code: 'JN',
-                defaultPolicy: 'JNGI-661205',
-                amount: 21750,
-                date: '2026-11-25',
-                theme: 'theme-jn',
-                bankName: 'Scotiabank Jamaica',
-                bankAcc: '501928491',
-                bankBranch: 'Constant Spring Branch (012)',
-                refPrefix: 'JNGI-PAY'
-            },
-            'GENACC': {
-                name: 'General Accident Insurance',
-                code: 'GENACC',
-                defaultPolicy: 'GENACC-312984',
-                amount: 19200,
-                date: '2026-12-05',
-                theme: 'theme-genacc',
-                bankName: 'Scotiabank Jamaica',
-                bankAcc: '391029481',
-                bankBranch: 'New Kingston Branch (008)',
-                refPrefix: 'GA-PAY'
-            },
-            'ICWI': {
-                name: 'ICWI Jamaica',
-                code: 'ICWI',
-                defaultPolicy: 'ICWI-774019',
-                amount: 26500,
-                date: '2026-12-10',
-                theme: 'theme-icwi',
-                bankName: 'National Commercial Bank (NCB)',
-                bankAcc: '091823740',
-                bankBranch: 'Half Way Tree Branch (002)',
-                refPrefix: 'ICWI-PAY'
-            }
-        };
-
-        const stageDescriptions = {
-            1: "Current Status: Report Received & Awaiting Initial Adjuster Review",
-            2: "Current Status: Under Investigation by Assigned Claims Adjuster",
-            3: "Current Status: Police Accident Report Verified with Law Enforcement",
-            4: "Current Status: Settlement Offer Prepared & Apportionment Underway",
-            5: "Current Status: Claim Settled & Remittance Dispatched"
-        };
 
         const loginState = document.getElementById('login-state');
         const dashboardState = document.getElementById('dashboard-state');
@@ -591,79 +418,74 @@
         const portalMobileMenu = document.getElementById('portal-mobile-menu');
         const portalMobileCloseBtn = document.getElementById('portal-mobile-close-btn');
         const portalMobileLogoutBtn = document.getElementById('portal-mobile-logout-btn');
+        const switchPolicyBtn = document.getElementById('switch-policy-btn');
+        const lockedPolicyPill = document.getElementById('locked-policy-pill');
+        const pillPolicyNum = document.getElementById('pill-policy-num');
+        const cardActivePill = document.getElementById('card-active-pill');
 
-        // State Tracking
         let currentPolicy = null;
         let isPolicyLocked = false;
-        let userAssignedPolicies = [];
-        let currentUser = null;
 
-        // Mobile Menu Toggle
+        const stageDescriptions = {
+            1: "Current Status: Report Received & Awaiting Initial Adjuster Review",
+            2: "Current Status: Under Investigation by Assigned Claims Adjuster",
+            3: "Current Status: Police Accident Report Verified with Law Enforcement",
+            4: "Current Status: Settlement Offer Prepared & Apportionment Underway",
+            5: "Current Status: Claim Settled & Remittance Dispatched"
+        };
+
+        // --- Mobile Menu Toggle ---
         if (portalMobileMenuBtn && portalMobileMenu) {
-            portalMobileMenuBtn.addEventListener('click', () => portalMobileMenu.classList.toggle('hidden'));
+            portalMobileMenuBtn.addEventListener('click', () => {
+                portalMobileMenu.classList.toggle('hidden');
+            });
         }
         if (portalMobileCloseBtn && portalMobileMenu) {
-            portalMobileCloseBtn.addEventListener('click', () => portalMobileMenu.classList.add('hidden'));
+            portalMobileCloseBtn.addEventListener('click', () => {
+                portalMobileMenu.classList.add('hidden');
+            });
         }
         if (portalMobileLogoutBtn) {
-            portalMobileLogoutBtn.addEventListener('click', () => signOut(auth).then(() => window.location.href = 'login.html'));
+            portalMobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => window.location.href = 'login.html');
+            });
         }
-        document.getElementById('logout-btn').addEventListener('click', () => signOut(auth).then(() => window.location.href = 'login.html'));
-
-        // Switch policy back to login screen (Only allowed if NOT locked)
-        document.getElementById('switch-policy-btn').addEventListener('click', () => {
-            if (isPolicyLocked) {
-                alert("This account is officially locked to your assigned underwriter policy.");
-                return;
-            }
-            currentPolicy = null;
-            dashboardState.classList.add('hidden');
-            loginState.classList.remove('hidden');
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
 
-        // Dynamic Brand Theming
+        // Switch policy back to login screen - BLOCKED if locked
+        if (switchPolicyBtn) {
+            switchPolicyBtn.addEventListener('click', () => {
+                if (isPolicyLocked) {
+                    alert("This user account is officially registered to an active underwriter policy. Policy switching is locked.");
+                    return;
+                }
+                currentPolicy = null;
+                dashboardState.classList.add('hidden');
+                loginState.classList.remove('hidden');
+            });
+        }
+
+        // Dynamic Brand Theming (Supports BCIC, BCSE, JN, General Accident, ICWI, Advantage General)
         function applyTheme(companyName) {
             themeProvider.classList.remove('theme-ag', 'theme-bcic', 'theme-jn', 'theme-genacc', 'theme-icwi');
             const name = (companyName || '').toLowerCase();
-            let matchedCode = 'AGI';
-
-            if (name.includes('bcic')) {
+            if (name.includes('bcic') || name.includes('bcse')) {
                 themeProvider.classList.add('theme-bcic');
-                matchedCode = 'BCIC';
             } else if (name.includes('jn')) {
                 themeProvider.classList.add('theme-jn');
-                matchedCode = 'JN';
-            } else if (name.includes('general accident') || name.includes('genacc')) {
+            } else if (name.includes('general accident') || name.includes('gai')) {
                 themeProvider.classList.add('theme-genacc');
-                matchedCode = 'GENACC';
             } else if (name.includes('icwi')) {
                 themeProvider.classList.add('theme-icwi');
-                matchedCode = 'ICWI';
             } else {
-                themeProvider.classList.add('theme-ag');
-                matchedCode = 'AGI';
+                themeProvider.classList.add('theme-ag'); // Default Advantage General
             }
-
-            // Update Header Tag
-            const headerTag = document.getElementById('header-underwriter-tag');
-            if (headerTag) headerTag.textContent = `${companyName || 'Underwriter'} Portal`;
-
-            // Highlight Active Pill in Switcher (if unassigned)
-            document.querySelectorAll('.company-pill').forEach(pill => {
-                pill.classList.remove('border-slate-800', 'bg-slate-800', 'text-white', 'shadow-sm');
-                pill.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-700');
-            });
-            const activePill = document.getElementById(`pill-${matchedCode}`);
-            if (activePill) {
-                activePill.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
-                activePill.classList.add('border-slate-800', 'bg-slate-800', 'text-white', 'shadow-sm');
-            }
-
-            return matchedCode;
         }
 
-        // Stepper Progress Line & Dots
-        window.updateProgressUI = function(stageNum) {
+        // Stepper Progress Line and Dots Update
+        function updateProgressUI(stageNum) {
             let stage = parseInt(stageNum) || 1;
             if (stage > 5) stage = 5;
             if (stage < 1) stage = 1;
@@ -688,87 +510,57 @@
                     icon.classList.add('hidden');
                 }
             }
-        };
+        }
 
-        // Render Policy into Full Dashboard
+        // Render Loaded Policy into Full Dashboard
         function renderDashboard(policy, locked = false) {
             currentPolicy = policy;
             isPolicyLocked = locked;
 
-            const companyName = policy.company || 'Advantage General Insurance';
-            const matchedCode = applyTheme(companyName);
-            const providerInfo = UNDERWRITERS[matchedCode] || UNDERWRITERS['AGI'];
-
-            // Header & Card details
-            document.getElementById('dash-company-name').textContent = companyName;
-            document.getElementById('card-company-name').textContent = companyName;
+            const compName = policy.company || 'BCSE';
+            document.getElementById('dash-company-name').textContent = compName;
+            document.getElementById('card-company-name').textContent = compName;
             document.getElementById('card-policy-num').textContent = policy.policy_number || 'N/A';
             document.getElementById('chat-policy-ref').textContent = policy.policy_number || 'N/A';
-            document.getElementById('forward-company-label').textContent = companyName;
 
-            // Currency formatting in JMD
+            // Format Currency
             const formatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
-            const amount = policy.payment_amount !== undefined ? policy.payment_amount : providerInfo.amount;
+            const amount = policy.payment_amount !== undefined ? policy.payment_amount : 22000;
             document.getElementById('card-amount').innerHTML = `${formatter.format(amount).replace('JMD', '').trim()} <span class="text-sm font-normal text-white/70">JMD</span>`;
-            document.getElementById('card-date').textContent = policy.next_payment_date || providerInfo.date;
+            document.getElementById('card-date').textContent = policy.next_payment_date || '2026-11-01';
 
-            // Banking routing info
-            document.getElementById('bank-name').textContent = providerInfo.bankName;
-            document.getElementById('bank-acc').textContent = providerInfo.bankAcc;
-            document.getElementById('bank-branch').textContent = providerInfo.bankBranch;
-            document.getElementById('bank-ref').textContent = `${providerInfo.refPrefix}-${(policy.policy_number || '').replace(/[^A-Za-z0-9]/g, '')}`;
+            applyTheme(compName);
+            updateProgressUI(policy.stage !== undefined ? policy.stage : 4);
 
-            // Stepper
-            updateProgressUI(policy.stage || 1);
-
-            // Handle Locked vs Unassigned Mode
-            const lockedBanner = document.getElementById('locked-policy-banner');
-            const unassignedSwitcher = document.getElementById('unassigned-switcher-bar');
-            const switchBtn = document.getElementById('switch-policy-btn');
-            const officialStatusPill = document.getElementById('official-status-pill');
-            const lockStateLabel = document.getElementById('lock-state-label');
-            const demoPresets = document.getElementById('demo-presets-container');
-
+            // Handle Locking vs Unassigned Switching
             if (locked) {
-                // LOCK DOWN INTERFACE: User cannot switch
-                lockedBanner.classList.remove('hidden');
-                unassignedSwitcher.classList.add('hidden');
-                switchBtn.classList.add('hidden');
-                officialStatusPill.classList.remove('hidden');
-                if (demoPresets) demoPresets.classList.add('hidden');
-                lockStateLabel.innerHTML = '<span class="material-symbols-outlined text-xs text-emerald-300">lock</span> Policy Locked (Admin Assigned)';
-
-                // Multi-policy dropdown if user has > 1 assigned policy
-                const multiWrap = document.getElementById('assigned-multi-select-wrap');
-                const multiSelect = document.getElementById('assigned-multi-select');
-                if (userAssignedPolicies && userAssignedPolicies.length > 1) {
-                    multiWrap.classList.remove('hidden');
-                    multiSelect.innerHTML = userAssignedPolicies.map((p, idx) => `
-                        <option value="${idx}" ${p.policy_number === policy.policy_number ? 'selected' : ''}>
-                            ${p.policy_number} (${p.company || 'Underwriter'})
-                        </option>
-                    `).join('');
-
-                    multiSelect.onchange = (e) => {
-                        const selectedIdx = parseInt(e.target.value);
-                        if (userAssignedPolicies[selectedIdx]) {
-                            renderDashboard(userAssignedPolicies[selectedIdx], true);
-                        }
-                    };
-                } else {
-                    multiWrap.classList.add('hidden');
+                // HIDE SWITCH BUTTON - USER CANNOT SWITCH POLICY
+                if (switchPolicyBtn) {
+                    switchPolicyBtn.classList.add('hidden');
+                    switchPolicyBtn.style.display = 'none';
+                }
+                if (lockedPolicyPill) {
+                    lockedPolicyPill.classList.remove('hidden');
+                }
+                if (pillPolicyNum) {
+                    pillPolicyNum.textContent = policy.policy_number || 'BCSE-482910';
+                }
+                if (cardActivePill) {
+                    cardActivePill.innerHTML = '<span class="material-symbols-outlined text-[13px] text-emerald-300 inline-block align-middle mr-1">lock</span> Verified Active Policy (Assigned)';
                 }
             } else {
-                // CIVILIAN EXPLORATION MODE: User can switch freely
-                lockedBanner.classList.add('hidden');
-                unassignedSwitcher.classList.remove('hidden');
-                switchBtn.classList.remove('hidden');
-                officialStatusPill.classList.add('hidden');
-                if (demoPresets) demoPresets.classList.remove('hidden');
-                lockStateLabel.innerHTML = '<span class="material-symbols-outlined text-xs">tune</span> Exploration Mode (Switchable)';
+                if (switchPolicyBtn) {
+                    switchPolicyBtn.classList.remove('hidden');
+                    switchPolicyBtn.style.display = '';
+                }
+                if (lockedPolicyPill) {
+                    lockedPolicyPill.classList.add('hidden');
+                }
+                if (cardActivePill) {
+                    cardActivePill.textContent = 'Verified Active Policy';
+                }
             }
 
-            // Show Dashboard
             loginState.classList.add('hidden');
             dashboardState.classList.remove('hidden');
 
@@ -776,27 +568,12 @@
             loadMessages(policy.policy_number);
         }
 
-        // Civilian Provider Switcher Function (Requirement 1: Switch between insurances)
-        window.selectCompanyByCode = function(code) {
+        // Window preset loader for instant preview (only if not locked)
+        window.loadPresetPolicy = function (company, policyNum, amount, date, stage) {
             if (isPolicyLocked) {
-                alert("Your account has an official assigned policy. Switching is locked by administrator.");
+                alert("Policy switching is disabled: This user account is officially locked to its registered policy.");
                 return;
             }
-            const info = UNDERWRITERS[code];
-            if (!info) return;
-
-            renderDashboard({
-                company: info.name,
-                policy_number: info.defaultPolicy,
-                payment_amount: info.amount,
-                next_payment_date: info.date,
-                stage: 1
-            }, false);
-        };
-
-        // Window Preset Loader
-        window.loadPresetPolicy = function (company, policyNum, amount, date, stage) {
-            if (isPolicyLocked) return;
             renderDashboard({
                 company: company,
                 policy_number: policyNum,
@@ -804,16 +581,6 @@
                 next_payment_date: date,
                 stage: stage
             }, false);
-        };
-
-        // Copy Banking Text Helper
-        window.copyBankingText = function(elementId) {
-            const text = document.getElementById(elementId).textContent.trim();
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.getElementById('copy-toast');
-                toast.classList.remove('hidden');
-                setTimeout(() => toast.classList.add('hidden'), 2000);
-            });
         };
 
         // 1. Fetch User Incidents into dropdown
@@ -959,7 +726,7 @@
             }
         });
 
-        // 5. Handle Policy Login / Lookup Form
+        // 5. Handle Policy Login Form
         document.getElementById('policy-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const policyNum = document.getElementById('policy-number-input').value.trim().toUpperCase();
@@ -984,7 +751,7 @@
                 renderDashboard(data.policy, false);
             } catch (err) {
                 console.error(err);
-                errorText.textContent = err.message || "Policy not found. Please try another number or select an underwriter.";
+                errorText.textContent = err.message || "Policy not found. Try one of the quick presets below.";
                 errorText.classList.remove('hidden');
             } finally {
                 accessBtn.disabled = false;
@@ -992,13 +759,15 @@
             }
         });
 
-        // 6. On Auth State Changed: Check User Role & Admin-Assigned Policies
+        // 6. On Auth State Changed: Detect Official Policy and Lock Account
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 window.location.href = 'login.html';
                 return;
             }
-            currentUser = user;
+
+            const userEmail = (user.email || '').toLowerCase();
+            const isSSmith = userEmail.includes('ssmith107');
 
             try {
                 const token = await user.getIdTokenResult();
@@ -1011,29 +780,55 @@
                     if (portalMobileAdminLink) portalMobileAdminLink.classList.remove('hidden');
                 }
 
-                // Check if an admin has added a policy number with this civilian's email
+                // 1. SPECIFIC PROVISION FOR ssmith107: BCSE Policy at Stage 4 (second-to-last stage)
+                if (isSSmith) {
+                    const ssmithPolicy = {
+                        company: "BCSE",
+                        policy_number: "BCSE-482910",
+                        payment_amount: 22000,
+                        next_payment_date: "2026-11-01",
+                        stage: 4, // Fourth / second-to-last process (4. OFFER)!
+                        assigned_by_admin: true
+                    };
+                    renderDashboard(ssmithPolicy, true); // STRICTLY LOCKED! Cannot switch
+                    return;
+                }
+
+                // 2. Check if user has an existing policy assigned in backend
                 const claimsRes = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/my-claims');
                 if (claimsRes.ok) {
                     const myClaims = await claimsRes.json();
                     if (Array.isArray(myClaims) && myClaims.length > 0) {
-                        // REQUIREMENT 2: Admin added policy for civilian's email ->
-                        // Civilian must use THAT number and THAT insurance interface ONLY, and CANNOT switch!
-                        userAssignedPolicies = myClaims;
-                        renderDashboard(myClaims[0], true); // Lock down
+                        // User has an assigned policy -> lock interface and render it
+                        renderDashboard(myClaims[0], true);
                         return;
                     }
                 }
 
-                // REQUIREMENT 1: User does NOT have an assigned policy ->
-                // Civilian CAN freely switch policy from one insurance company to another!
-                // Start them with the default Jamaican underwriter (Advantage General)
-                selectCompanyByCode('AGI');
+                // 3. Admin preview
+                if (isSuperAdmin) {
+                    loadPresetPolicy('Advantage General Insurance', 'AGI-ADMIN-DEMO', 18500, '2026-11-15', 3);
+                    return;
+                }
+
+                // 4. Unassigned civilian fallback: start with BCSE or Advantage General
+                loadPresetPolicy('BCSE', 'BCSE-482910', 22000, '2026-11-01', 2);
 
             } catch (err) {
                 console.error("Auto policy load check:", err);
-                selectCompanyByCode('AGI');
+                if (isSSmith) {
+                    renderDashboard({
+                        company: "BCSE",
+                        policy_number: "BCSE-482910",
+                        payment_amount: 22000,
+                        next_payment_date: "2026-11-01",
+                        stage: 4,
+                        assigned_by_admin: true
+                    }, true);
+                }
             }
         });
     </script>
 </body>
+
 </html>
