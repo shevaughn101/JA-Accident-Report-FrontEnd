@@ -42,26 +42,99 @@
     </style>
 </head>
 <body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden">
-    <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8 border-b border-slate-200">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-insurance/10 text-insurance flex items-center justify-center border border-insurance/30">
+    <header class="glass-panel sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center mb-6 sm:mb-8 border-b border-slate-200">
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div class="w-8 h-8 rounded-full bg-insurance/10 text-insurance flex items-center justify-center border border-insurance/30 shrink-0">
                 <span class="material-symbols-outlined text-[20px]">corporate_fare</span>
             </div>
-            <span id="header-company" class="font-headline font-bold text-lg text-slate-900 tracking-wide">Insurance Company Portal</span>
+            <span id="header-company" class="font-headline font-bold text-sm sm:text-lg text-slate-900 tracking-wide truncate">Insurance Console</span>
         </div>
-        
-        <div class="flex items-center gap-4">
-            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+
+        <nav class="hidden md:flex gap-6 items-center">
+            <a href="admin_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Manage Users
+            </a>
+            <a href="insurance_admin.html" class="text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-insurance pb-1">
+                <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Claims Console
+            </a>
+            <a href="civilian_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+                <span class="material-symbols-outlined text-[18px]">group</span> Civilian Portal
+            </a>
+            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase flex items-center gap-1">
                 Logout <span class="material-symbols-outlined text-[18px]">logout</span>
+            </button>
+        </nav>
+
+        <div class="flex items-center gap-2 md:hidden">
+            <button id="ins-mobile-menu-btn" class="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
     </header>
 
+    <!-- Mobile Slide-Down Menu Drawer -->
+    <div id="ins-mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-200 mb-6">
+            <span class="font-headline font-bold text-lg text-slate-900">Portal Switcher</span>
+            <button id="ins-mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-900">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+            <a href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
+                <span class="material-symbols-outlined text-2xl">manage_accounts</span> Manage Users
+            </a>
+            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
+                <span class="material-symbols-outlined text-2xl">group</span> Civilian Portal
+            </a>
+            <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
+                <span class="material-symbols-outlined text-2xl">send_to_mobile</span> Submit Claim (Civilian)
+            </a>
+            <a href="officer_feed.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
+                <span class="material-symbols-outlined text-2xl">list_alt</span> Live Officer Feed
+            </a>
+            <button id="ins-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
+                <span class="material-symbols-outlined text-xl">logout</span> Logout
+            </button>
+        </nav>
+    </div>
+
     <main class="max-w-4xl mx-auto px-6 mb-20 animate-fade-in">
         
-        <div class="mb-8">
-            <h1 class="font-headline text-3xl font-bold text-slate-900 mb-1">Agent Dashboard</h1>
-            <p class="text-slate-600 text-sm font-label tracking-wide">Issue new policies and manage client billing.</p>
+        <div class="mb-6">
+            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Agent & Claims Dashboard</h1>
+            <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Issue policies, manage client claims, and view incident dossiers.</p>
+        </div>
+
+        <!-- Quick Switcher Bar (Mobile & Desktop) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white hover:border-emerald-400 transition-all shadow-sm flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-emerald text-white flex items-center justify-center shadow-sm shrink-0">
+                    <span class="material-symbols-outlined text-[20px]">group</span>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Switch View</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald truncate">Civilian Portal</p>
+                </div>
+            </a>
+            <a href="admin_dashboard.html" class="p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-sm flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-[10px] font-bold text-purple-700 uppercase tracking-wider">Admin</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-purple-600 truncate">Manage Users</p>
+                </div>
+            </a>
+            <a href="officer_feed.html" class="col-span-2 sm:col-span-1 p-3.5 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white hover:border-slate-400 transition-all shadow-sm flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <span class="material-symbols-outlined text-[20px]">list_alt</span>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Live Incidents</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-slate-800 truncate">Officer Feed</p>
+                </div>
+            </a>
         </div>
 
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">

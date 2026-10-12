@@ -45,23 +45,50 @@
 </head>
 <body class="font-body min-h-screen pt-16 antialiased flex flex-col">
 
-    <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 px-6 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center shadow-md">
+    <header class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200 h-16 px-4 sm:px-6 flex items-center justify-between">
+        <div class="flex items-center gap-2 min-w-0">
+            <div class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center shadow-md shrink-0">
                 <span class="material-symbols-outlined text-[20px]">local_police</span>
             </div>
-            <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">Officer Feed</span>
+            <span class="font-headline font-bold text-base sm:text-lg text-slate-900 tracking-wide truncate">Officer Feed</span>
         </div>
-        <div class="flex items-center gap-4">
-            <button id="admin-nav-btn" class="hidden text-slate-500 hover:text-admin transition-colors text-sm font-bold tracking-wider uppercase items-center gap-1 border-r border-slate-300 pr-4 sm:flex" onclick="window.location.href='admin_dashboard.html'">
-                <span class="material-symbols-outlined text-sm">admin_panel_settings</span> Dashboard
+        <div class="flex items-center gap-3">
+            <button id="admin-nav-btn" class="hidden text-slate-500 hover:text-admin transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1 border-r border-slate-300 pr-4 md:flex" onclick="window.location.href='admin_dashboard.html'">
+                <span class="material-symbols-outlined text-sm">admin_panel_settings</span> Admin
             </button>
-            <span id="officer-email" class="text-sm font-label font-bold text-slate-500 hidden sm:block"></span>
-            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+            <span id="officer-email" class="text-xs font-mono font-bold text-slate-500 hidden lg:block"></span>
+            <button id="logout-btn" class="hidden sm:flex text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1">
                 Logout <span class="material-symbols-outlined text-sm">logout</span>
+            </button>
+            <button id="officer-mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
     </header>
+
+    <!-- Mobile Slide-Down Drawer for Officer Feed -->
+    <div id="officer-mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-200 mb-6">
+            <span class="font-headline font-bold text-lg text-slate-900">Portal Switcher</span>
+            <button id="officer-mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-900">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+            <a id="mobile-admin-feed-link" href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span> Admin Dashboard
+            </a>
+            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
+                <span class="material-symbols-outlined text-2xl">group</span> Civilian Portal
+            </a>
+            <a href="insurance_admin.html" class="p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
+                <span class="material-symbols-outlined text-2xl">health_and_safety</span> Insurance Console
+            </a>
+            <button id="officer-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
+                <span class="material-symbols-outlined text-xl">logout</span> Logout
+            </button>
+        </nav>
+    </div>
 
     <div id="toast" class="fixed top-20 right-6 z-[100] transform translate-x-[200%] transition-transform duration-300 ease-in-out">
         <div class="glass-panel bg-emerald/10 border-emerald/20 text-emerald-800 p-4 rounded-xl shadow-lg flex items-center gap-3">

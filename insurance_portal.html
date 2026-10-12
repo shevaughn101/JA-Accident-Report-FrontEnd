@@ -58,39 +58,65 @@
 <body class="bg-slate-50 font-body text-slate-800 min-h-screen relative overflow-x-hidden">
 
     <!-- Header Navigation -->
-    <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex justify-between items-center mb-8 border-b border-slate-200">
-        <div class="flex items-center gap-8">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-emerald/10 text-emerald flex items-center justify-center border border-emerald/30 shadow-sm">
-                    <span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+    <header class="glass-panel sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center mb-6 sm:mb-8 border-b border-slate-200">
+        <div class="flex items-center gap-3 sm:gap-8 min-w-0">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald/10 text-emerald flex items-center justify-center border border-emerald/30 shadow-sm shrink-0">
+                    <span class="material-symbols-outlined text-[20px] sm:text-[22px]">health_and_safety</span>
                 </div>
-                <span class="font-headline font-bold text-lg text-slate-900 tracking-wide">JA Accident Report</span>
+                <span class="font-headline font-bold text-base sm:text-lg text-slate-900 tracking-wide truncate">JA Insurance</span>
             </div>
 
             <nav class="hidden md:flex gap-6 items-center">
                 <a href="civilian_dashboard.html"
-                    class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    class="text-slate-600 hover:text-emerald font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">home</span> Dashboard
                 </a>
                 <a href="insurance_portal.html"
-                    class="text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-emerald pb-1">
+                    class="text-emerald font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-emerald pb-1">
                     <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Insurance
                 </a>
                 <a id="admin-console-nav-link" href="insurance_admin.html"
-                    class="hidden text-slate-600 hover:text-insurance font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
+                    class="hidden text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Agent Console
                 </a>
             </nav>
         </div>
 
-        <div class="flex items-center gap-4">
-            <span id="user-display-email" class="text-xs font-mono text-slate-500 hidden sm:inline-block"></span>
+        <div class="flex items-center gap-3">
             <button id="logout-btn"
-                class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
+                class="hidden sm:flex text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase items-center gap-1">
                 Logout <span class="material-symbols-outlined text-[18px]">logout</span>
+            </button>
+            <button id="portal-mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-2xl">menu</span>
             </button>
         </div>
     </header>
+
+    <!-- Mobile Slide-Down Menu Drawer -->
+    <div id="portal-mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
+        <div class="flex justify-between items-center pb-4 border-b border-slate-200 mb-6">
+            <span class="font-headline font-bold text-lg text-slate-900">Navigation</span>
+            <button id="portal-mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-900">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+        </div>
+        <nav class="flex flex-col gap-4">
+            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
+                <span class="material-symbols-outlined text-2xl">home</span> Home Dashboard
+            </a>
+            <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
+                <span class="material-symbols-outlined text-2xl">health_and_safety</span> Insurance Claims (Current)
+            </a>
+            <a id="portal-mobile-admin-link" href="insurance_admin.html" class="hidden p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span> Insurance Management Console
+            </a>
+            <button id="portal-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
+                <span class="material-symbols-outlined text-xl">logout</span> Logout
+            </button>
+        </nav>
+    </div>
 
     <main class="max-w-4xl mx-auto px-6 mb-20 animate-fade-in relative">
 
@@ -409,6 +435,7 @@
                 if (isSuperAdmin || isAgent) {
                     adminBanner.classList.remove('hidden');
                     adminNav.classList.remove('hidden');
+                    if (portalMobileAdminLink) portalMobileAdminLink.classList.remove('hidden');
                 }
 
                 // Load live civilian data immediately
