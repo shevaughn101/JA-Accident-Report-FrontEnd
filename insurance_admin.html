@@ -196,9 +196,13 @@
                 const isAgent = token.claims.role === 'insurance_agent';
                 
                 if (!isSuperAdmin && !isAgent) {
-                    alert("Unauthorized. This portal is for Insurance Agents only.");
-                    window.location.href = 'index.html';
+                    alert("Unauthorized. This portal is for Insurance Agents and Administrators only.");
+                    window.location.href = 'civilian_dashboard.html';
                     return;
+                }
+
+                if (isSuperAdmin) {
+                    document.getElementById('header-company').textContent = 'Administrator Oversight — All Insurance Providers';
                 }
                 
                 // If they are a specific agent, lock the company dropdown to their company
