@@ -51,7 +51,7 @@
         </div>
 
         <nav class="hidden md:flex gap-6 items-center">
-            <a href="admin_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
+            <a id="nav-manage-users-link" href="admin_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
                 <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Manage Users
             </a>
             <a href="insurance_admin.html" class="text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-insurance pb-1">
@@ -81,7 +81,7 @@
             </button>
         </div>
         <nav class="flex flex-col gap-4">
-            <a href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
+            <a id="drawer-manage-users-link" href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
                 <span class="material-symbols-outlined text-2xl">manage_accounts</span> Manage Users
             </a>
             <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
@@ -117,7 +117,7 @@
                     <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald truncate">Civilian Portal</p>
                 </div>
             </a>
-            <a href="admin_dashboard.html" class="p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-sm flex items-center gap-3 group">
+            <a id="quick-manage-users-card" href="admin_dashboard.html" class="p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-sm flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-sm shrink-0">
                     <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
                 </div>
@@ -126,6 +126,15 @@
                     <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-purple-600 truncate">Manage Users</p>
                 </div>
             </a>
+            <button type="button" id="quick-add-agent-card" onclick="document.getElementById('add-agent-section').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('new-agent-email').focus();" class="hidden p-3.5 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:border-blue-400 transition-all shadow-sm flex items-center gap-3 group text-left cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <span class="material-symbols-outlined text-[20px]">person_add</span>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-[10px] font-bold text-blue-700 uppercase tracking-wider">Agents</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 truncate">Add Agency Agent</p>
+                </div>
+            </button>
             <a href="officer_feed.html" class="col-span-2 sm:col-span-1 p-3.5 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white hover:border-slate-400 transition-all shadow-sm flex items-center gap-3 group">
                 <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-sm shrink-0">
                     <span class="material-symbols-outlined text-[20px]">list_alt</span>
@@ -137,7 +146,25 @@
             </a>
         </div>
 
-        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
+        <!-- Admin Oversight Notice Banner -->
+        <div id="admin-oversight-banner" class="hidden mb-8 p-6 rounded-2xl bg-purple-50 border border-purple-200 shadow-sm flex items-start gap-4 animate-fade-in">
+            <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+            </div>
+            <div>
+                <h3 class="font-headline font-bold text-base text-purple-950 mb-1">Police Administrator Oversight Mode</h3>
+                <p class="text-xs text-purple-800 leading-relaxed mb-3">
+                    As a JA Police Administrator, your role is user management, officer jurisdiction oversight, and incident investigation. 
+                    <strong>Policy creation is strictly restricted to licensed insurance agency adjusters.</strong>
+                </p>
+                <a href="admin_dashboard.html" class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">manage_accounts</span> Open User Management Console
+                </a>
+            </div>
+        </div>
+
+        <!-- POLICY CREATION SECTION (Agent Only) -->
+        <section id="create-policy-section" class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-insurance to-blue-400"></div>
 
             <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
@@ -185,6 +212,52 @@
                         Issue Policy
                         <span class="material-symbols-outlined text-[18px]">send</span>
                     </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ADD NEW AGENCY AGENT SECTION (Agent Portal Only) -->
+        <section id="add-agent-section" class="hidden glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-600">person_add</span>
+                        <span id="add-agent-title">Authorize New Agency Agent</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">Provision login access for a claims adjuster or representative in your company</p>
+                </div>
+                <span id="agent-company-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                    Company Agent
+                </span>
+            </div>
+
+            <div id="add-agent-status-msg" class="hidden mb-6 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
+
+            <form id="add-agent-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">New Agent Email</label>
+                        <input type="email" id="new-agent-email" class="w-full rounded-lg border-slate-300 focus:border-blue-600 focus:ring-blue-600 px-4 py-3" placeholder="adjuster@myinsurance.com" required/>
+                    </div>
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Temporary Password</label>
+                        <input type="password" id="new-agent-password" class="w-full rounded-lg border-slate-300 focus:border-blue-600 focus:ring-blue-600 px-4 py-3" placeholder="At least 6 characters" minlength="6" required/>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+                    <div>
+                        <label class="block font-label text-xs font-bold mb-2 uppercase tracking-wider text-slate-700">Assigned Company (Locked to Your Agency)</label>
+                        <input type="text" id="new-agent-company" class="w-full rounded-lg border-slate-200 bg-slate-100 text-slate-700 font-bold px-4 py-3 cursor-not-allowed" readonly/>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" id="add-agent-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold font-label px-8 py-3 rounded-lg transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                            <span>Authorize Agent</span>
+                            <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                        </button>
+                    </div>
                 </div>
             </form>
         </section>
@@ -318,16 +391,55 @@
 
                 currentAgentCompany = token.claims.company || '';
 
+                // --- STRICT ROLE SEPARATION ---
+                const navManageUsers = document.getElementById('nav-manage-users-link');
+                const drawerManageUsers = document.getElementById('drawer-manage-users-link');
+                const quickManageUsers = document.getElementById('quick-manage-users-card');
+                const quickAddAgent = document.getElementById('quick-add-agent-card');
+                const createPolicySec = document.getElementById('create-policy-section');
+                const adminOversightBanner = document.getElementById('admin-oversight-banner');
+                const addAgentSec = document.getElementById('add-agent-section');
+
                 if (isSuperAdmin) {
                     document.getElementById('header-company').textContent = 'Administrator Oversight • All Insurance Providers';
+                    
+                    // JA Police Admin cannot set policies - only manage users
+                    if (createPolicySec) createPolicySec.classList.add('hidden');
+                    if (adminOversightBanner) adminOversightBanner.classList.remove('hidden');
+                    if (addAgentSec) addAgentSec.classList.add('hidden');
+
+                    if (navManageUsers) navManageUsers.classList.remove('hidden');
+                    if (drawerManageUsers) drawerManageUsers.classList.remove('hidden');
+                    if (quickManageUsers) quickManageUsers.classList.remove('hidden');
+                    if (quickAddAgent) quickAddAgent.classList.add('hidden');
                 }
                 
                 if (isAgent && currentAgentCompany) {
-                    const companySelect = document.getElementById('policy-company');
-                    companySelect.innerHTML = `<option value="${currentAgentCompany}">${currentAgentCompany}</option>`;
-                    companySelect.disabled = true;
-                    
                     document.getElementById('header-company').textContent = `${currentAgentCompany} Portal`;
+
+                    // Insurance agents CAN set policies for their own company
+                    if (createPolicySec) createPolicySec.classList.remove('hidden');
+                    if (adminOversightBanner) adminOversightBanner.classList.add('hidden');
+
+                    const companySelect = document.getElementById('policy-company');
+                    if (companySelect) {
+                        companySelect.innerHTML = `<option value="${currentAgentCompany}">${currentAgentCompany}</option>`;
+                        companySelect.disabled = true;
+                    }
+
+                    // Insurance agents DO NOT have access to the police user management section
+                    if (navManageUsers) navManageUsers.classList.add('hidden');
+                    if (drawerManageUsers) drawerManageUsers.classList.add('hidden');
+                    if (quickManageUsers) quickManageUsers.classList.add('hidden');
+
+                    // Insurance agents CAN add new agents for their own agency portal
+                    if (quickAddAgent) quickAddAgent.classList.remove('hidden');
+                    if (addAgentSec) {
+                        addAgentSec.classList.remove('hidden');
+                        document.getElementById('add-agent-title').textContent = `Authorize New ${currentAgentCompany} Agent`;
+                        document.getElementById('agent-company-badge').textContent = `${currentAgentCompany} Desk`;
+                        document.getElementById('new-agent-company').value = currentAgentCompany;
+                    }
                 }
                 
                 // Fetch claims and messages
@@ -662,7 +774,49 @@
             });
         }
 
-        document.getElementById('logout-btn').addEventListener('click', () => {
+                // --- Add Agency Agent Form Submission ---
+        const addAgentForm = document.getElementById('add-agent-form');
+        if (addAgentForm) {
+            addAgentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = document.getElementById('add-agent-btn');
+                const msgBox = document.getElementById('add-agent-status-msg');
+                msgBox.classList.add('hidden');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">autorenew</span> Authorizing...';
+
+                const payload = {
+                    email: document.getElementById('new-agent-email').value.trim(),
+                    password: document.getElementById('new-agent-password').value.trim(),
+                    company: currentAgentCompany
+                };
+
+                try {
+                    const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/add-agent', {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.detail || "Failed to create agent");
+
+                    msgBox.textContent = data.message || `Successfully created agent account for ${payload.email}`;
+                    msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-green-100 text-green-700 font-bold border border-green-200 animate-fade-in";
+                    msgBox.classList.remove('hidden');
+                    addAgentForm.reset();
+                    document.getElementById('new-agent-company').value = currentAgentCompany;
+                } catch (err) {
+                    msgBox.textContent = err.message;
+                    msgBox.className = "mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-100 text-red-700 font-bold border border-red-200 animate-fade-in";
+                    msgBox.classList.remove('hidden');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>Authorize Agent</span> <span class="material-symbols-outlined text-[18px]">verified_user</span>';
+                }
+            });
+        }
+
+document.getElementById('logout-btn').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = 'login.html'; });
         });
     </script>
