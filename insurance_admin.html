@@ -18,7 +18,7 @@
             theme: {
                 extend: {
                     colors: {
-                        emerald: "#009b3a",
+                        jaGreen: "#009b3a",
                         insurance: "#2563eb" 
                     },
                     fontFamily: {
@@ -305,14 +305,17 @@
             <div class="bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200/80 mb-6 shadow-xs">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
                     
-                    <!-- 1. Total Active Premium -->
+                    <!-- 1. Total Active Premium / Selected Policy Premium -->
                     <div class="flex items-center gap-3 pt-2 sm:pt-0">
                         <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 border border-blue-200/60 flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined material-icons text-lg">payments</span>
                         </div>
                         <div class="min-w-0">
-                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Active Premium</span>
-                            <span id="stat-total-premium" class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">$0.00 JMD</span>
+                            <span id="stat-premium-label" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Portfolio Total Premium</span>
+                            <div class="flex items-baseline gap-1.5 flex-wrap">
+                                <span id="stat-total-premium" class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">$0.00 JMD</span>
+                                <span id="stat-premium-sub" class="text-[10px] font-semibold text-slate-400"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -437,8 +440,11 @@
                         <input type="date" id="adjuster-next-date" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-300 focus:border-emerald-500" />
                     </div>
 
-                    <button type="button" id="save-adjuster-btn" onclick="window.savePaymentAdjustment()" class="w-full py-3 px-4 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
-                        <span class="material-symbols-outlined material-icons text-[18px]">save</span> Save & Update Client Premium
+                    <button type="button" id="save-adjuster-btn" onclick="window.savePaymentAdjustment()" 
+                        class="w-full py-3.5 px-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider text-white shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all hover:brightness-110 active:scale-[0.99]"
+                        style="background-color: #2563eb !important; color: #ffffff !important;">
+                        <span class="material-symbols-outlined material-icons text-[20px]" style="color: #ffffff !important;">save</span>
+                        <span id="save-adjuster-btn-text" style="color: #ffffff !important; font-weight: 700;">Save & Update Client Premium</span>
                     </button>
                 </div>
 
@@ -864,27 +870,40 @@
 
         // 4. Fetch Active Claims (Tenant Isolated by Company)
         let allCompanyPolicies = [];
+        let lastReceiptsList = [];
         const currencyFormatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
 
         function updateAgencyStatistics(policies = [], receipts = []) {
-            let totalPremium = 0;
+            if (receipts && receipts.length >= 0) lastReceiptsList = receipts;
+            let totalPortfolioPremium = 0;
             let activePolicies = policies.length;
             let activeClaims = 0;
 
             policies.forEach(p => {
                 const amt = typeof p.payment_amount === 'number' ? p.payment_amount : parseFloat(p.payment_amount || 0);
-                totalPremium += (amt || 0);
+                totalPortfolioPremium += (amt || 0);
                 if (p.stage && p.stage > 0) activeClaims++;
             });
 
-            const pendingReceipts = receipts.filter(r => r.status === 'pending_verification' || r.status === 'pending').length;
+            const pendingReceipts = (lastReceiptsList || []).filter(r => r.status === 'pending_verification' || r.status === 'pending').length;
 
             const statPremium = document.getElementById('stat-total-premium');
+            const statLabel = document.getElementById('stat-premium-label');
+            const statSub = document.getElementById('stat-premium-sub');
             const statPending = document.getElementById('stat-pending-receipts');
             const statPolicies = document.getElementById('stat-active-policies');
             const statClaims = document.getElementById('stat-active-claims');
 
-            if (statPremium) statPremium.textContent = `${currencyFormatter.format(totalPremium)} JMD`;
+            if (!currentAdjusterPolicy) {
+                if (statLabel) statLabel.textContent = `Portfolio Total (${activePolicies} Policies)`;
+                if (statPremium) statPremium.textContent = `${currencyFormatter.format(totalPortfolioPremium)} JMD`;
+                if (statSub) statSub.textContent = `Combined Agency Book`;
+            } else {
+                if (statLabel) statLabel.textContent = `${currentAdjusterPolicy.policy_number} Premium`;
+                if (statPremium) statPremium.textContent = `${currencyFormatter.format(currentAdjusterAmount)} JMD`;
+                if (statSub) statSub.textContent = `(Portfolio: ${currencyFormatter.format(totalPortfolioPremium)})`;
+            }
+
             if (statPending) statPending.textContent = `${pendingReceipts} Needs Review`;
             if (statPolicies) statPolicies.textContent = `${activePolicies} Registered`;
             if (statClaims) statClaims.textContent = `${activeClaims} In Review`;
@@ -993,8 +1012,10 @@
 
                     const actionButtons = isPending ? `
                         <div class="flex items-center gap-2">
-                            <button type="button" onclick="window.approveReceipt('${r.receipt_id}', '${r.policy_number}', ${amt})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-colors flex items-center gap-1 cursor-pointer">
-                                <span class="material-symbols-outlined material-icons text-[14px]">check</span> Approve
+                            <button type="button" onclick="window.approveReceipt('${r.receipt_id}', '${r.policy_number}', ${amt})" 
+                                class="px-3 py-1.5 rounded-lg text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-colors flex items-center gap-1 cursor-pointer hover:brightness-110"
+                                style="background-color: #059669 !important; color: #ffffff !important;">
+                                <span class="material-symbols-outlined material-icons text-[14px]" style="color: #ffffff !important;">check</span> Approve
                             </button>
                             <button type="button" onclick="window.rejectReceipt('${r.receipt_id}')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-red-50 text-slate-600 hover:text-red-600 font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
                                 <span class="material-symbols-outlined material-icons text-[14px]">close</span>
@@ -1084,6 +1105,26 @@
             if (slider) slider.value = currentAdjusterAmount;
             if (sliderLabel) sliderLabel.textContent = `${currencyFormatter.format(currentAdjusterAmount)}`;
             if (date && dateDisp) dateDisp.textContent = date;
+
+            // Live update the top metric card so user immediately sees their dialed amount
+            const statPremium = document.getElementById('stat-total-premium');
+            const statLabel = document.getElementById('stat-premium-label');
+            const statSub = document.getElementById('stat-premium-sub');
+
+            if (currentAdjusterPolicy) {
+                if (statLabel) statLabel.textContent = `${currentAdjusterPolicy.policy_number} Premium`;
+                if (statPremium) statPremium.textContent = `${currencyFormatter.format(currentAdjusterAmount)} JMD`;
+
+                let otherTotal = 0;
+                allCompanyPolicies.forEach(p => {
+                    if (p.policy_number !== currentAdjusterPolicy.policy_number) {
+                        const amt = typeof p.payment_amount === 'number' ? p.payment_amount : parseFloat(p.payment_amount || 0);
+                        otherTotal += amt;
+                    }
+                });
+                const projectedPortfolio = otherTotal + currentAdjusterAmount;
+                if (statSub) statSub.textContent = `(Portfolio: ${currencyFormatter.format(projectedPortfolio)})`;
+            }
         }
 
         window.setAdjusterAmount = function(val) {
@@ -1110,6 +1151,7 @@
                     currentAdjusterPolicy = null;
                     if (targetPill) targetPill.textContent = 'NO POLICY SELECTED';
                     document.getElementById('ledger-history-list').innerHTML = '<p class="text-xs text-slate-400 italic text-center py-10 bg-slate-50 rounded-2xl border border-slate-200">Select a policy on the left to inspect its complete official payment history and verified bank receipts.</p>';
+                    updateAgencyStatistics(allCompanyPolicies, lastReceiptsList);
                     return;
                 }
                 const found = allCompanyPolicies.find(p => p.policy_number === polNum);
@@ -1195,7 +1237,8 @@
             const nextDate = document.getElementById('adjuster-next-date').value;
 
             btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-[18px]">autorenew</span> Updating Policy...';
+            btn.style.setProperty('background-color', '#1d4ed8', 'important');
+            btn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-[20px]" style="color: #ffffff !important;">autorenew</span> <span style="color: #ffffff !important; font-weight: 700;">Updating Policy Premium...</span>';
             feedback.classList.add('hidden');
 
             try {
@@ -1210,19 +1253,29 @@
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.detail || "Update failed");
 
+                // Immediately update local policy object in memory
+                currentAdjusterPolicy.payment_amount = currentAdjusterAmount;
+                if (nextDate) currentAdjusterPolicy.next_payment_date = nextDate;
+                const match = allCompanyPolicies.find(p => p.policy_number === currentAdjusterPolicy.policy_number);
+                if (match) {
+                    match.payment_amount = currentAdjusterAmount;
+                    if (nextDate) match.next_payment_date = nextDate;
+                }
+
                 feedback.className = 'mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold';
                 feedback.textContent = `Successfully updated ${currentAdjusterPolicy.policy_number} premium to ${currencyFormatter.format(currentAdjusterAmount)} JMD!`;
                 feedback.classList.remove('hidden');
 
-                // Refresh active claims list & statistics
-                window.fetchActiveClaims();
+                // Refresh active claims list & statistics from server
+                await window.fetchActiveClaims();
             } catch (err) {
                 feedback.className = 'mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-50 text-red-800 border border-red-200 font-bold';
                 feedback.textContent = `Error: ${err.message}`;
                 feedback.classList.remove('hidden');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<span class="material-symbols-outlined material-icons text-[18px]">save</span> Save & Update Client Premium';
+                btn.style.setProperty('background-color', '#2563eb', 'important');
+                btn.innerHTML = '<span class="material-symbols-outlined material-icons text-[20px]" style="color: #ffffff !important;">save</span> <span style="color: #ffffff !important; font-weight: 700;">Save & Update Client Premium</span>';
             }
         };
 
