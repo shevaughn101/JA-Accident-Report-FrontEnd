@@ -123,85 +123,7 @@
             <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Issue policies, manage client claims, and view incident dossiers.</p>
         </div>
 
-        <!-- Compact 2x2 Mobile App-Grid (Center-Aligned, Small Icons, Above the Fold) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
-            <a href="civilian_dashboard.html" class="p-2.5 sm:p-3.5 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white hover:border-emerald-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald text-white flex items-center justify-center shadow-xs shrink-0">
-                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">group</span>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-[9px] sm:text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Switch View</p>
-                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald truncate">Civilian Portal</p>
-                </div>
-            </a>
-            <a id="quick-manage-users-card" href="admin_dashboard.html" class="p-2.5 sm:p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-xs shrink-0">
-                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">manage_accounts</span>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-[9px] sm:text-[10px] font-bold text-purple-700 uppercase tracking-wider">Admin</p>
-                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-purple-600 truncate">Manage Users</p>
-                </div>
-            </a>
-            <button type="button" id="quick-add-agent-card" onclick="document.getElementById('add-agent-section').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('new-agent-email').focus();" class="hidden p-2.5 sm:p-3.5 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:border-blue-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group cursor-pointer">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs shrink-0">
-                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">person_add</span>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-[9px] sm:text-[10px] font-bold text-blue-700 uppercase tracking-wider">Agents</p>
-                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 truncate">Add Agent</p>
-                </div>
-            </button>
-            <a href="officer_feed.html" class="p-2.5 sm:p-3.5 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white hover:border-slate-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-xs shrink-0">
-                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">list_alt</span>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-700 uppercase tracking-wider">Live Incidents</p>
-                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-slate-800 truncate">Officer Feed</p>
-                </div>
-            </a>
-        </div>
 
-        <!-- Agency Operational Performance & Live Statistics -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined material-icons text-2xl">payments</span>
-                </div>
-                <div>
-                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Active Premium</p>
-                    <p id="stat-total-premium" class="text-xl font-bold text-slate-900 font-mono">$0.00</p>
-                </div>
-            </div>
-            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined material-icons text-2xl">receipt_long</span>
-                </div>
-                <div>
-                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Pending Receipts</p>
-                    <p id="stat-pending-receipts" class="text-xl font-bold text-amber-600">0 Needs Review</p>
-                </div>
-            </div>
-            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined material-icons text-2xl">verified_user</span>
-                </div>
-                <div>
-                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Policies</p>
-                    <p id="stat-active-policies" class="text-xl font-bold text-slate-900">0 Registered</p>
-                </div>
-            </div>
-            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined material-icons text-2xl">health_and_safety</span>
-                </div>
-                <div>
-                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Claims In Pipeline</p>
-                    <p id="stat-active-claims" class="text-xl font-bold text-slate-900">0 Under Review</p>
-                </div>
-            </div>
-        </div>
 
         <!-- Admin Oversight Notice Banner -->
         <div id="admin-oversight-banner" class="hidden mb-8 p-6 rounded-2xl bg-purple-50 border border-purple-200 shadow-sm flex items-start gap-4 animate-fade-in">
@@ -395,6 +317,57 @@
                         Graphical Payment Adjuster & Payment History
                     </h2>
                     <p class="text-xs text-slate-500 mt-1">Adjust policy premiums graphically using presets, sliders, and steppers, and view official verified payment histories.</p>
+                </div>
+            </div>
+
+            <!-- Integrated Agency Overview & Key Metrics Bar -->
+            <div class="bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-xl p-3 sm:p-4 border border-slate-200/80 mb-6 shadow-xs">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200">
+                    
+                    <!-- 1. Total Active Premium -->
+                    <div class="flex items-center gap-3 pt-2 sm:pt-0">
+                        <div class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 border border-blue-200/60 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined material-icons text-lg">payments</span>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Active Premium</span>
+                            <span id="stat-total-premium" class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">$0.00 JMD</span>
+                        </div>
+                    </div>
+
+                    <!-- 2. Pending Receipts -->
+                    <div class="flex items-center gap-3 pt-2 sm:pt-0 sm:pl-4">
+                        <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 border border-amber-200/60 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined material-icons text-lg">receipt_long</span>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Pending Receipts</span>
+                            <span id="stat-pending-receipts" class="text-xs sm:text-sm font-bold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-md inline-block">0 Needs Review</span>
+                        </div>
+                    </div>
+
+                    <!-- 3. Active Policies -->
+                    <div class="flex items-center gap-3 pt-2 sm:pt-0 sm:pl-4">
+                        <div class="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-200/60 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined material-icons text-lg">verified_user</span>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Active Policies</span>
+                            <span id="stat-active-policies" class="text-xs sm:text-sm font-bold text-slate-800">0 Registered</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Claims In Pipeline -->
+                    <div class="flex items-center gap-3 pt-2 sm:pt-0 sm:pl-4">
+                        <div class="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 border border-purple-200/60 flex items-center justify-center shrink-0">
+                            <span class="material-symbols-outlined material-icons text-lg">health_and_safety</span>
+                        </div>
+                        <div class="min-w-0">
+                            <span class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider truncate">Claims Pipeline</span>
+                            <span id="stat-active-claims" class="text-xs sm:text-sm font-bold text-slate-800">0 In Review</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
