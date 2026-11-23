@@ -68,16 +68,16 @@
         </div>
 
         <nav class="hidden lg:flex gap-6 items-center">
-            <a id="nav-manage-users-link" href="admin_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
-                <span class="material-symbols-outlined material-icons text-[18px]">manage_accounts</span> Manage Users
-            </a>
             <a href="insurance_admin.html" class="text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-insurance pb-1">
                 <span class="material-symbols-outlined material-icons text-[18px]">health_and_safety</span> Claims Console
             </a>
             <a href="civilian_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
                 <span class="material-symbols-outlined material-icons text-[18px]">group</span> Civilian Portal
             </a>
-            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase flex items-center gap-1">
+            <button id="change-pwd-btn" type="button" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors cursor-pointer">
+                <span class="material-symbols-outlined material-icons text-[18px]">key</span> Change Password
+            </button>
+            <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase flex items-center gap-1 cursor-pointer">
                 Logout <span class="material-symbols-outlined material-icons text-[18px]">logout</span>
             </button>
         </nav>
@@ -98,19 +98,19 @@
             </button>
         </div>
         <nav class="flex flex-col gap-4">
-            <a id="drawer-manage-users-link" href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
-                <span class="material-symbols-outlined material-icons text-2xl">manage_accounts</span> Manage Users
+            <a href="insurance_admin.html" class="p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
+                <span class="material-symbols-outlined material-icons text-2xl">health_and_safety</span> Claims Console (Current)
             </a>
             <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
                 <span class="material-symbols-outlined material-icons text-2xl">group</span> Civilian Portal
             </a>
-            <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
-                <span class="material-symbols-outlined material-icons text-2xl">send_to_mobile</span> Submit Claim (Civilian)
+            <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
+                <span class="material-symbols-outlined material-icons text-2xl">send_to_mobile</span> Civilian Self-Service Portal
             </a>
-            <a href="officer_feed.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
-                <span class="material-symbols-outlined material-icons text-2xl">list_alt</span> Live Officer Feed
-            </a>
-            <button id="ins-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
+            <button id="drawer-change-pwd-btn" type="button" class="p-3.5 rounded-xl bg-amber-50 text-amber-900 font-bold text-base flex items-center gap-3 border border-amber-200 cursor-pointer w-full text-left">
+                <span class="material-symbols-outlined material-icons text-2xl">key</span> Change Password
+            </button>
+            <button id="ins-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200 cursor-pointer">
                 <span class="material-symbols-outlined material-icons text-xl">logout</span> Logout
             </button>
         </nav>
@@ -121,25 +121,6 @@
         <div class="mb-6">
             <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Agent & Claims Dashboard</h1>
             <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Issue policies, manage client claims, and view incident dossiers.</p>
-        </div>
-
-
-
-        <!-- Admin Oversight Notice Banner -->
-        <div id="admin-oversight-banner" class="hidden mb-8 p-6 rounded-2xl bg-purple-50 border border-purple-200 shadow-sm flex items-start gap-4 animate-fade-in">
-            <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                <span class="material-symbols-outlined material-icons text-2xl">admin_panel_settings</span>
-            </div>
-            <div>
-                <h3 class="font-headline font-bold text-base text-purple-950 mb-1">Police Administrator Oversight Mode</h3>
-                <p class="text-xs text-purple-800 leading-relaxed mb-3">
-                    As a JA Police Administrator, your role is user management, officer jurisdiction oversight, and incident investigation. 
-                    <strong>Policy creation is strictly restricted to licensed insurance agency adjusters.</strong>
-                </p>
-                <a href="admin_dashboard.html" class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-sm">
-                    <span class="material-symbols-outlined material-icons text-[16px]">manage_accounts</span> Open User Management Console
-                </a>
-            </div>
         </div>
 
         <!-- POLICY CREATION SECTION (Agent Only) -->
@@ -608,6 +589,90 @@
             });
         }
 
+        // --- Password Modal & Handler ---
+        const passwordModal = document.getElementById('password-modal');
+        const closePasswordModal = document.getElementById('close-password-modal');
+        const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+        const passwordForm = document.getElementById('password-change-form');
+        const pwdStatus = document.getElementById('pwd-modal-status');
+        const savePwdBtn = document.getElementById('save-password-btn');
+        const changePwdBtn = document.getElementById('change-pwd-btn');
+        const drawerChangePwdBtn = document.getElementById('drawer-change-pwd-btn');
+
+        window.openPasswordModal = function(isEnforced = false) {
+            if (!passwordModal) return;
+            passwordModal.classList.remove('hidden');
+            if (isEnforced) {
+                closePasswordModal?.classList.add('hidden');
+                cancelPasswordBtn?.classList.add('hidden');
+                document.getElementById('pwd-modal-desc').textContent = "Security Notice: Your account was assigned a temporary password. You must set a permanent password before continuing.";
+            } else {
+                closePasswordModal?.classList.remove('hidden');
+                cancelPasswordBtn?.classList.remove('hidden');
+                document.getElementById('pwd-modal-desc').textContent = "Enter your new permanent password below to update your credentials.";
+            }
+        };
+
+        function closePasswordDialog() {
+            passwordModal?.classList.add('hidden');
+            passwordForm?.reset();
+            pwdStatus?.classList.add('hidden');
+        }
+
+        closePasswordModal?.addEventListener('click', closePasswordDialog);
+        cancelPasswordBtn?.addEventListener('click', closePasswordDialog);
+        changePwdBtn?.addEventListener('click', () => window.openPasswordModal(false));
+        drawerChangePwdBtn?.addEventListener('click', () => {
+            insMobileMenu?.classList.add('hidden');
+            window.openPasswordModal(false);
+        });
+
+        passwordForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const newPwd = document.getElementById('new-password-input').value;
+            const confirmPwd = document.getElementById('confirm-password-input').value;
+
+            if (newPwd !== confirmPwd) {
+                pwdStatus.textContent = "Passwords do not match.";
+                pwdStatus.className = "mb-4 p-3 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 block";
+                return;
+            }
+
+            if (newPwd.length < 6) {
+                pwdStatus.textContent = "Password must be at least 6 characters.";
+                pwdStatus.className = "mb-4 p-3 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 block";
+                return;
+            }
+
+            savePwdBtn.disabled = true;
+            savePwdBtn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-lg">autorenew</span> Saving...';
+
+            try {
+                const res = await apiFetch('https://ja-accident-report-backend.onrender.com/api/auth/change-password', {
+                    method: 'POST',
+                    body: JSON.stringify({ new_password: newPwd })
+                });
+
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.detail || 'Failed to update password');
+                }
+
+                pwdStatus.textContent = "Permanent password saved successfully!";
+                pwdStatus.className = "mb-4 p-3 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 block";
+                
+                setTimeout(() => {
+                    closePasswordDialog();
+                }, 1500);
+            } catch (err) {
+                pwdStatus.textContent = err.message || "Failed to update password";
+                pwdStatus.className = "mb-4 p-3 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 block";
+            } finally {
+                savePwdBtn.disabled = false;
+                savePwdBtn.innerHTML = '<span class="material-symbols-outlined material-icons text-lg">check_circle</span> Save Permanent Password';
+            }
+        });
+
         let currentAgentCompany = '';
 
         onAuthStateChanged(auth, async (user) => {
@@ -617,66 +682,38 @@
             }
             try {
                 const token = await user.getIdTokenResult();
-                const isSuperAdmin = token.claims.role === 'admin' || token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com';
-                const isAgent = token.claims.role === 'insurance_agent';
+                const role = token.claims.role || 'civilian';
+                currentAgentCompany = token.claims.company || '';
                 
-                if (!isSuperAdmin && !isAgent) {
-                    alert("Unauthorized. This portal is for Insurance Agents and Administrators only.");
-                    window.location.href = 'civilian_dashboard.html';
+                // Strictly restrict Insurance Portal to licensed insurance agents - block police admins
+                if (role !== 'insurance_agent' || !currentAgentCompany) {
+                    alert("Access Denied: The Insurance Portal is strictly restricted to licensed insurance agency agents. Police administrators and non-agents do not have access.");
+                    window.location.href = role === 'admin' ? 'admin_dashboard.html' : role === 'officer' ? 'officer_feed.html' : 'civilian_dashboard.html';
                     return;
                 }
 
-                currentAgentCompany = token.claims.company || '';
+                document.getElementById('header-company').textContent = `${currentAgentCompany} Portal`;
 
-                // --- STRICT ROLE SEPARATION ---
-                const navManageUsers = document.getElementById('nav-manage-users-link');
-                const drawerManageUsers = document.getElementById('drawer-manage-users-link');
-                const quickManageUsers = document.getElementById('quick-manage-users-card');
-                const quickAddAgent = document.getElementById('quick-add-agent-card');
                 const createPolicySec = document.getElementById('create-policy-section');
-                const adminOversightBanner = document.getElementById('admin-oversight-banner');
-                const addAgentSec = document.getElementById('add-agent-section');
+                if (createPolicySec) createPolicySec.classList.remove('hidden');
 
-                if (isSuperAdmin) {
-                    document.getElementById('header-company').textContent = 'Administrator Oversight • All Insurance Providers';
-                    
-                    // JA Police Admin cannot set policies - only manage users
-                    if (createPolicySec) createPolicySec.classList.add('hidden');
-                    if (adminOversightBanner) adminOversightBanner.classList.remove('hidden');
-                    if (addAgentSec) addAgentSec.classList.add('hidden');
-
-                    if (navManageUsers) navManageUsers.classList.remove('hidden');
-                    if (drawerManageUsers) drawerManageUsers.classList.remove('hidden');
-                    if (quickManageUsers) quickManageUsers.classList.remove('hidden');
-                    if (quickAddAgent) quickAddAgent.classList.add('hidden');
+                const companySelect = document.getElementById('policy-company');
+                if (companySelect) {
+                    companySelect.innerHTML = `<option value="${currentAgentCompany}">${currentAgentCompany}</option>`;
+                    companySelect.disabled = true;
                 }
-                
-                if (isAgent && currentAgentCompany) {
-                    document.getElementById('header-company').textContent = `${currentAgentCompany} Portal`;
 
-                    // Insurance agents CAN set policies for their own company
-                    if (createPolicySec) createPolicySec.classList.remove('hidden');
-                    if (adminOversightBanner) adminOversightBanner.classList.add('hidden');
+                const addAgentSec = document.getElementById('add-agent-section');
+                if (addAgentSec) {
+                    addAgentSec.classList.remove('hidden');
+                    document.getElementById('add-agent-title').textContent = `Authorize New ${currentAgentCompany} Agent`;
+                    document.getElementById('agent-company-badge').textContent = `${currentAgentCompany} Desk`;
+                    document.getElementById('new-agent-company').value = currentAgentCompany;
+                }
 
-                    const companySelect = document.getElementById('policy-company');
-                    if (companySelect) {
-                        companySelect.innerHTML = `<option value="${currentAgentCompany}">${currentAgentCompany}</option>`;
-                        companySelect.disabled = true;
-                    }
-
-                    // Insurance agents DO NOT have access to the police user management section
-                    if (navManageUsers) navManageUsers.classList.add('hidden');
-                    if (drawerManageUsers) drawerManageUsers.classList.add('hidden');
-                    if (quickManageUsers) quickManageUsers.classList.add('hidden');
-
-                    // Insurance agents CAN add new agents for their own agency portal
-                    if (quickAddAgent) quickAddAgent.classList.remove('hidden');
-                    if (addAgentSec) {
-                        addAgentSec.classList.remove('hidden');
-                        document.getElementById('add-agent-title').textContent = `Authorize New ${currentAgentCompany} Agent`;
-                        document.getElementById('agent-company-badge').textContent = `${currentAgentCompany} Desk`;
-                        document.getElementById('new-agent-company').value = currentAgentCompany;
-                    }
+                // If account was created with a temporary password, prompt mandatory password change
+                if (token.claims.must_change_password) {
+                    window.openPasswordModal(true);
                 }
                 
                 // Fetch claims, messages, and receipts
@@ -1405,6 +1442,51 @@ document.getElementById('logout-btn').addEventListener('click', () => {
             <div class="p-6 overflow-y-auto" id="report-modal-content">
                 <div class="flex items-center justify-center p-10"><span class="material-symbols-outlined material-icons animate-spin text-4xl text-insurance">autorenew</span></div>
             </div>
+        </div>
+    </div>
+
+    <!-- Password Change Modal (For Accounts with Temporary or Expired Passwords) -->
+    <div id="password-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-fade-in">
+        <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-md w-full p-6 sm:p-8 relative">
+            <button id="close-password-modal" type="button" class="hidden absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                <span class="material-symbols-outlined material-icons text-xl">close</span>
+            </button>
+
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined material-icons text-2xl">lock_reset</span>
+            </div>
+
+            <h3 class="font-headline font-bold text-xl text-slate-900 mb-1" id="pwd-modal-title">Update Your Password</h3>
+            <p class="text-xs text-slate-600 mb-6 leading-relaxed" id="pwd-modal-desc">
+                For security reasons, accounts issued with temporary credentials must set a permanent, confidential password before proceeding.
+            </p>
+
+            <div id="pwd-modal-status" class="hidden mb-4 p-3 rounded-lg text-xs font-semibold"></div>
+
+            <form id="password-change-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">New Permanent Password</label>
+                    <input type="password" id="new-password-input" required minlength="6" placeholder="At least 6 characters"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-insurance/50 text-slate-900 text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Confirm New Password</label>
+                    <input type="password" id="confirm-password-input" required minlength="6" placeholder="Re-enter password"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-insurance/50 text-slate-900 text-sm">
+                </div>
+
+                <div class="pt-2 flex flex-col gap-2">
+                    <button type="submit" id="save-password-btn"
+                        class="w-full py-3.5 px-4 bg-insurance hover:bg-blue-700 text-white font-bold text-sm rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                        <span class="material-symbols-outlined material-icons text-lg">check_circle</span>
+                        Save Permanent Password
+                    </button>
+                    <button type="button" id="cancel-password-btn" class="hidden py-2 text-xs font-bold text-slate-500 hover:text-slate-800 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

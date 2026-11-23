@@ -1099,17 +1099,15 @@
 
             try {
                 const token = await user.getIdTokenResult();
-                const isSuperAdmin = token.claims.role === 'admin' || token.claims.admin === true || user.email === 'admin@ja-accident-report.com' || user.email === 'shevaughn@example.com';
                 const isAgent = token.claims.role === 'insurance_agent';
                 const agentCompany = token.claims.company || '';
 
-                if (isSuperAdmin || isAgent) {
+                // Strictly grant console access exclusively to verified insurance agency agents (hide from police admins)
+                if (isAgent && agentCompany) {
                     adminBanner.classList.remove('hidden');
                     adminNav.classList.remove('hidden');
                     if (portalMobileAdminLink) portalMobileAdminLink.classList.remove('hidden');
-                    if (agentCompany) {
-                        document.getElementById('admin-banner-title').textContent = `${agentCompany} Agent Session Active`;
-                    }
+                    document.getElementById('admin-banner-title').textContent = `${agentCompany} Agent Session Active`;
                 }
 
                 // Strict Backend Fetch: Fetch ONLY genuine personal policies tied to authenticated user
