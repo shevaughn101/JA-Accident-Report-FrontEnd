@@ -13,8 +13,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <script id="tailwind-config">
         tailwind.config = {
             theme: {
@@ -48,7 +49,20 @@
         }
     </script>
     <style>
-        .material-symbols-outlined {
+        .material-symbols-outlined, .material-icons {
+            font-family: 'Material Symbols Outlined', 'Material Icons', sans-serif !important;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
             font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
 
@@ -82,51 +96,53 @@
 
 <body class="font-body min-h-screen flex flex-col items-center justify-center p-6 antialiased">
 
-    <div class="w-full max-w-md animate-slide-up">
-        <div class="text-center mb-10">
+    <div class="w-full max-w-md sm:max-w-lg md:max-w-xl transition-all duration-300 animate-slide-up">
+        <div class="text-center mb-6 sm:mb-8">
             <div
-                class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gold text-slate-900 mb-4 shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
-                <span class="material-symbols-outlined text-4xl">security</span>
+                class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gold text-slate-900 mb-3 sm:mb-4 shadow-[0_4px_15px_rgba(16,185,129,0.3)]">
+                <span class="material-symbols-outlined material-icons text-3xl sm:text-4xl">security</span>
             </div>
-            <h1 class="font-headline text-3xl font-bold text-slate-900 mb-2 tracking-tight">JA Accident Report</h1>
-            <p class="text-slate-600 font-label tracking-wide">Secure Authentication Portal</p>
+            <h1 class="font-headline text-2xl sm:text-3xl font-bold text-slate-900 mb-1 sm:mb-2 tracking-tight">JA Accident Report</h1>
+            <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Secure Authentication Portal</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <!-- Responsive Role Switcher: Sleek Segmented Bar on Mobile, Rich Cards on Tablet & PC -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3.5 mb-6 sm:mb-8">
 
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="civilian" id="role-civilian" class="peer sr-only" checked />
                 <div
-                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-emerald/10 peer-checked:border-emerald/50 hover:bg-white/80 h-full flex flex-col justify-center">
+                    class="glass-panel rounded-xl sm:rounded-2xl p-2.5 sm:p-4 text-center transition-all duration-200 peer-checked:bg-white peer-checked:border-emerald-500 peer-checked:shadow-md peer-checked:ring-2 peer-checked:ring-emerald-500/20 hover:bg-white/80 h-full flex flex-col items-center justify-center border border-slate-200/60">
                     <span
-                        class="material-symbols-outlined text-3xl mb-2 text-slate-400 peer-checked:text-emerald transition-colors">group</span>
-                    <h3 class="font-bold text-slate-900 mb-1">Civilian Access</h3>
-                    <p class="text-xs text-slate-600">Report an Incident</p>
+                        class="material-symbols-outlined material-icons text-xl sm:text-2xl md:text-3xl mb-1 sm:mb-1.5 text-slate-400 peer-checked:text-emerald transition-colors">group</span>
+                    <h3 class="font-bold text-xs sm:text-sm text-slate-900 leading-tight">Civilian</h3>
+                    <p class="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block mt-0.5 truncate">Report Incident</p>
                 </div>
             </label>
 
             <label class="cursor-pointer group relative">
                 <input type="radio" name="role" value="officer" id="role-officer" class="peer sr-only" />
                 <div
-                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-amber/10 peer-checked:border-amber/50 hover:bg-white/80">
+                    class="glass-panel rounded-xl sm:rounded-2xl p-2.5 sm:p-4 text-center transition-all duration-200 peer-checked:bg-white peer-checked:border-amber-500 peer-checked:shadow-md peer-checked:ring-2 peer-checked:ring-amber-500/20 hover:bg-white/80 h-full flex flex-col items-center justify-center border border-slate-200/60">
                     <span
-                        class="material-symbols-outlined text-3xl mb-2 text-slate-400 peer-checked:text-amber transition-colors">local_police</span>
-                    <h3 class="font-bold text-slate-900 mb-1">Officer Portal</h3>
-                    <p class="text-xs text-slate-600">Access Database</p>
-                </div>
-            </label>
-            <label class="cursor-pointer group">
-                <input type="radio" name="role" value="insurance" id="role-insurance" class="peer sr-only" />
-                <div
-                    class="glass-panel rounded-xl p-5 text-center transition-all duration-300 peer-checked:bg-blue-500/10 peer-checked:border-blue-500/50 hover:bg-white/80 h-full flex flex-col justify-center">
-                    <span
-                        class="material-symbols-outlined text-3xl mb-2 text-slate-400 peer-checked:text-blue-500 transition-colors">corporate_fare</span>
-                    <h3 class="font-bold text-slate-900 mb-1">Agent Portal</h3>
-                    <p class="text-xs text-slate-600">Manage Policies</p>
+                        class="material-symbols-outlined material-icons text-xl sm:text-2xl md:text-3xl mb-1 sm:mb-1.5 text-slate-400 peer-checked:text-amber transition-colors">local_police</span>
+                    <h3 class="font-bold text-xs sm:text-sm text-slate-900 leading-tight">Officer</h3>
+                    <p class="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block mt-0.5 truncate">Police Portal</p>
                 </div>
             </label>
 
-          </div>
+            <label class="cursor-pointer group relative">
+                <input type="radio" name="role" value="insurance" id="role-insurance" class="peer sr-only" />
+                <div
+                    class="glass-panel rounded-xl sm:rounded-2xl p-2.5 sm:p-4 text-center transition-all duration-200 peer-checked:bg-white peer-checked:border-blue-500 peer-checked:shadow-md peer-checked:ring-2 peer-checked:ring-blue-500/20 hover:bg-white/80 h-full flex flex-col items-center justify-center border border-slate-200/60">
+                    <span
+                        class="material-symbols-outlined material-icons text-xl sm:text-2xl md:text-3xl mb-1 sm:mb-1.5 text-slate-400 peer-checked:text-blue-500 transition-colors">corporate_fare</span>
+                    <h3 class="font-bold text-xs sm:text-sm text-slate-900 leading-tight">Agent</h3>
+                    <p class="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block mt-0.5 truncate">Insurance Desk</p>
+                </div>
+            </label>
+
+        </div>
 
         <div class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
 
@@ -168,7 +184,7 @@
                     class="w-full bg-gold text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-gold/90 transition-all shadow-md flex justify-center items-center gap-2 group">
                     <span id="btn-text">Secure Login</span>
                     <span
-                        class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">login</span>
+                        class="material-symbols-outlined material-icons text-sm group-hover:translate-x-1 transition-transform">login</span>
                 </button>
             </form>
 
@@ -311,7 +327,7 @@
             const submitBtn = document.getElementById('submit-btn');
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
+            submitBtn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin">autorenew</span>';
 
             const slowBootTimer = setTimeout(() => {
                 showError("Waking up the secure server... this can take up to 60 seconds on the free tier. Please wait.");

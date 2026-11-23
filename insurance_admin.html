@@ -10,7 +10,9 @@
     <title>Insurance Company Admin - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <script id="tailwind-config">
         tailwind.config = {
             theme: {
@@ -32,7 +34,22 @@
         }
     </script>
     <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined, .material-icons {
+            font-family: 'Material Symbols Outlined', 'Material Icons', sans-serif !important;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
         .glass-panel {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(16px);
@@ -45,29 +62,29 @@
     <header class="glass-panel sticky top-0 z-50 px-4 sm:px-6 py-4 flex justify-between items-center mb-6 sm:mb-8 border-b border-slate-200">
         <div class="flex items-center gap-2 sm:gap-3 min-w-0">
             <div class="w-8 h-8 rounded-full bg-insurance/10 text-insurance flex items-center justify-center border border-insurance/30 shrink-0">
-                <span class="material-symbols-outlined text-[20px]">corporate_fare</span>
+                <span class="material-symbols-outlined material-icons text-[20px]">corporate_fare</span>
             </div>
             <span id="header-company" class="font-headline font-bold text-sm sm:text-lg text-slate-900 tracking-wide truncate">Insurance Console</span>
         </div>
 
-        <nav class="hidden md:flex gap-6 items-center">
+        <nav class="hidden lg:flex gap-6 items-center">
             <a id="nav-manage-users-link" href="admin_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
-                <span class="material-symbols-outlined text-[18px]">manage_accounts</span> Manage Users
+                <span class="material-symbols-outlined material-icons text-[18px]">manage_accounts</span> Manage Users
             </a>
             <a href="insurance_admin.html" class="text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors border-b-2 border-insurance pb-1">
-                <span class="material-symbols-outlined text-[18px]">health_and_safety</span> Claims Console
+                <span class="material-symbols-outlined material-icons text-[18px]">health_and_safety</span> Claims Console
             </a>
             <a href="civilian_dashboard.html" class="text-slate-600 hover:text-insurance font-label font-bold text-xs uppercase tracking-wider flex items-center gap-1 transition-colors">
-                <span class="material-symbols-outlined text-[18px]">group</span> Civilian Portal
+                <span class="material-symbols-outlined material-icons text-[18px]">group</span> Civilian Portal
             </a>
             <button id="logout-btn" class="text-slate-500 hover:text-red-500 transition-colors text-xs font-bold tracking-wider uppercase flex items-center gap-1">
-                Logout <span class="material-symbols-outlined text-[18px]">logout</span>
+                Logout <span class="material-symbols-outlined material-icons text-[18px]">logout</span>
             </button>
         </nav>
 
-        <div class="flex items-center gap-2 md:hidden">
+        <div class="flex items-center gap-2 lg:hidden">
             <button id="ins-mobile-menu-btn" class="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors flex items-center justify-center">
-                <span class="material-symbols-outlined text-2xl">menu</span>
+                <span class="material-symbols-outlined material-icons text-2xl">menu</span>
             </button>
         </div>
     </header>
@@ -77,24 +94,24 @@
         <div class="flex justify-between items-center pb-4 border-b border-slate-200 mb-6">
             <span class="font-headline font-bold text-lg text-slate-900">Portal Switcher</span>
             <button id="ins-mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-900">
-                <span class="material-symbols-outlined text-2xl">close</span>
+                <span class="material-symbols-outlined material-icons text-2xl">close</span>
             </button>
         </div>
         <nav class="flex flex-col gap-4">
             <a id="drawer-manage-users-link" href="admin_dashboard.html" class="p-3.5 rounded-xl bg-purple-50 text-purple-800 font-bold text-base flex items-center gap-3 border border-purple-200">
-                <span class="material-symbols-outlined text-2xl">manage_accounts</span> Manage Users
+                <span class="material-symbols-outlined material-icons text-2xl">manage_accounts</span> Manage Users
             </a>
             <a href="civilian_dashboard.html" class="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold text-base flex items-center gap-3 border border-emerald-200">
-                <span class="material-symbols-outlined text-2xl">group</span> Civilian Portal
+                <span class="material-symbols-outlined material-icons text-2xl">group</span> Civilian Portal
             </a>
             <a href="insurance_portal.html" class="p-3.5 rounded-xl bg-blue-50 text-blue-800 font-bold text-base flex items-center gap-3 border border-blue-200">
-                <span class="material-symbols-outlined text-2xl">send_to_mobile</span> Submit Claim (Civilian)
+                <span class="material-symbols-outlined material-icons text-2xl">send_to_mobile</span> Submit Claim (Civilian)
             </a>
             <a href="officer_feed.html" class="p-3.5 rounded-xl bg-slate-100 text-slate-800 font-bold text-base flex items-center gap-3 border border-slate-200">
-                <span class="material-symbols-outlined text-2xl">list_alt</span> Live Officer Feed
+                <span class="material-symbols-outlined material-icons text-2xl">list_alt</span> Live Officer Feed
             </a>
             <button id="ins-mobile-logout-btn" class="mt-4 p-3.5 rounded-xl text-red-600 bg-red-50 font-bold text-base flex items-center justify-center gap-2 border border-red-200">
-                <span class="material-symbols-outlined text-xl">logout</span> Logout
+                <span class="material-symbols-outlined material-icons text-xl">logout</span> Logout
             </button>
         </nav>
     </div>
@@ -106,50 +123,90 @@
             <p class="text-slate-600 text-xs sm:text-sm font-label tracking-wide">Issue policies, manage client claims, and view incident dossiers.</p>
         </div>
 
-        <!-- Quick Switcher Bar (Mobile & Desktop) -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-            <a href="civilian_dashboard.html" class="p-3.5 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white hover:border-emerald-400 transition-all shadow-sm flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-emerald text-white flex items-center justify-center shadow-sm shrink-0">
-                    <span class="material-symbols-outlined text-[20px]">group</span>
+        <!-- Compact 2x2 Mobile App-Grid (Center-Aligned, Small Icons, Above the Fold) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
+            <a href="civilian_dashboard.html" class="p-2.5 sm:p-3.5 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white hover:border-emerald-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald text-white flex items-center justify-center shadow-xs shrink-0">
+                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">group</span>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Switch View</p>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Switch View</p>
                     <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-emerald truncate">Civilian Portal</p>
                 </div>
             </a>
-            <a id="quick-manage-users-card" href="admin_dashboard.html" class="p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-sm flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-sm shrink-0">
-                    <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+            <a id="quick-manage-users-card" href="admin_dashboard.html" class="p-2.5 sm:p-3.5 rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-white hover:border-purple-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-purple-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">manage_accounts</span>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] font-bold text-purple-700 uppercase tracking-wider">Admin</p>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-purple-700 uppercase tracking-wider">Admin</p>
                     <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-purple-600 truncate">Manage Users</p>
                 </div>
             </a>
-            <button type="button" id="quick-add-agent-card" onclick="document.getElementById('add-agent-section').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('new-agent-email').focus();" class="hidden p-3.5 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:border-blue-400 transition-all shadow-sm flex items-center gap-3 group text-left cursor-pointer">
-                <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-sm shrink-0">
-                    <span class="material-symbols-outlined text-[20px]">person_add</span>
+            <button type="button" id="quick-add-agent-card" onclick="document.getElementById('add-agent-section').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('new-agent-email').focus();" class="hidden p-2.5 sm:p-3.5 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white hover:border-blue-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group cursor-pointer">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs shrink-0">
+                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">person_add</span>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] font-bold text-blue-700 uppercase tracking-wider">Agents</p>
-                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 truncate">Add Agency Agent</p>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-blue-700 uppercase tracking-wider">Agents</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-blue-600 truncate">Add Agent</p>
                 </div>
             </button>
-            <a href="officer_feed.html" class="col-span-2 sm:col-span-1 p-3.5 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white hover:border-slate-400 transition-all shadow-sm flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-sm shrink-0">
-                    <span class="material-symbols-outlined text-[20px]">list_alt</span>
+            <a href="officer_feed.html" class="p-2.5 sm:p-3.5 rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white hover:border-slate-400 transition-all shadow-xs flex flex-col items-center justify-center text-center gap-1 sm:flex-row sm:text-left sm:gap-3 group">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-800 text-white flex items-center justify-center shadow-xs shrink-0">
+                    <span class="material-symbols-outlined material-icons text-[18px] sm:text-[20px]">list_alt</span>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Live Incidents</p>
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-700 uppercase tracking-wider">Live Incidents</p>
                     <p class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-slate-800 truncate">Officer Feed</p>
                 </div>
             </a>
         </div>
 
+        <!-- Agency Operational Performance & Live Statistics -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined material-icons text-2xl">payments</span>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Active Premium</p>
+                    <p id="stat-total-premium" class="text-xl font-bold text-slate-900 font-mono">$0.00</p>
+                </div>
+            </div>
+            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined material-icons text-2xl">receipt_long</span>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Pending Receipts</p>
+                    <p id="stat-pending-receipts" class="text-xl font-bold text-amber-600">0 Needs Review</p>
+                </div>
+            </div>
+            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined material-icons text-2xl">verified_user</span>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Policies</p>
+                    <p id="stat-active-policies" class="text-xl font-bold text-slate-900">0 Registered</p>
+                </div>
+            </div>
+            <div class="glass-panel p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined material-icons text-2xl">health_and_safety</span>
+                </div>
+                <div>
+                    <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Claims In Pipeline</p>
+                    <p id="stat-active-claims" class="text-xl font-bold text-slate-900">0 Under Review</p>
+                </div>
+            </div>
+        </div>
+
         <!-- Admin Oversight Notice Banner -->
         <div id="admin-oversight-banner" class="hidden mb-8 p-6 rounded-2xl bg-purple-50 border border-purple-200 shadow-sm flex items-start gap-4 animate-fade-in">
             <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-                <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+                <span class="material-symbols-outlined material-icons text-2xl">admin_panel_settings</span>
             </div>
             <div>
                 <h3 class="font-headline font-bold text-base text-purple-950 mb-1">Police Administrator Oversight Mode</h3>
@@ -158,7 +215,7 @@
                     <strong>Policy creation is strictly restricted to licensed insurance agency adjusters.</strong>
                 </p>
                 <a href="admin_dashboard.html" class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-sm">
-                    <span class="material-symbols-outlined text-[16px]">manage_accounts</span> Open User Management Console
+                    <span class="material-symbols-outlined material-icons text-[16px]">manage_accounts</span> Open User Management Console
                 </a>
             </div>
         </div>
@@ -168,7 +225,7 @@
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-insurance to-blue-400"></div>
 
             <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
-                <span class="material-symbols-outlined text-insurance">post_add</span>
+                <span class="material-symbols-outlined material-icons text-insurance">post_add</span>
                 Issue New Client Policy
             </h2>
 
@@ -210,7 +267,7 @@
                 <div class="pt-4 border-t border-slate-200 flex justify-end">
                     <button type="submit" id="policy-submit-btn" class="bg-insurance text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-blue-700 transition-all shadow-md flex items-center gap-2">
                         Issue Policy
-                        <span class="material-symbols-outlined text-[18px]">send</span>
+                        <span class="material-symbols-outlined material-icons text-[18px]">send</span>
                     </button>
                 </div>
             </form>
@@ -223,7 +280,7 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6 border-b border-slate-200 pb-4">
                 <div>
                     <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-blue-600">person_add</span>
+                        <span class="material-symbols-outlined material-icons text-blue-600">person_add</span>
                         <span id="add-agent-title">Authorize New Agency Agent</span>
                     </h2>
                     <p class="text-xs text-slate-500 mt-1">Provision login access for a claims adjuster or representative in your company</p>
@@ -255,7 +312,7 @@
                     <div class="flex justify-end">
                         <button type="submit" id="add-agent-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold font-label px-8 py-3 rounded-lg transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
                             <span>Authorize Agent</span>
-                            <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                            <span class="material-symbols-outlined material-icons text-[18px]">verified_user</span>
                         </button>
                     </div>
                 </div>
@@ -266,7 +323,7 @@
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-insurance to-emerald-400"></div>
             <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
-                <span class="material-symbols-outlined text-insurance">list_alt</span>
+                <span class="material-symbols-outlined material-icons text-insurance">list_alt</span>
                 Recently Submitted Claims
             </h2>
             <div class="overflow-x-auto">
@@ -286,13 +343,198 @@
             </div>
         </section>
 
+        <!-- INCOMING PAYMENT RECEIPTS VERIFICATION QUEUE -->
+        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-emerald-500"></div>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="material-symbols-outlined material-icons text-amber-500">receipt_long</span>
+                        Civilian Bank Transfer Receipts
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">Review incoming photo proofs of bank transfers submitted by policyholders, verify funds, and approve.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="receipts-count-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">
+                        0 Pending
+                    </span>
+                    <button type="button" onclick="window.fetchReceipts()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center gap-1 shadow-sm transition-colors cursor-pointer">
+                        <span class="material-symbols-outlined material-icons text-sm">refresh</span> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-600 text-xs uppercase tracking-wider font-bold">
+                            <th class="p-4 rounded-tl-lg">Receipt Proof</th>
+                            <th class="p-4">Policy #</th>
+                            <th class="p-4">Client Email</th>
+                            <th class="p-4">Amount ($ JMD)</th>
+                            <th class="p-4">Submitted</th>
+                            <th class="p-4">Status</th>
+                            <th class="p-4 rounded-tr-lg">Verification Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="receipts-list-body" class="divide-y divide-slate-100 text-sm">
+                        <tr><td colspan="7" class="p-8 text-center text-slate-500">Loading incoming receipts...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- GRAPHICAL PAYMENT ADJUSTER & PAYMENT HISTORY SECTION -->
+        <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+            
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
+                <div>
+                    <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span class="material-symbols-outlined material-icons text-emerald-600">tune</span>
+                        Graphical Payment Adjuster & Payment History
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">Adjust policy premiums graphically using presets, sliders, and steppers, and view official verified payment histories.</p>
+                </div>
+            </div>
+
+            <div id="adjuster-feedback" class="hidden mb-6 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left: Graphical Payment Adjuster -->
+                <div class="space-y-6 bg-slate-50/80 p-6 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-sm text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <span class="material-symbols-outlined material-icons text-base text-emerald-600">currency_exchange</span> Premium Amount Adjuster
+                    </h3>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Select Client Policy</label>
+                        <select id="adjuster-policy-select" class="w-full rounded-lg border-slate-300 focus:border-emerald-500 text-sm font-bold px-3 py-2.5">
+                            <option value="">-- Choose a policy to adjust --</option>
+                        </select>
+                    </div>
+
+                    <!-- Live Graphical Price Display -->
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 text-center shadow-lg relative overflow-hidden">
+                        <div class="absolute top-2 right-3 text-slate-500 font-mono text-[10px] uppercase font-bold" id="adjuster-target-policy">NO POLICY SELECTED</div>
+                        <p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Adjusted Monthly Premium</p>
+                        <p id="adjuster-display-amount" class="text-3xl sm:text-4xl font-extrabold font-mono tracking-tight text-emerald-400">$0.00 <span class="text-sm font-normal text-slate-300">JMD</span></p>
+                        <p class="text-xs text-slate-400 mt-2 flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined material-icons text-xs text-emerald-400">event</span>
+                            Next Due: <span id="adjuster-display-date" class="font-bold text-white">-</span>
+                        </p>
+                    </div>
+
+                    <!-- Preset Tier Chips -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Standard Premium Tiers</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                            <button type="button" onclick="window.setAdjusterAmount(15000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $15,000 <span class="block text-[10px] font-normal text-slate-500">Third Party</span>
+                            </button>
+                            <button type="button" onclick="window.setAdjusterAmount(25000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $25,000 <span class="block text-[10px] font-normal text-slate-500">Standard</span>
+                            </button>
+                            <button type="button" onclick="window.setAdjusterAmount(35000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $35,000 <span class="block text-[10px] font-normal text-slate-500">Silver Cover</span>
+                            </button>
+                            <button type="button" onclick="window.setAdjusterAmount(50000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $50,000 <span class="block text-[10px] font-normal text-slate-500">Gold Comprehensive</span>
+                            </button>
+                            <button type="button" onclick="window.setAdjusterAmount(75000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $75,000 <span class="block text-[10px] font-normal text-slate-500">Platinum Plus</span>
+                            </button>
+                            <button type="button" onclick="window.setAdjusterAmount(100000)" class="px-3 py-2 rounded-xl text-xs font-bold bg-white border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 text-slate-700 transition-colors cursor-pointer shadow-sm">
+                                $100,000 <span class="block text-[10px] font-normal text-slate-500">Commercial Fleet</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Range Slider Control -->
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-slate-600 mb-1">
+                            <span>Interactive Amount Slider</span>
+                            <span id="slider-val-label" class="font-mono text-emerald-700">$0</span>
+                        </div>
+                        <input type="range" id="adjuster-slider" min="5000" max="150000" step="500" value="22000" class="w-full accent-emerald-600 cursor-pointer" />
+                        <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
+                            <span>$5,000</span>
+                            <span>$75,000</span>
+                            <span>$150,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Stepper Increment/Decrement Buttons -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Precision Stepper Adjusters</label>
+                        <div class="flex items-center justify-between gap-1.5 flex-wrap">
+                            <button type="button" onclick="window.stepAdjusterAmount(-5000)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-red-50 hover:text-red-600 text-slate-700 transition-colors cursor-pointer">- $5,000</button>
+                            <button type="button" onclick="window.stepAdjusterAmount(-1000)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-red-50 hover:text-red-600 text-slate-700 transition-colors cursor-pointer">- $1,000</button>
+                            <button type="button" onclick="window.stepAdjusterAmount(-500)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-red-50 hover:text-red-600 text-slate-700 transition-colors cursor-pointer">- $500</button>
+                            <button type="button" onclick="window.stepAdjusterAmount(500)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 transition-colors cursor-pointer">+ $500</button>
+                            <button type="button" onclick="window.stepAdjusterAmount(1000)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 transition-colors cursor-pointer">+ $1,000</button>
+                            <button type="button" onclick="window.stepAdjusterAmount(5000)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 transition-colors cursor-pointer">+ $5,000</button>
+                        </div>
+                    </div>
+
+                    <!-- Next Due Date Adjustment -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Next Payment Due Date</label>
+                        <input type="date" id="adjuster-next-date" class="w-full text-xs font-mono px-3 py-2 rounded-lg border border-slate-300 focus:border-emerald-500" />
+                    </div>
+
+                    <button type="button" id="save-adjuster-btn" onclick="window.savePaymentAdjustment()" class="w-full py-3 px-4 rounded-xl font-bold text-xs uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                        <span class="material-symbols-outlined material-icons text-[18px]">save</span> Save & Update Client Premium
+                    </button>
+                </div>
+
+                <!-- Right: Client Payment History Ledger -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="material-symbols-outlined material-icons text-base text-blue-600">history_edu</span> Client Verified Payment Ledger
+                        </h3>
+                        <span id="ledger-count-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-700">0 Records</span>
+                    </div>
+                    <div id="ledger-history-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                        <p class="text-xs text-slate-400 italic text-center py-10 bg-slate-50 rounded-2xl border border-slate-200">
+                            Select a policy on the left to inspect its complete official payment history and verified bank receipts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECEIPT IMAGE MODAL -->
+        <div id="receipt-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
+                    <h3 class="font-headline font-bold text-lg text-slate-900" id="receipt-modal-title">Receipt Photo Verification</h3>
+                    <button type="button" onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">
+                        <span class="material-symbols-outlined material-icons text-2xl">close</span>
+                    </button>
+                </div>
+                <div class="flex justify-center bg-slate-100 rounded-xl p-2 mb-4 max-h-[65vh] overflow-auto">
+                    <img id="receipt-modal-img" src="" alt="Civilian Receipt Photo" class="max-h-[60vh] object-contain rounded-lg shadow-sm" />
+                </div>
+                <div class="flex justify-between items-center">
+                    <a id="receipt-modal-open-link" href="#" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1">
+                        <span class="material-symbols-outlined material-icons text-sm">open_in_new</span> Open High-Resolution Original
+                    </a>
+                    <button type="button" onclick="document.getElementById('receipt-modal').classList.add('hidden')" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-lg transition-colors cursor-pointer">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- INCOMING CLIENT MESSAGES & CHAT INBOX -->
         <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden mb-8 mt-8">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b border-slate-200 pb-4">
                 <div>
                     <h2 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-blue-600">mark_chat_unread</span>
+                        <span class="material-symbols-outlined material-icons text-blue-600">mark_chat_unread</span>
                         Incoming Client Inquiries & Messages
                     </h2>
                     <p class="text-xs text-slate-500 mt-1">Real-time secure messages from your policyholders requiring adjuster review</p>
@@ -302,7 +544,7 @@
                         0 Messages
                     </span>
                     <button type="button" onclick="window.fetchCompanyMessages()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center gap-1 shadow-sm transition-colors cursor-pointer">
-                        <span class="material-symbols-outlined text-sm">refresh</span> Refresh
+                        <span class="material-symbols-outlined material-icons text-sm">refresh</span> Refresh
                     </button>
                 </div>
             </div>
@@ -332,7 +574,7 @@
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 to-amber-300"></div>
             
             <h2 class="font-headline text-xl font-bold text-slate-900 mb-6 flex items-center gap-2 border-b border-slate-200 pb-4">
-                <span class="material-symbols-outlined text-orange-500">pending_actions</span>
+                <span class="material-symbols-outlined material-icons text-orange-500">pending_actions</span>
                 Update Client Claim Progress
             </h2>
             
@@ -359,7 +601,7 @@
                 <div class="pt-4 border-t border-slate-200 flex justify-end">
                     <button type="submit" id="status-submit-btn" class="bg-orange-500 text-white font-bold font-label px-8 py-3 rounded-lg hover:bg-orange-600 transition-all shadow-md flex items-center gap-2">
                         Update Progress
-                        <span class="material-symbols-outlined text-[18px]">update</span>
+                        <span class="material-symbols-outlined material-icons text-[18px]">update</span>
                     </button>
                 </div>
             </form>
@@ -370,6 +612,28 @@
     <script type="module">
         import { auth, apiFetch } from './firebase-config.js';
         import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // --- Mobile Menu Drawer Toggle (Immediate Top-Level Binding) ---
+        const insMobileMenuBtn = document.getElementById('ins-mobile-menu-btn');
+        const insMobileMenu = document.getElementById('ins-mobile-menu');
+        const insMobileCloseBtn = document.getElementById('ins-mobile-close-btn');
+        const insMobileLogoutBtn = document.getElementById('ins-mobile-logout-btn');
+
+        if (insMobileMenuBtn && insMobileMenu) {
+            insMobileMenuBtn.addEventListener('click', () => {
+                insMobileMenu.classList.toggle('hidden');
+            });
+        }
+        if (insMobileCloseBtn && insMobileMenu) {
+            insMobileCloseBtn.addEventListener('click', () => {
+                insMobileMenu.classList.add('hidden');
+            });
+        }
+        if (insMobileLogoutBtn) {
+            insMobileLogoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => { window.location.href = 'login.html'; });
+            });
+        }
 
         let currentAgentCompany = '';
 
@@ -442,14 +706,16 @@
                     }
                 }
                 
-                // Fetch claims and messages
+                // Fetch claims, messages, and receipts
                 window.fetchActiveClaims();
                 window.fetchCompanyMessages();
+                window.fetchReceipts();
 
-                // Periodic automated poll every 5 seconds for incoming civilian messages
+                // Periodic automated poll every 5 seconds for incoming civilian messages and receipts
                 setInterval(() => {
                     if (!document.hidden) {
                         window.fetchCompanyMessages();
+                        window.fetchReceipts();
                     }
                 }, 5000);
     
@@ -465,7 +731,7 @@
             const msgBox = document.getElementById('policy-status-msg');
             msgBox.classList.add('hidden');
             btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span>';
+            btn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin">autorenew</span>';
 
             const payload = {
                 user_email: document.getElementById('policy-user-email').value.trim(),
@@ -495,7 +761,7 @@
                 msgBox.classList.remove('hidden');
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = 'Issue Policy <span class="material-symbols-outlined text-[18px]">send</span>';
+                btn.innerHTML = 'Issue Policy <span class="material-symbols-outlined material-icons text-[18px]">send</span>';
             }
         });
 
@@ -545,7 +811,7 @@
             const modal = document.getElementById('report-modal');
             const content = document.getElementById('report-modal-content');
             modal.classList.remove('hidden');
-            content.innerHTML = '<div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-blue-600">autorenew</span></div>';
+            content.innerHTML = '<div class="flex items-center justify-center p-10"><span class="material-symbols-outlined material-icons animate-spin text-4xl text-blue-600">autorenew</span></div>';
             
             try {
                 const response = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/incident/${incidentId}`);
@@ -587,6 +853,39 @@
         };
 
         // 4. Fetch Active Claims (Tenant Isolated by Company)
+        let allCompanyPolicies = [];
+        const currencyFormatter = new Intl.NumberFormat('en-JM', { style: 'currency', currency: 'JMD' });
+
+        function updateAgencyStatistics(policies = [], receipts = []) {
+            let totalPremium = 0;
+            let activePolicies = policies.length;
+            let activeClaims = 0;
+
+            policies.forEach(p => {
+                const amt = typeof p.payment_amount === 'number' ? p.payment_amount : parseFloat(p.payment_amount || 0);
+                totalPremium += (amt || 0);
+                if (p.stage && p.stage > 0) activeClaims++;
+            });
+
+            const pendingReceipts = receipts.filter(r => r.status === 'pending_verification' || r.status === 'pending').length;
+
+            const statPremium = document.getElementById('stat-total-premium');
+            const statPending = document.getElementById('stat-pending-receipts');
+            const statPolicies = document.getElementById('stat-active-policies');
+            const statClaims = document.getElementById('stat-active-claims');
+
+            if (statPremium) statPremium.textContent = `${currencyFormatter.format(totalPremium)} JMD`;
+            if (statPending) statPending.textContent = `${pendingReceipts} Needs Review`;
+            if (statPolicies) statPolicies.textContent = `${activePolicies} Registered`;
+            if (statClaims) statClaims.textContent = `${activeClaims} In Review`;
+
+            const rBadge = document.getElementById('receipts-count-badge');
+            if (rBadge) {
+                rBadge.textContent = `${pendingReceipts} Pending`;
+                rBadge.className = pendingReceipts > 0 ? 'px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 animate-pulse' : 'px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600';
+            }
+        }
+
         window.fetchActiveClaims = async function() {
             try {
                 const response = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/claims?t=' + new Date().getTime());
@@ -606,9 +905,23 @@
                 
                 if (!Array.isArray(claims) || claims.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500">No active claims found for your company.</td></tr>';
+                    allCompanyPolicies = [];
+                    updateAgencyStatistics([], []);
                     return;
                 }
                 
+                allCompanyPolicies = claims;
+                updateAgencyStatistics(claims, []);
+
+                // Populate Adjuster Policy Select
+                const adjSelect = document.getElementById('adjuster-policy-select');
+                if (adjSelect) {
+                    const currentVal = adjSelect.value;
+                    adjSelect.innerHTML = '<option value="">-- Choose a policy to adjust --</option>' + 
+                        claims.map(c => `<option value="${c.policy_number}">${c.policy_number} - ${c.user_email || 'Client'} (${c.company || 'Company'})</option>`).join('');
+                    if (currentVal) adjSelect.value = currentVal;
+                }
+
                 tbody.innerHTML = claims.map(c => `
                     <tr class="hover:bg-slate-50 transition-colors">
                         <td class="p-4 font-mono font-bold text-slate-900">${c.policy_number}</td>
@@ -620,10 +933,10 @@
                         </td>
                         <td class="p-4 flex gap-4">
                             <button type="button" onclick="viewReport('${c.incident_id}')" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1 ${!c.incident_id ? 'opacity-50 cursor-not-allowed' : ''}" ${!c.incident_id ? 'disabled title="No report attached"' : ''}>
-                                View <span class="material-symbols-outlined text-[14px]">visibility</span>
+                                View <span class="material-symbols-outlined material-icons text-[14px]">visibility</span>
                             </button>
                             <button type="button" onclick="document.getElementById('status-policy-number').value='${c.policy_number}'; document.getElementById('update-status-form').scrollIntoView({behavior: 'smooth', block: 'center'}); document.getElementById('status-stage').focus();" class="text-blue-600 hover:text-blue-800 font-bold text-xs uppercase flex items-center gap-1">
-                                Update <span class="material-symbols-outlined text-[14px]">edit</span>
+                                Update <span class="material-symbols-outlined material-icons text-[14px]">edit</span>
                             </button>
                         </td>
                     </tr>
@@ -631,6 +944,275 @@
             } catch (err) {
                 console.error("Failed to load claims:", err);
                 document.getElementById('claims-list-body').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold text-xs break-words">Failed to load claims: ${err.message}</td></tr>`;
+            }
+        };
+
+        // --- INCOMING PAYMENT RECEIPTS QUEUE ---
+        window.fetchReceipts = async function() {
+            const tbody = document.getElementById('receipts-list-body');
+            try {
+                const res = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/receipts?t=' + Date.now());
+                if (!res.ok) return;
+                const data = await res.json();
+                const receipts = Array.isArray(data.receipts) ? data.receipts : [];
+
+                updateAgencyStatistics(allCompanyPolicies, receipts);
+
+                if (receipts.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-500 font-medium">No incoming civilian payment receipts found.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = receipts.map(r => {
+                    const amt = typeof r.amount === 'number' ? r.amount : parseFloat(r.amount || 0);
+                    const isPending = r.status === 'pending_verification' || r.status === 'pending';
+                    const isApproved = r.status === 'approved' || r.status === 'verified';
+                    const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : 'Recent';
+                    const imgThumb = r.receipt_url ? `
+                        <button type="button" onclick="window.openReceiptModal('${r.receipt_url}', '${r.policy_number}')" class="group relative block w-14 h-14 rounded-lg overflow-hidden border border-slate-200 bg-slate-100 shadow-sm hover:ring-2 hover:ring-blue-500 transition-all cursor-pointer">
+                            <img src="${r.receipt_url}" alt="Receipt" class="w-full h-full object-cover" />
+                            <span class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity"><span class="material-symbols-outlined material-icons text-sm">zoom_in</span></span>
+                        </button>
+                    ` : '<span class="text-xs text-slate-400">No Image</span>';
+
+                    const statusBadge = isApproved 
+                        ? '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">Approved</span>' 
+                        : isPending 
+                            ? '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 animate-pulse">Pending Review</span>' 
+                            : '<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-800">Declined</span>';
+
+                    const actionButtons = isPending ? `
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="window.approveReceipt('${r.receipt_id}', '${r.policy_number}', ${amt})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-colors flex items-center gap-1 cursor-pointer">
+                                <span class="material-symbols-outlined material-icons text-[14px]">check</span> Approve
+                            </button>
+                            <button type="button" onclick="window.rejectReceipt('${r.receipt_id}')" class="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-red-50 text-slate-600 hover:text-red-600 font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                                <span class="material-symbols-outlined material-icons text-[14px]">close</span>
+                            </button>
+                        </div>
+                    ` : `
+                        <span class="text-xs text-slate-400 italic">Processed ${r.verified_by ? 'by ' + r.verified_by.split('@')[0] : ''}</span>
+                    `;
+
+                    return `
+                        <tr class="hover:bg-slate-50 transition-colors">
+                            <td class="p-4">${imgThumb}</td>
+                            <td class="p-4 font-mono font-bold text-slate-900">${r.policy_number}</td>
+                            <td class="p-4 text-xs text-slate-600 font-medium">${r.civilian_email || 'N/A'}</td>
+                            <td class="p-4 font-mono font-bold text-slate-900">${currencyFormatter.format(amt)}</td>
+                            <td class="p-4 text-xs text-slate-500">${dateStr}</td>
+                            <td class="p-4">${statusBadge}</td>
+                            <td class="p-4">${actionButtons}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.error("Error fetching receipts:", e);
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500 font-medium">Failed to load receipts.</td></tr>';
+            }
+        };
+
+        window.openReceiptModal = function(url, policyNumber) {
+            const modal = document.getElementById('receipt-modal');
+            const img = document.getElementById('receipt-modal-img');
+            const link = document.getElementById('receipt-modal-open-link');
+            const title = document.getElementById('receipt-modal-title');
+            if (!modal || !img) return;
+            img.src = url;
+            if (link) link.href = url;
+            if (title) title.textContent = `Receipt Verification • Policy ${policyNumber || ''}`;
+            modal.classList.remove('hidden');
+        };
+
+        window.approveReceipt = async function(receiptId, policyNumber, amount) {
+            if (!confirm(`Approve this bank transfer receipt for Policy ${policyNumber}?\n\nThis will record $${amount?.toLocaleString() || ''} JMD into official payment history and advance the policy renewal date.`)) return;
+            try {
+                const res = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/approve-receipt', {
+                    method: 'POST',
+                    body: JSON.stringify({ receipt_id: receiptId })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || "Approval failed");
+                alert(`Receipt Approved! Payment of ${data.message} has been committed to the official ledger.`);
+                window.fetchReceipts();
+                window.fetchActiveClaims();
+                if (currentAdjusterPolicy && currentAdjusterPolicy.policy_number === policyNumber) {
+                    window.loadPolicyPaymentHistory(policyNumber);
+                }
+            } catch (err) {
+                alert(`Approval error: ${err.message}`);
+            }
+        };
+
+        window.rejectReceipt = async function(receiptId) {
+            const reason = prompt("Enter a reason for declining this receipt:", "Bank transfer transaction unverified or unconfirmed");
+            if (!reason) return;
+            try {
+                const res = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/reject-receipt', {
+                    method: 'POST',
+                    body: JSON.stringify({ receipt_id: receiptId, reason: reason })
+                });
+                if (!res.ok) throw new Error("Rejection failed");
+                window.fetchReceipts();
+            } catch (err) {
+                alert(`Error: ${err.message}`);
+            }
+        };
+
+        // --- GRAPHICAL PAYMENT ADJUSTER & LEDGER ---
+        let currentAdjusterPolicy = null;
+        let currentAdjusterAmount = 22000;
+
+        function updateAdjusterDisplay(amount, date) {
+            currentAdjusterAmount = Math.max(500, Math.round(amount));
+            const disp = document.getElementById('adjuster-display-amount');
+            const slider = document.getElementById('adjuster-slider');
+            const sliderLabel = document.getElementById('slider-val-label');
+            const dateDisp = document.getElementById('adjuster-display-date');
+
+            if (disp) disp.innerHTML = `${currencyFormatter.format(currentAdjusterAmount).replace('JMD', '').trim()} <span class="text-sm font-normal text-slate-300">JMD</span>`;
+            if (slider) slider.value = currentAdjusterAmount;
+            if (sliderLabel) sliderLabel.textContent = `${currencyFormatter.format(currentAdjusterAmount)}`;
+            if (date && dateDisp) dateDisp.textContent = date;
+        }
+
+        window.setAdjusterAmount = function(val) {
+            updateAdjusterDisplay(val);
+        };
+
+        window.stepAdjusterAmount = function(delta) {
+            updateAdjusterDisplay(currentAdjusterAmount + delta);
+        };
+
+        const adjusterSlider = document.getElementById('adjuster-slider');
+        if (adjusterSlider) {
+            adjusterSlider.addEventListener('input', (e) => {
+                updateAdjusterDisplay(parseFloat(e.target.value));
+            });
+        }
+
+        const adjusterPolicySelect = document.getElementById('adjuster-policy-select');
+        if (adjusterPolicySelect) {
+            adjusterPolicySelect.addEventListener('change', (e) => {
+                const polNum = e.target.value;
+                const targetPill = document.getElementById('adjuster-target-policy');
+                if (!polNum) {
+                    currentAdjusterPolicy = null;
+                    if (targetPill) targetPill.textContent = 'NO POLICY SELECTED';
+                    document.getElementById('ledger-history-list').innerHTML = '<p class="text-xs text-slate-400 italic text-center py-10 bg-slate-50 rounded-2xl border border-slate-200">Select a policy on the left to inspect its complete official payment history and verified bank receipts.</p>';
+                    return;
+                }
+                const found = allCompanyPolicies.find(p => p.policy_number === polNum);
+                if (found) {
+                    currentAdjusterPolicy = found;
+                    if (targetPill) targetPill.textContent = found.policy_number;
+                    const amt = typeof found.payment_amount === 'number' ? found.payment_amount : parseFloat(found.payment_amount || 0);
+                    updateAdjusterDisplay(amt || 22000, found.next_payment_date || 'Pending');
+                    const nextDateInput = document.getElementById('adjuster-next-date');
+                    if (nextDateInput && found.next_payment_date) {
+                        nextDateInput.value = found.next_payment_date;
+                    }
+                    window.loadPolicyPaymentHistory(found.policy_number);
+                }
+            });
+        }
+
+        window.loadPolicyPaymentHistory = async function(policyNumber) {
+            const list = document.getElementById('ledger-history-list');
+            const countBadge = document.getElementById('ledger-count-badge');
+            if (!list || !policyNumber) return;
+
+            list.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs"><span class="material-symbols-outlined material-icons animate-spin text-2xl text-emerald-600 mb-1">autorenew</span><p>Loading payment ledger...</p></div>';
+
+            try {
+                const res = await apiFetch(`https://ja-accident-report-backend.onrender.com/api/insurance/payment-history/${encodeURIComponent(policyNumber)}`);
+                if (!res.ok) throw new Error("Could not fetch ledger");
+                const data = await res.json();
+                const history = Array.isArray(data.history) ? data.history : [];
+
+                if (countBadge) countBadge.textContent = `${history.length} Records`;
+
+                if (history.length === 0) {
+                    list.innerHTML = `
+                        <div class="text-center py-8 bg-slate-50 rounded-2xl border border-slate-200">
+                            <span class="material-symbols-outlined material-icons text-3xl text-slate-400 mb-1">receipt</span>
+                            <p class="text-xs text-slate-500 font-bold">No verified payments on file for ${policyNumber}</p>
+                            <p class="text-[11px] text-slate-400 mt-1">When civilian transfer receipts are approved, they appear here.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                list.innerHTML = history.map(item => {
+                    const amt = typeof item.amount === 'number' ? item.amount : parseFloat(item.amount || 0);
+                    const dateStr = item.payment_date || (item.timestamp ? new Date(item.timestamp).toLocaleDateString() : 'Recent');
+                    const receiptLink = item.receipt_url ? `
+                        <button type="button" onclick="window.openReceiptModal('${item.receipt_url}', '${policyNumber}')" class="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-1 cursor-pointer">
+                            <span class="material-symbols-outlined material-icons text-[13px]">image</span> Receipt Photo
+                        </button>
+                    ` : '';
+
+                    return `
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-sm flex items-center justify-between hover:border-emerald-300 transition-colors">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-sm text-slate-900 font-mono">${currencyFormatter.format(amt)} JMD</span>
+                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Verified</span>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-1">
+                                    ${item.method || 'Bank Transfer'} • Paid on ${dateStr} ${item.reference ? '• Ref: <span class="font-mono font-bold text-slate-700">' + item.reference + '</span>' : ''}
+                                </p>
+                                <p class="text-[10px] text-slate-400 mt-0.5">Verified by ${item.verified_by || 'Agent'}</p>
+                            </div>
+                            <div>
+                                ${receiptLink}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                list.innerHTML = `<p class="text-xs text-red-500 italic text-center py-4">Failed to load history: ${err.message}</p>`;
+            }
+        };
+
+        window.savePaymentAdjustment = async function() {
+            if (!currentAdjusterPolicy || !currentAdjusterPolicy.policy_number) {
+                alert("Please select a policy from the dropdown to adjust.");
+                return;
+            }
+            const btn = document.getElementById('save-adjuster-btn');
+            const feedback = document.getElementById('adjuster-feedback');
+            const nextDate = document.getElementById('adjuster-next-date').value;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-[18px]">autorenew</span> Updating Policy...';
+            feedback.classList.add('hidden');
+
+            try {
+                const res = await apiFetch('https://ja-accident-report-backend.onrender.com/api/insurance/adjust-payment', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        policy_number: currentAdjusterPolicy.policy_number,
+                        payment_amount: currentAdjusterAmount,
+                        next_payment_date: nextDate
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.detail || "Update failed");
+
+                feedback.className = 'mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold';
+                feedback.textContent = `Successfully updated ${currentAdjusterPolicy.policy_number} premium to ${currencyFormatter.format(currentAdjusterAmount)} JMD!`;
+                feedback.classList.remove('hidden');
+
+                // Refresh active claims list & statistics
+                window.fetchActiveClaims();
+            } catch (err) {
+                feedback.className = 'mb-6 px-4 py-3 rounded-lg text-sm font-label text-center bg-red-50 text-red-800 border border-red-200 font-bold';
+                feedback.textContent = `Error: ${err.message}`;
+                feedback.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-symbols-outlined material-icons text-[18px]">save</span> Save & Update Client Premium';
             }
         };
 
@@ -670,7 +1252,7 @@
                             <td class="p-4 text-slate-500 text-xs font-mono">${timeStr}</td>
                             <td class="p-4">
                                 <button type="button" onclick="window.openReplyModal('${m.policy_number}', '${m.sender_email || ''}')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase flex items-center gap-1 shadow-sm transition-colors cursor-pointer">
-                                    Reply <span class="material-symbols-outlined text-[13px]">chat</span>
+                                    Reply <span class="material-symbols-outlined material-icons text-[13px]">chat</span>
                                 </button>
                             </td>
                         </tr>
@@ -752,29 +1334,7 @@
             }
         });
 
-        // --- Mobile Menu Drawer Toggle ---
-        const insMobileMenuBtn = document.getElementById('ins-mobile-menu-btn');
-        const insMobileMenu = document.getElementById('ins-mobile-menu');
-        const insMobileCloseBtn = document.getElementById('ins-mobile-close-btn');
-        const insMobileLogoutBtn = document.getElementById('ins-mobile-logout-btn');
-
-        if (insMobileMenuBtn && insMobileMenu) {
-            insMobileMenuBtn.addEventListener('click', () => {
-                insMobileMenu.classList.toggle('hidden');
-            });
-        }
-        if (insMobileCloseBtn && insMobileMenu) {
-            insMobileCloseBtn.addEventListener('click', () => {
-                insMobileMenu.classList.add('hidden');
-            });
-        }
-        if (insMobileLogoutBtn) {
-            insMobileLogoutBtn.addEventListener('click', () => {
-                signOut(auth).then(() => { window.location.href = 'login.html'; });
-            });
-        }
-
-                // --- Add Agency Agent Form Submission ---
+        // --- Add Agency Agent Form Submission ---
         const addAgentForm = document.getElementById('add-agent-form');
         if (addAgentForm) {
             addAgentForm.addEventListener('submit', async (e) => {
@@ -783,7 +1343,7 @@
                 const msgBox = document.getElementById('add-agent-status-msg');
                 msgBox.classList.add('hidden');
                 btn.disabled = true;
-                btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">autorenew</span> Authorizing...';
+                btn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-sm">autorenew</span> Authorizing...';
 
                 const payload = {
                     email: document.getElementById('new-agent-email').value.trim(),
@@ -811,7 +1371,7 @@
                     msgBox.classList.remove('hidden');
                 } finally {
                     btn.disabled = false;
-                    btn.innerHTML = '<span>Authorize Agent</span> <span class="material-symbols-outlined text-[18px]">verified_user</span>';
+                    btn.innerHTML = '<span>Authorize Agent</span> <span class="material-symbols-outlined material-icons text-[18px]">verified_user</span>';
                 }
             });
         }
@@ -829,7 +1389,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                        <span class="material-symbols-outlined text-xl">forum</span>
+                        <span class="material-symbols-outlined material-icons text-xl">forum</span>
                     </div>
                     <div>
                         <h3 class="font-headline font-bold text-lg text-slate-900" id="reply-modal-title">Client Message Thread</h3>
@@ -837,7 +1397,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
                     </div>
                 </div>
                 <button type="button" onclick="document.getElementById('reply-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100">
-                    <span class="material-symbols-outlined text-2xl">close</span>
+                    <span class="material-symbols-outlined material-icons text-2xl">close</span>
                 </button>
             </div>
             
@@ -852,7 +1412,7 @@ document.getElementById('logout-btn').addEventListener('click', () => {
                 <input type="text" id="agent-reply-input" class="flex-1 rounded-xl border-slate-300 focus:border-blue-600 p-3 text-xs" placeholder="Type a response to this policyholder..." required>
                 <button type="submit" id="agent-reply-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer">
                     <span>Send</span>
-                    <span class="material-symbols-outlined text-sm">send</span>
+                    <span class="material-symbols-outlined material-icons text-sm">send</span>
                 </button>
             </form>
         </div>
@@ -862,15 +1422,15 @@ document.getElementById('logout-btn').addEventListener('click', () => {
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
             <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h3 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-insurance">plagiarism</span>
+                    <span class="material-symbols-outlined material-icons text-insurance">plagiarism</span>
                     Incident Report Details
                 </h3>
                 <button onclick="document.getElementById('report-modal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700">
-                    <span class="material-symbols-outlined">close</span>
+                    <span class="material-symbols-outlined material-icons">close</span>
                 </button>
             </div>
             <div class="p-6 overflow-y-auto" id="report-modal-content">
-                <div class="flex items-center justify-center p-10"><span class="material-symbols-outlined animate-spin text-4xl text-insurance">autorenew</span></div>
+                <div class="flex items-center justify-center p-10"><span class="material-symbols-outlined material-icons animate-spin text-4xl text-insurance">autorenew</span></div>
             </div>
         </div>
     </div>

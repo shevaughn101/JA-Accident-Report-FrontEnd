@@ -10,7 +10,8 @@
     <title>Review & Submit - JA Accident Report</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Atkinson+Hyperlegible+Next:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <script id="tailwind-config">
         tailwind.config = {
             theme: {
@@ -44,7 +45,23 @@
         }
     </script>
     <style>
-        .material-symbols-outlined { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined, .material-icons {
+            font-family: 'Material Symbols Outlined', 'Material Icons', sans-serif !important;
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            font-feature-settings: 'liga';
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
 
         .glass-panel {
             background: rgba(255, 255, 255, 0.7);
@@ -67,34 +84,34 @@
         <div class="flex items-center gap-8">
             <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='civilian_dashboard.html'">
                 <div class="w-8 h-8 rounded-full bg-gold text-slate-900 flex items-center justify-center shadow-md">
-                    <span class="material-symbols-outlined text-[20px]">security</span>
+                    <span class="material-symbols-outlined material-icons text-[20px]">security</span>
                 </div>
                 <span class="font-headline font-bold text-lg text-slate-900 tracking-wide hidden sm:block">JA Accident Report</span>
             </div>
 
-            <nav class="hidden md:flex gap-6">
+            <nav class="hidden lg:flex gap-6">
                 <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">home</span> Home
+                    <span class="material-symbols-outlined material-icons text-[18px]">home</span> Home
                 </a>
                 <a href="civilian_dashboard.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">history</span> Past Incidents
+                    <span class="material-symbols-outlined material-icons text-[18px]">history</span> Past Incidents
                 </a>
                 <a href="civilian_profile.html" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">person</span> Profile
+                    <span class="material-symbols-outlined material-icons text-[18px]">person</span> Profile
                 </a>
                 <a href="#" id="portal-link-desktop" class="text-slate-600 hover:text-emerald font-label font-bold text-sm uppercase tracking-wider flex items-center gap-1 transition-colors">
-                    <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Management
+                    <span class="material-symbols-outlined material-icons text-[18px]">admin_panel_settings</span> Management
                 </a>
             </nav>
         </div>
 
         <div class="flex items-center gap-4">
-            <button id="mobile-menu-btn" class="md:hidden text-slate-600 hover:text-emerald transition-colors">
-                <span class="material-symbols-outlined">menu</span>
+            <button id="mobile-menu-btn" class="lg:hidden text-slate-600 hover:text-emerald transition-colors">
+                <span class="material-symbols-outlined material-icons">menu</span>
             </button>
             <button id="cancel-btn" class="text-slate-500 hover:text-red-500 transition-colors text-sm font-bold tracking-wider uppercase flex items-center gap-1">
                 Cancel
-                <span class="material-symbols-outlined text-sm">close</span>
+                <span class="material-symbols-outlined material-icons text-sm">close</span>
             </button>
         </div>
     </header>
@@ -102,19 +119,19 @@
     <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-white/95 backdrop-blur-md pt-20 px-6">
         <nav class="flex flex-col gap-6 text-center">
             <a href="civilian_dashboard.html" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-3xl">home</span> Home
+                <span class="material-symbols-outlined material-icons text-3xl">home</span> Home
             </a>
             <a href="civilian_dashboard.html" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-3xl">history</span> Past Incidents
+                <span class="material-symbols-outlined material-icons text-3xl">history</span> Past Incidents
             </a>
             <a href="civilian_profile.html" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-3xl">person</span> Profile
+                <span class="material-symbols-outlined material-icons text-3xl">person</span> Profile
             </a>
             <a href="#" id="portal-link-mobile" class="text-slate-800 font-headline font-bold text-2xl flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-3xl">admin_panel_settings</span> Management
+                <span class="material-symbols-outlined material-icons text-3xl">admin_panel_settings</span> Management
             </a>
             <button id="mobile-logout-btn" class="mt-8 text-red-500 font-headline font-bold text-xl flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-2xl">logout</span> Logout
+                <span class="material-symbols-outlined material-icons text-2xl">logout</span> Logout
             </button>
         </nav>
     </div>
@@ -127,14 +144,14 @@
 
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">
-                        <span class="material-symbols-outlined text-[20px]">check</span>
+                        <span class="material-symbols-outlined material-icons text-[20px]">check</span>
                     </div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Describe</span>
                 </div>
 
                 <div class="flex flex-col items-center gap-2 px-2" style="background: transparent;">
                     <div class="w-10 h-10 rounded-full bg-gold text-slate-900 flex items-center justify-center font-bold shadow-md">
-                        <span class="material-symbols-outlined text-[20px]">check</span>
+                        <span class="material-symbols-outlined material-icons text-[20px]">check</span>
                     </div>
                     <span class="font-label text-xs text-emerald font-bold uppercase tracking-wider">Evidence</span>
                 </div>
@@ -155,7 +172,7 @@
 
                     <div class="flex justify-between items-center mb-6 border-b border-slate-200 pb-4">
                         <h3 class="font-headline text-xl font-bold text-slate-900 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-emerald">summarize</span>
+                            <span class="material-symbols-outlined material-icons text-emerald">summarize</span>
                             Incident Summary
                         </h3>
                     </div>
@@ -168,12 +185,12 @@
                             </div>
                             <div>
                                 <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Jurisdiction / Parish</p>
-                                <p id="disp-jur" class="text-slate-900 font-body text-lg font-medium flex items-center gap-1"><span class="material-symbols-outlined text-emerald text-[18px]">map</span> <span id="jur-text"></span></p>
+                                <p id="disp-jur" class="text-slate-900 font-body text-lg font-medium flex items-center gap-1"><span class="material-symbols-outlined material-icons text-emerald text-[18px]">map</span> <span id="jur-text"></span></p>
                             </div>
                         </div>
                         <div>
                             <p class="font-label text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Specific Location</p>
-                            <p id="disp-location" class="text-slate-700 font-body flex items-start gap-1"><span class="material-symbols-outlined text-slate-400 text-[18px] mt-0.5">location_on</span> <span id="loc-text"></span></p>
+                            <p id="disp-location" class="text-slate-700 font-body flex items-start gap-1"><span class="material-symbols-outlined material-icons text-slate-400 text-[18px] mt-0.5">location_on</span> <span id="loc-text"></span></p>
                         </div>
 
                         <div id="veh-container" class="hidden">
@@ -205,7 +222,7 @@
 
                 <section class="glass-panel rounded-2xl p-8 shadow-xl relative overflow-hidden">
                     <h3 class="font-headline text-lg font-bold text-slate-900 flex items-center gap-2 mb-6 border-b border-slate-200 pb-4">
-                        <span class="material-symbols-outlined text-emerald">photo_library</span>
+                        <span class="material-symbols-outlined material-icons text-emerald">photo_library</span>
                         Attached Evidence
                     </h3>
                     <div id="evidence-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -219,7 +236,7 @@
                     <section class="glass-panel rounded-2xl p-6 shadow-xl border border-emerald/20 bg-emerald/5 relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-emerald/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
                         <h3 class="font-headline text-lg font-bold text-emerald flex items-center gap-2 mb-3">
-                            <span class="material-symbols-outlined">gavel</span> Legal Declaration
+                            <span class="material-symbols-outlined material-icons">gavel</span> Legal Declaration
                         </h3>
                         <p class="text-sm text-slate-700 mb-6 leading-relaxed">
                             Filing a false civic report is a punishable offense. By submitting, you affirm this data is accurate and agree to securely transmit it to authorities.
@@ -234,17 +251,17 @@
 
                     <div id="error-message" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm font-label text-center"></div>
                     <div id="success-message" class="hidden bg-emerald/10 border border-emerald/30 text-emerald-700 px-4 py-3 rounded-lg text-sm font-label text-center flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined">check_circle</span>
+                        <span class="material-symbols-outlined material-icons">check_circle</span>
                         Report Submitted!
                     </div>
 
                     <div class="flex flex-col gap-3">
                         <button id="submit-btn" disabled class="w-full bg-gold text-slate-900 font-bold font-label py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-gold/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald shadow-md">
-                            <span class="material-symbols-outlined text-[20px]">lock</span> 
+                            <span class="material-symbols-outlined material-icons text-[20px]">lock</span> 
                             <span class="tracking-wide">Submit Secure Report</span>
                         </button>
                         <button id="back-btn" class="w-full bg-white border border-slate-300 text-slate-700 font-bold font-label py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors shadow-sm">
-                            <span class="material-symbols-outlined text-[18px]">arrow_back</span> Go Back
+                            <span class="material-symbols-outlined material-icons text-[18px]">arrow_back</span> Go Back
                         </button>
                     </div>
                 </div>
@@ -326,7 +343,7 @@
             const wl = document.getElementById('witness-list');
             witnesses.forEach(w => {
                 const nameStr = (w.firstName || w.lastName) ? `${w.firstName || ''} ${w.lastName || ''}`.trim() : (w.name || 'Anonymous');
-                const addrStr = w.address ? `<br><span class="text-xs text-slate-500"><span class="material-symbols-outlined text-[14px] align-middle mt-1">home</span> ${w.address}</span>` : '';
+                const addrStr = w.address ? `<br><span class="text-xs text-slate-500"><span class="material-symbols-outlined material-icons text-[14px] align-middle mt-1">home</span> ${w.address}</span>` : '';
                 wl.innerHTML += `<div class="mb-2"><p class="text-sm text-slate-800"><span class="font-bold">${nameStr}</span> &bull; ${w.phone || 'No phone'}</p>${addrStr}</div>`;
             });
         }
@@ -345,7 +362,7 @@
                 else if (file.type === 'application/pdf') icon = 'picture_as_pdf';
 
                 div.innerHTML = `
-                    <span class="material-symbols-outlined text-4xl text-emerald mb-2 opacity-80">${icon}</span>
+                    <span class="material-symbols-outlined material-icons text-4xl text-emerald mb-2 opacity-80">${icon}</span>
                     <span class="text-xs font-mono text-slate-600 truncate w-full">${file.name}</span>
                     <div class="absolute inset-0 bg-slate-900/90 text-white p-2 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center text-xs text-left break-all overflow-y-auto z-10 pointer-events-none">
                         <span class="font-bold text-emerald mb-1">SHA-256 Hash:</span>
@@ -368,7 +385,7 @@
         submitBtn.addEventListener('click', async () => {
             errorMsg.classList.add('hidden');
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">autorenew</span> <span class="tracking-wide">Encrypting & Submitting...</span>';
+            submitBtn.innerHTML = '<span class="material-symbols-outlined material-icons animate-spin text-[20px]">autorenew</span> <span class="tracking-wide">Encrypting & Submitting...</span>';
 
             const latVal = sessionStorage.getItem('incidentLat');
             const lonVal = sessionStorage.getItem('incidentLon');
@@ -426,7 +443,7 @@
                 errorMsg.textContent = err.message;
                 errorMsg.classList.remove('hidden');
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">lock</span> <span class="tracking-wide">Submit Secure Report</span>';
+                submitBtn.innerHTML = '<span class="material-symbols-outlined material-icons text-[20px]">lock</span> <span class="tracking-wide">Submit Secure Report</span>';
             }
         });
 
